@@ -31,5 +31,13 @@ public class Robot
       //  jewelArm = new JewelArm(hardwareMap);
 //        vumarkDetect = new VumarkDetect(hardwareMap);
     }
+    public void initTeleop(HardwareMap hardwareMap)
+    {
+        driveTrain = new DriveTrain(hardwareMap);
+//          claw = new Claw(hardwareMap);
+//        elevator = new Elevator(hardwareMap);
+        //  jewelArm = new JewelArm(hardwareMap);
+//        vumarkDetect = new VumarkDetect(hardwareMap);
+    }
 
 }

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
@@ -16,7 +17,7 @@ public class MainTeleop extends OpMode
     @Override
     public void init()
     {
-        robot.init(hardwareMap);
+        robot.initTeleop(hardwareMap);
     }
 
     public void loop()
