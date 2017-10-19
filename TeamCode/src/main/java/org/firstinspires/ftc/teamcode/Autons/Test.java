@@ -17,7 +17,7 @@ public class Test extends LinearOpMode {
                 jewl.setPosition(0.0);
             } else if (jewl.getPosition() == 0.0){
                 jewl.setPosition(1.0);
-
+                //This is 180 degree turn
             }
         }
     }
