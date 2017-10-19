@@ -15,6 +15,8 @@ public class Test extends LinearOpMode {
         if (opModeIsActive()){
             if (jewl.getPosition() == 1.0){
                 jewl.setPosition(0.0);
+            } else {
+
             }
         }
     }
