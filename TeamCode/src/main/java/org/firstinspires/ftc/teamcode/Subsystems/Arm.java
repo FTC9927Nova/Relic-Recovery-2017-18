@@ -6,9 +6,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  * Created by therat0981 on 10/1/17.
  */
 
-public class Elevator implements SubsystemTemplate
+public class Arm implements SubsystemTemplate
 {
-    public Elevator(HardwareMap hardwareMap)
+    public Arm(HardwareMap hardwareMap)
     {
 
     }

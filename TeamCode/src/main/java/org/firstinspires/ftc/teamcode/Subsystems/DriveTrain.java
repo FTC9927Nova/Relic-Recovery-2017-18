@@ -27,7 +27,7 @@ public class DriveTrain implements SubsystemTemplate
     private DcMotor l2 = null;
     private DcMotor r1 = null;
     private DcMotor r2 = null;
-    private Gyro gyro = null;
+    public Gyro gyro;
 
     private int leftTarget;
     private int rightTarget;
@@ -64,6 +64,10 @@ public class DriveTrain implements SubsystemTemplate
         r2 = hardwareMap.dcMotor.get("r2");
         gyro.initGyro(hardwareMap);
         setDrive(Drive.SPEED);
+
+        r1.setDirection(DcMotorSimple.Direction.REVERSE);
+        r2.setDirection(DcMotorSimple.Direction.REVERSE);
+
         setSpeedController(DriveSpeedController.BRAKE);
     }
 
@@ -76,8 +80,11 @@ public class DriveTrain implements SubsystemTemplate
         r2 = hardwareMap.dcMotor.get("r2");
         gyro.initGyro(hardwareMap);
 
-
+        //
         r1.setDirection(DcMotorSimple.Direction.REVERSE);
+        r2.setDirection(DcMotorSimple.Direction.REVERSE);
+
+
 
 
         this.opMode = opMode;
@@ -165,14 +172,13 @@ public class DriveTrain implements SubsystemTemplate
 
     private int getLeftCurrentPosition()
     {
-        return (int)((l1.getCurrentPosition() + l2.getCurrentPosition()
-        )/2 );
+        return (int)((l1.getCurrentPosition() + l2.getCurrentPosition())/2.0 );
     }
 
     private int getRightCurrentPosition()
     {
-//        + r2.getCurrentPosition())
-        return (int)((r1.getCurrentPosition()));
+//
+        return (int)((r1.getCurrentPosition()+ r2.getCurrentPosition())/2.0);
     }
 
     public void setMoveDist(double dist) {
@@ -215,21 +221,22 @@ public class DriveTrain implements SubsystemTemplate
     public void rotateDeg(double target)
     {
         this.turnTarget = target;
-        if (this.opMode.opModeIsActive())
+
+        setDrive(Drive.SPEED);
+        setSpeedController(DriveSpeedController.BRAKE);
+        turnCL.setTarget(target);
+        while(this.opMode.opModeIsActive() &&
+                (Math.abs((gyro.getYaw()-turnTarget))>constant.getTurnTolerance()))
         {
-            setDrive(Drive.SPEED);
-            setSpeedController(DriveSpeedController.BRAKE);
-            turnCL.setTarget(target);
-            while(this.opMode.opModeIsActive() &&
-                    (Math.abs((gyro.getHeading()-turnTarget))<constant.getTurnTolerance()))
-            {
-                this.opMode.telemetry.addData("",display());
-                setLeftPower(turnCL.pLoop(gyro.getHeading()));
-                setRightPower(-turnCL.pLoop(gyro.getHeading()));
-            }
-            setLeftPower(0);
-            setRightPower(0);
+            this.opMode.telemetry.addData("",display());
+            setLeftPower(0.1);
+//                turnCL.pLoop(gyro.getYaw())
+            setRightPower(-0.1);
+//                -turnCL.pLoop(gyro.getYaw())
         }
+        setLeftPower(0);
+        setRightPower(0);
+
     }
 
     public void getLogs(){
@@ -252,6 +259,6 @@ public class DriveTrain implements SubsystemTemplate
                 +"\n  L2: pow: " + l2.getPower() + " enc: " + l2.getCurrentPosition() + " average: " + getLeftCurrentPosition()
                 +"\n  R1: pow: " + r1.getPower() + " enc: " + r1.getCurrentPosition() + " average: " + getRightCurrentPosition()
                 +"\n  R2: pow: " + r2.getPower() + " enc: " + r2.getCurrentPosition() + " average: " + getRightCurrentPosition()
-                +"\n  Gyro: Heading: " + gyro.getHeading() + " yaw: " + gyro.getYaw() + "  roll: " + gyro.getRoll();
+                +"\n  Gyro: Heading: " + gyro.getPitch() + " yaw: " + gyro.getYaw() + "  roll: " + gyro.getRoll();
     }
 }

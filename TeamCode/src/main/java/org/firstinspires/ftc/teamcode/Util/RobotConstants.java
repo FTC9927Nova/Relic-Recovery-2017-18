@@ -14,11 +14,12 @@ public class RobotConstants
     private final double WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
 
     //TODO: WITH TESTING
-    private final int ENCODER_TICKS_PER_REVOLUTION = 1440;
+    private final int ENCODER_TICKS_PER_REVOLUTION = 831;
+
 
     public int getTICKS_PER_INCH()
     {
-        return (int)(ENCODER_TICKS_PER_REVOLUTION * WHEEL_CIRCUMFERENCE);
+        return (int)(ENCODER_TICKS_PER_REVOLUTION / WHEEL_CIRCUMFERENCE);
     }
 
     public int getDRIVE_TOLERANCE()
