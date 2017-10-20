@@ -16,8 +16,6 @@ public class JewelArm implements SubsystemTemplate
     private Servo jewlArm = null;
     private ColorSensor jewlCheck = null;
 
-    private double dist1, dist2;
-
 
     private boolean isArmDown = false;
 
@@ -35,7 +33,7 @@ public class JewelArm implements SubsystemTemplate
 
     public JewelArm(HardwareMap hardwareMap)
     {
-        jewlArm = hardwareMap.servo.get("jewlArm");
+        jewlArm = hardwareMap.servo.get("jewl");
         jewlCheck = hardwareMap.get(ColorSensor.class,"jewlCheck");
 
         //TODO: SET JEWL ARM
@@ -48,13 +46,13 @@ public class JewelArm implements SubsystemTemplate
     public void armDown()
     {
         isArmDown = true;
-        jewlArm.setPosition(1);
+        jewlArm.setPosition(0.88);
     }
 
     public void armUp()
     {
         isArmDown = false;
-        jewlArm.setPosition(0);
+        jewlArm.setPosition(0.17);
     }
 
     //if hue is closer to 180 it is blue cos(pi) is -1
