@@ -15,13 +15,14 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
 public class myGyroTest extends LinearOpMode
 {
     Robot robot = new Robot();
+    Gyro gyro = new Gyro();
     @Override
     public void runOpMode()
     {
         waitForStart();
         while (opModeIsActive())
         {
-            telemetry.addData("yaw", robot.driveTrain.gyro.getYaw());
+            telemetry.addData("yaw", gyro.getYaw());
             telemetry.update();
         }
     }

@@ -13,8 +13,6 @@ import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 public class RotateDegTest extends LinearOpMode
 {
     Robot robot = new Robot();
-//      Gyro gyro = new Gyro();
-
     @Override
     public void runOpMode() throws InterruptedException
     {
