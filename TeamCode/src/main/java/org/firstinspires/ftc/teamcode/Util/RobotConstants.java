@@ -16,7 +16,6 @@ public class RobotConstants
     //TODO: WITH TESTING
     private final int ENCODER_TICKS_PER_REVOLUTION = 831;
 
-
     //TODO: GET ELEVATOR MEASUREMENTS
     private final int ELEVATOR_TICKS_PER_REVOLUTION = 0;
     private final int ELEVATOR_INCHES_PER_REVOLUTION = 1;
