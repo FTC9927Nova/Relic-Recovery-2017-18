@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.Util.Gyro;
 import org.firstinspires.ftc.teamcode.Util.VumarkDetect;
 
 /**
@@ -16,7 +17,7 @@ public class Robot
     public Arm elevator;
     public JewelArm jewelArm;
     public VumarkDetect vumarkDetect;
-
+    Gyro gyro = new Gyro();
 
     public Robot()
     {
@@ -26,15 +27,17 @@ public class Robot
     public void init(HardwareMap hardwareMap)
     {
         driveTrain = new DriveTrain(hardwareMap);
+        gyro.initGyro(hardwareMap);
 //          claw = new Claw(hardwareMap);
 //        elevator = new Arm(hardwareMap);
       //  jewelArm = new JewelArm(hardwareMap);
 //        vumarkDetect = new VumarkDetect(hardwareMap);
     }
 
-    public void init(HardwareMap hardwareMap, LinearOpMode linearOpMode)
+    public void init(HardwareMap hardwareMap, LinearOpMode linearOpMode, Gyro gyrofromOpMode)
     {
         driveTrain = new DriveTrain(hardwareMap,linearOpMode);
+        driveTrain.setGyro(gyrofromOpMode);
 //        claw = new Claw(hardwareMap);
 //        elevator = new Arm(hardwareMap);
         //  jewelArm = new JewelArm(hardwareMap);
