@@ -44,8 +44,6 @@ public class ConceptChangePID extends LinearOpMode {
         // re-read coefficients and verify change.
         PIDCoefficients pidModified = motorExLeft.getPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
 
-
-
         // display info to user.
         while (opModeIsActive()) {
             telemetry.addData("Runtime", "%.03f", getRuntime());
