@@ -27,7 +27,7 @@ public class DriveTrain implements SubsystemTemplate
     private DcMotor l2 = null;
     private DcMotor r1 = null;
     private DcMotor r2 = null;
-    public Gyro gyro;
+    public Gyro gyro = new Gyro();
 
     private int leftTarget;
     private int rightTarget;
