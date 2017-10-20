@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autons;
+package org.firstinspires.ftc.teamcode.Tests;
 
 import android.provider.Settings;
 import android.util.Log;
@@ -12,18 +12,22 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * Created by Ethan Pereira on 10/19/2017.
  */
-@TeleOp(name = "JewlArmTest")
+@TeleOp(name = "JewlTest")
 public class Test extends OpMode {
     Servo jewl;
     @Override
 
     public void init() {
-        jewl = hardwareMap.servo.get("jewl");
+        jewl = hardwareMap.get(Servo.class, "jewl");
+//                hardwareMap.servo.get("jewl");
     }
 
     @Override
     public void loop() {
         telemetry.addData("Pos", jewl.getPosition());
+        telemetry.update();
+        jewl.setPosition(1.0);
+
 //        Log.i("DataLogs", String.valueOf(jewl.getPosition()));
     }
 }
