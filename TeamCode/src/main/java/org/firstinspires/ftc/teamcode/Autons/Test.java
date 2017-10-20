@@ -14,8 +14,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 @TeleOp(name = "JewlArmTest")
 public class Test extends OpMode {
-    Servo jewl = null;
-    HardwareMap hardwareMap;
+    Servo jewl;
     @Override
 
     public void init() {
