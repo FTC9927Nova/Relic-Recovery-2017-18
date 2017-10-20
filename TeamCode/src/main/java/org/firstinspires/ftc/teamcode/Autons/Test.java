@@ -13,6 +13,7 @@ public class Test extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Servo jewl = hardwareMap.servo.get("jewl");
+        waitForStart();
         while (opModeIsActive()){
             telemetry.addData("Pos", jewl.getPosition());
             telemetry.addData("Direction", jewl.getDirection());
