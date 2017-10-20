@@ -78,7 +78,7 @@ public class DriveTrain implements SubsystemTemplate
         l2 = hardwareMap.dcMotor.get("l2");
         r1 = hardwareMap.dcMotor.get("r1");
         r2 = hardwareMap.dcMotor.get("r2");
-        gyro.initGyro(hardwareMap);
+//        gyro.initGyro(hardwareMap);
 
         //
         r1.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -90,10 +90,10 @@ public class DriveTrain implements SubsystemTemplate
         this.opMode = opMode;
     }
 
-//    public void setGyro(Gyro gyro)
-//    {
-//        this.gyro = gyro;
-//    }
+    public void setGyro(Gyro gyro)
+    {
+        this.gyro = gyro;
+    }
 
     private void setDrive(Drive d)
     {
@@ -234,10 +234,10 @@ public class DriveTrain implements SubsystemTemplate
                 (Math.abs((gyro.getYaw()-turnTarget))>constant.getTurnTolerance()))
         {
             this.opMode.telemetry.addData("",display());
-            setLeftPower(0.1);
-//                turnCL.pLoop(gyro.getYaw())
-            setRightPower(-0.1);
-//                -turnCL.pLoop(gyro.getYaw())
+            setLeftPower(turnCL.pLoop(gyro.getYaw()));
+            setRightPower(-turnCL.pLoop(gyro.getYaw()));
+            opMode.telemetry.addData("Deg", gyro.getYaw());
+            opMode.telemetry.update();
         }
         setLeftPower(0);
         setRightPower(0);
