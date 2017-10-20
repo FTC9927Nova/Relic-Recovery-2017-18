@@ -27,7 +27,7 @@ public class DriveTrain implements SubsystemTemplate
     private DcMotor l2 = null;
     private DcMotor r1 = null;
     private DcMotor r2 = null;
-    public Gyro gyro = new Gyro();
+    public Gyro gyro;
 
     private int leftTarget;
     private int rightTarget;
@@ -89,6 +89,11 @@ public class DriveTrain implements SubsystemTemplate
 
         this.opMode = opMode;
     }
+
+//    public void setGyro(Gyro gyro)
+//    {
+//        this.gyro = gyro;
+//    }
 
     private void setDrive(Drive d)
     {
