@@ -40,6 +40,7 @@ public class Elevator implements SubsystemTemplate
         }
 
 
+
     public void setMoveDist(double dist) {
 
         if (this.opMode.opModeIsActive()) {
