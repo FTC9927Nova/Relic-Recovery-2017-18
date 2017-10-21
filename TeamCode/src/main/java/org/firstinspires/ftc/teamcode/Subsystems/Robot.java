@@ -30,7 +30,7 @@ public class Robot
         gyro.initGyro(hardwareMap);
 //          claw = new Claw(hardwareMap);
 //        elevator = new Arm(hardwareMap);
-      //  jewelArm = new JewelArm(hardwareMap);
+        jewelArm = new JewelArm(hardwareMap);
 //        vumarkDetect = new VumarkDetect(hardwareMap);
     }
 

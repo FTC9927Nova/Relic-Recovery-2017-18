@@ -22,7 +22,7 @@ public class JewelArm implements SubsystemTemplate
     private final double SCALE_FACTOR = 255;
 
 
-    enum ColorDetected
+    public enum ColorDetected
     {
         RED,
         BLUE,
