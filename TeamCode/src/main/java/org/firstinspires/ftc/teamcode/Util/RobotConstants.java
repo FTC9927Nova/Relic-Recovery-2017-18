@@ -21,7 +21,6 @@ public class RobotConstants
     private final int ELEVATOR_INCHES_PER_REVOLUTION = 1;
     private final int ELEVATOR_TICKS_PER_INCH = ELEVATOR_TICKS_PER_REVOLUTION/ELEVATOR_INCHES_PER_REVOLUTION;
 
-
     public int getTICKS_PER_INCH()
     {
         return (int)(ENCODER_TICKS_PER_REVOLUTION / WHEEL_CIRCUMFERENCE);

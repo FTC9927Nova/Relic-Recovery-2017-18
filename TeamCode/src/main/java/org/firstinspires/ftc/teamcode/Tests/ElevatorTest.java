@@ -11,6 +11,12 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
+import org.firstinspires.ftc.teamcode.Util.*;
+
+import org.firstinspires.ftc.teamcode.Subsystems.Robot;
+
+import static org.firstinspires.ftc.teamcode.Subsystems.SubsystemTemplate.constant;
+
 /**
  * Created by Ethan Pereira on 10/19/2017.
  */
@@ -18,6 +24,8 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 public class ElevatorTest extends OpMode {
     Servo claw;
     DcMotor elevator;
+    Robot robot = new Robot();
+
     @Override
 
     public void init() {
@@ -28,41 +36,55 @@ public class ElevatorTest extends OpMode {
         //                hardwareMap.servo.get("jewl");
     }
 
+
     @Override
     public void loop() {
         telemetry.addData("Pos", claw.getPosition());
         telemetry.update();
+        if (gamepad1.a) {
+            elevator.setTargetPosition(robot.constant.getELEVATOR_TICKS_PER_INCH());
 
-        if(gamepad1.right_bumper){
+        } else if (gamepad1.b) {
 
-            claw.setPosition(0.35);
 
-        }
+        } else if (gamepad1.y) {
 
-        else if(gamepad1.left_bumper){
-
-            claw.setPosition(0.0);
 
         }
 
-        if(gamepad1.y){
 
-            elevator.setPower(0.5);
+//
+//        if(gamepad1.right_bumper){
+//
+//            claw.setPosition(0.35);
+//
+//        }
+//
+//        else if(gamepad1.left_bumper){
+//
+//            claw.setPosition(0.0);
+//
+//        }
+//
+//        if(gamepad1.y){
+//
+//            elevator.setPower(0.5);
+//
+//        }
+//
+//        else if(gamepad1.x){
+//
+//            elevator.setPower(-0.5);
+//
+//        }
+//        else{
+//
+//            elevator.setPower(0);
+//
+//        }
+//
+////        Log.i("DataLogs", String.valueOf(jewl.getPosition()));
+//    }
 
-        }
-
-        else if(gamepad1.x){
-
-            elevator.setPower(-0.5);
-
-        }
-        else{
-
-            elevator.setPower(0);
-
-        }
-
-//        Log.i("DataLogs", String.valueOf(jewl.getPosition()));
     }
-
 }
