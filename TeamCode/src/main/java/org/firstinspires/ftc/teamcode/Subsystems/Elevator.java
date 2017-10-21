@@ -23,7 +23,8 @@ public class Elevator implements SubsystemTemplate
 
     private int targetLevel;
 
-    private LinearOpMode opMode;
+    boolean hasReached = false;
+
 
     private PIDLoop elevatorCL = new PIDLoop();
 
@@ -36,14 +37,13 @@ public class Elevator implements SubsystemTemplate
 
             elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            this.opMode = opMode;
         }
 
 
 
     public void setMoveDist(double dist) {
 
-        if (this.opMode.opModeIsActive()) {
+        if (!hasReached) {
 
             target = elevator.getCurrentPosition()
                     + (int) (dist * constant.getELEVATOR_TICKS_PER_INCH());
@@ -53,15 +53,19 @@ public class Elevator implements SubsystemTemplate
 
             elevatorCL.setTarget(target);
 
-            while(this.opMode.opModeIsActive() &&
-                    (Math.abs((elevator.getCurrentPosition() - target)) > constant.getDRIVE_TOLERANCE()))
+            while(!hasReached && (Math.abs((elevator.getCurrentPosition() - target)) > constant.getDRIVE_TOLERANCE()))
             {
                 elevator.setPower(elevatorCL.pLoop(elevator.getCurrentPosition()));
             }
 
+            hasReached = true;
+
             elevator.setPower(0);
 
         }
+
+        hasReached = false;
+
     }
 
     public void moveLevel(int level){
