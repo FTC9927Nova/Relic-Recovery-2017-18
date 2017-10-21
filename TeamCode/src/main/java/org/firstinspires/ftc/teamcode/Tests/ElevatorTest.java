@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 /**
  * Created by Ethan Pereira on 10/19/2017.
@@ -26,7 +27,6 @@ public class ElevatorTest extends OpMode {
 
         //                hardwareMap.servo.get("jewl");
     }
-
 
     @Override
     public void loop() {
@@ -64,4 +64,5 @@ public class ElevatorTest extends OpMode {
 
 //        Log.i("DataLogs", String.valueOf(jewl.getPosition()));
     }
+
 }
