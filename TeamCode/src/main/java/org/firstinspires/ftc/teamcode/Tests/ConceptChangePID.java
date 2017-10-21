@@ -1,10 +1,19 @@
 package org.firstinspires.ftc.teamcode.Tests;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
+import com.qualcomm.robotcore.hardware.configuration.ExpansionHubMotorControllerParamsState;
+import com.qualcomm.robotcore.hardware.configuration.ExpansionHubMotorControllerPositionParams;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.internal.android.dx.dex.file.StringDataItem;
 
 /**
  * Created by tom on 9/26/17.
@@ -19,18 +28,22 @@ import com.qualcomm.robotcore.hardware.PIDCoefficients;
 public class ConceptChangePID extends LinearOpMode {
 
     // our DC motor.
+    DcMotorController dcMotorController;
     DcMotorEx motorExLeft;
+
 
     public static final double NEW_P = 2.5;
     public static final double NEW_I = 0.1;
     public static final double NEW_D = 0.2;
+
+    VoltageSensor voltageSensor;
+
 
     public void runOpMode() {
         // get reference to DC motor.
         // since we are using the Expansion Hub,
         // cast this motor to a DcMotorEx object.
         motorExLeft = (DcMotorEx) hardwareMap.get(DcMotor.class, "left_drive");
-
         // wait for start command.
         waitForStart();
 
@@ -51,6 +64,13 @@ public class ConceptChangePID extends LinearOpMode {
                     pidOrig.p, pidOrig.i, pidOrig.d);
             telemetry.addData("P,I,D (modified)", "%.04f, %.04f, %.04f",
                     pidModified.p, pidModified.i, pidModified.d);
+            motorExLeft.setVelocity(30,AngleUnit.DEGREES);
+            motorExLeft.setPower(.3);
+            Log.i("velocity", String.valueOf(motorExLeft.getVelocity(AngleUnit.DEGREES)));
+            Log.i("power", String.valueOf((motorExLeft.getPower())));
+//            Log.i("voltage", String.valueOf(()))
+
+
             telemetry.update();
         }
     }

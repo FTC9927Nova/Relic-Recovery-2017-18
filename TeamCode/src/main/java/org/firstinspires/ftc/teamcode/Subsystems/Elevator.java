@@ -68,6 +68,12 @@ public class Elevator implements SubsystemTemplate
 
     }
 
+    public void setPower(double power){
+
+        elevator.setPower(power);
+
+    }
+
     public void moveLevel(int level){
 
         targetLevel = level - currentLevel;

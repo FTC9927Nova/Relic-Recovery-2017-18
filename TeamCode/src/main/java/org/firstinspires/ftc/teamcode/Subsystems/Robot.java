@@ -24,13 +24,14 @@ public class Robot
 
     }
 
-    public void init(HardwareMap hardwareMap)
+    public void init(HardwareMap hardwareMap, Gyro gyrofromOpMode)
     {
         driveTrain = new DriveTrain(hardwareMap);
-        gyro.initGyro(hardwareMap);
+        driveTrain.setGyro(gyrofromOpMode);
 //          claw = new Claw(hardwareMap);
 //        elevator = new Arm(hardwareMap);
         jewelArm = new JewelArm(hardwareMap);
+        elevator = new Elevator(hardwareMap);
 //        vumarkDetect = new VumarkDetect(hardwareMap);
     }
 
@@ -41,7 +42,9 @@ public class Robot
 //        claw = new Claw(hardwareMap);
 //        elevator = new Arm(hardwareMap);
           jewelArm = new JewelArm(hardwareMap);
+        elevator = new Elevator(hardwareMap);
 //        vumarkDetect = new VumarkDetect(hardwareMap);
     }
+
 
 }
