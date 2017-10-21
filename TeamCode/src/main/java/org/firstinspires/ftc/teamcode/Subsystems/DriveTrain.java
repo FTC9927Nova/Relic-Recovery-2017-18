@@ -62,7 +62,7 @@ public class DriveTrain implements SubsystemTemplate
         l2 = hardwareMap.dcMotor.get("l2");
         r1 = hardwareMap.dcMotor.get("r1");
         r2 = hardwareMap.dcMotor.get("r2");
-        gyro.initGyro(hardwareMap);
+//        gyro.initGyro(hardwareMap);
         setDrive(Drive.SPEED);
 
         l1.setDirection(DcMotorSimple.Direction.REVERSE);
