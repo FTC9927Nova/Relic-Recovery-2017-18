@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  * Created by therat0981 on 10/19/17.
  */
 
-@TeleOp(name = "Rotate Deg Test")
+@TeleOp(name = "Rotate Deg ServoArmTest")
 public class RotateDegTest extends LinearOpMode
 {
     Robot robot = new Robot();

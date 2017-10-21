@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Tests;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -10,9 +10,9 @@ import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 /**
  * Created by therat0981 on 10/1/17.
  */
-@TeleOp(name = "TeleOp")
-
-public class MainTeleop extends OpMode
+@TeleOp(name = "Tepeop1GP")
+@Disabled
+public class TestTeleop extends OpMode
 {
     Robot robot = new Robot();
 
@@ -45,6 +45,11 @@ public class MainTeleop extends OpMode
         robot.driveTrain.setRightPower(rpwr);
 
         telemetry.addData("",robot.driveTrain.display());
+
+        if(gamepad1.a)
+            robot.jewelArm.armUp();
+        else if (gamepad1.b)
+            robot.jewelArm.armDown();
 
         //Operator Code
         //claw

@@ -65,8 +65,10 @@ public class DriveTrain implements SubsystemTemplate
         gyro.initGyro(hardwareMap);
         setDrive(Drive.SPEED);
 
-        r1.setDirection(DcMotorSimple.Direction.REVERSE);
-        r2.setDirection(DcMotorSimple.Direction.REVERSE);
+        l1.setDirection(DcMotorSimple.Direction.REVERSE);
+        l2.setDirection(DcMotorSimple.Direction.REVERSE);
+        r1.setDirection(DcMotorSimple.Direction.FORWARD);
+        r2.setDirection(DcMotorSimple.Direction.FORWARD);
 
         setSpeedController(DriveSpeedController.BRAKE);
     }
