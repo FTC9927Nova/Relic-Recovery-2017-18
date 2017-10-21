@@ -34,7 +34,7 @@ public class ElevatorTest extends OpMode {
     @Override
     public void loop() {
 //        telemetry.addData("Pos", claw.getPosition());
-        telemetry.update();
+//        telemetry.update();
         if (gamepad1.a){
             robot.elevator.moveLevel(1);
         } else if (gamepad1.b){
@@ -43,6 +43,12 @@ public class ElevatorTest extends OpMode {
             robot.elevator.moveLevel(3);
         } else {
             robot.elevator.setPower(0.0);
+        }
+
+        if (gamepad1.right_bumper){
+            robot.claw.close();
+        } else if (gamepad1.left_bumper){
+            robot.claw.open();
         }
 
 
