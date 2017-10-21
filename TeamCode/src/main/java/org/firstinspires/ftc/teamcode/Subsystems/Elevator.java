@@ -66,6 +66,7 @@ public class Elevator implements SubsystemTemplate
 
         hasReached = false;
 
+
     }
 
     public void moveLevel(int level){
