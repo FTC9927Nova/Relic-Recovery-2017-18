@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Util.VumarkDetect;
  * Created by therat0981 on 10/1/17.
  */
 
-public class Robot implements SubsystemTemplate
+public class Robot
 {
     public DriveTrain driveTrain;
     public Claw claw;
@@ -19,19 +19,19 @@ public class Robot implements SubsystemTemplate
     public VumarkDetect vumarkDetect;
     Gyro gyro = new Gyro();
 
-
     public Robot()
     {
 
     }
 
-    public void init(HardwareMap hardwareMap)
+    public void init(HardwareMap hardwareMap, Gyro gyrofromOpMode)
     {
         driveTrain = new DriveTrain(hardwareMap);
-        gyro.initGyro(hardwareMap);
+        driveTrain.setGyro(gyrofromOpMode);
 //          claw = new Claw(hardwareMap);
 //        elevator = new Arm(hardwareMap);
         jewelArm = new JewelArm(hardwareMap);
+        elevator = new Elevator(hardwareMap);
 //        vumarkDetect = new VumarkDetect(hardwareMap);
     }
 
@@ -42,12 +42,9 @@ public class Robot implements SubsystemTemplate
 //        claw = new Claw(hardwareMap);
 //        elevator = new Arm(hardwareMap);
           jewelArm = new JewelArm(hardwareMap);
+        elevator = new Elevator(hardwareMap);
 //        vumarkDetect = new VumarkDetect(hardwareMap);
     }
 
-    @Override
-    public String display() {
-        return
-                driveTrain.display() + "\n" + jewelArm.display();
-    }
+
 }

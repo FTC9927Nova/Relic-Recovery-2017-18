@@ -9,48 +9,41 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.VoltageSensor;
-
-import org.firstinspires.ftc.teamcode.Util.*;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
-
-import static org.firstinspires.ftc.teamcode.Subsystems.SubsystemTemplate.constant;
+import org.firstinspires.ftc.teamcode.Util.Gyro;
 
 /**
  * Created by Ethan Pereira on 10/19/2017.
  */
 @TeleOp(name = "ElevatorTest")
 public class ElevatorTest extends OpMode {
-    Servo claw;
-    DcMotor elevator;
-    Robot robot = new Robot();
 
+    Robot robot = new Robot();
+    Gyro gyro = new Gyro();
     @Override
 
     public void init() {
 
-        elevator = hardwareMap.dcMotor.get("elevator");
-        claw = hardwareMap.get(Servo.class, "claw");
+        robot.init(hardwareMap, gyro);
 
-        //                hardwareMap.servo.get("jewl");
     }
 
 
     @Override
     public void loop() {
-        telemetry.addData("Pos", claw.getPosition());
+//        telemetry.addData("Pos", claw.getPosition());
         telemetry.update();
-        if (gamepad1.a) {
-            elevator.setTargetPosition(robot.constant.getELEVATOR_TICKS_PER_INCH());
-
-        } else if (gamepad1.b) {
-
-
-        } else if (gamepad1.y) {
-
-
+        if (gamepad1.a){
+            robot.elevator.moveLevel(1);
+        } else if (gamepad1.b){
+            robot.elevator.moveLevel(2);
+        } else if (gamepad1.y){
+            robot.elevator.moveLevel(3);
+        } else {
+            robot.elevator.setPower(0.0);
         }
+
 
 
 //
@@ -84,7 +77,5 @@ public class ElevatorTest extends OpMode {
 //        }
 //
 ////        Log.i("DataLogs", String.valueOf(jewl.getPosition()));
-//    }
-
     }
 }

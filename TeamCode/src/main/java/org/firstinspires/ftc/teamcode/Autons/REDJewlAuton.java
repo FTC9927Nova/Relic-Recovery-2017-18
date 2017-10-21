@@ -30,14 +30,14 @@ public class REDJewlAuton extends LinearOpMode{
 
             if(robot.jewelArm.getColor() == JewelArm.ColorDetected.RED){
 
-                robot.driveTrain.rotateDeg(-10);
+                robot.driveTrain.setMoveDist(-2);
 
             }
 
 
             else if(robot.jewelArm.getColor() == JewelArm.ColorDetected.BLUE){
 
-               robot.driveTrain.rotateDeg(10);
+               robot.driveTrain.setMoveDist(2);
 
             }
 
