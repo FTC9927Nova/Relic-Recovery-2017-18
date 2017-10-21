@@ -25,6 +25,7 @@ public class ElevatorTest extends OpMode {
 
     public void init() {
 
+        gyro.initGyro(hardwareMap);
         robot.init(hardwareMap, gyro);
 
     }
