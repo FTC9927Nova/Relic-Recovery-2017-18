@@ -30,7 +30,7 @@ public class Robot
         driveTrain.setGyro(gyrofromOpMode);
         claw = new Claw(hardwareMap);
         jewelArm = new JewelArm(hardwareMap);
-        elevator = new Elevator(hardwareMap);
+//        elevator = new Elevator(hardwareMap);
 
 //        vumarkDetect = new VumarkDetect(hardwareMap);
     }
