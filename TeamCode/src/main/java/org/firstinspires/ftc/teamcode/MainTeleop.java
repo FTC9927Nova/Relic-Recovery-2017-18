@@ -37,12 +37,12 @@ public class MainTeleop extends OpMode
         float rpwr = (float) Math.pow((yval - xval), 3);
 
 
-        //turtle mode
-//        if (gamepad1.right_bumper || gamepad1.left_bumper)
-//        {
-//            lpwr = lpwr/2.0f;
-//            rpwr = rpwr/2.0f;
-//        }
+//        turtle mode
+        if (gamepad1.right_trigger != 0 || gamepad1.left_trigger != 0)
+        {
+            lpwr = lpwr/2.0f;
+            rpwr = rpwr/2.0f;
+        }
 
         robot.driveTrain.setLeftPower(lpwr);
         robot.driveTrain.setRightPower(rpwr);
