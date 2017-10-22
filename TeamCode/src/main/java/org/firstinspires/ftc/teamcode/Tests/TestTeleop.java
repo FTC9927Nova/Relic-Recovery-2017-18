@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
+import org.firstinspires.ftc.teamcode.Util.Gyro;
 
 /**
  * Created by therat0981 on 10/1/17.
@@ -15,11 +16,12 @@ import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 public class TestTeleop extends OpMode
 {
     Robot robot = new Robot();
-
+    Gyro gyro = new Gyro();
     @Override
     public void init()
     {
-        robot.init(hardwareMap);
+        gyro.initGyro(hardwareMap);
+        robot.init(hardwareMap, gyro);
     }
 
     public void loop()

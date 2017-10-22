@@ -30,7 +30,7 @@ public class Claw implements SubsystemTemplate
     {
 
 //        clWheel = hardwareMap.dcMotor.get("clWheel");
-        grabber = hardwareMap.servo.get("grabber");
+//        grabber = hardwareMap.servo.get("grabber");
 //        ultrasonicSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "ultrasonic");
 
 
