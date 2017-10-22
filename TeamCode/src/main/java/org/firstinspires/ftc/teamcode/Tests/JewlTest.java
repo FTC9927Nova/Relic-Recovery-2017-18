@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.util.Range;
  * Created by Ethan Pereira on 10/19/2017.
  */
 @TeleOp(name = "JewlTest")
-public class ServoArmTest extends OpMode {
+public class JewlTest extends OpMode {
     Servo jewl;
     double pos = 0;
     @Override
