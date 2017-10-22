@@ -28,9 +28,10 @@ public class Robot
     {
         driveTrain = new DriveTrain(hardwareMap);
         driveTrain.setGyro(gyrofromOpMode);
-          claw = new Claw(hardwareMap);
+        claw = new Claw(hardwareMap);
         jewelArm = new JewelArm(hardwareMap);
         elevator = new Elevator(hardwareMap);
+
 //        vumarkDetect = new VumarkDetect(hardwareMap);
     }
 

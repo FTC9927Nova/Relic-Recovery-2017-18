@@ -10,18 +10,25 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.Subsystems.Robot;
+import org.firstinspires.ftc.teamcode.Util.Gyro;
+
 /**
  * Created by Ethan Pereira on 10/19/2017.
  */
 @TeleOp(name = "JewlTest")
 public class JewlTest extends OpMode {
+//    Robot robot = new Robot();
+//    Gyro gyro = new Gyro();
     Servo jewl;
     double pos = 0;
     @Override
 
     public void init() {
-        jewl = hardwareMap.get(Servo.class, "jewl");
 
+        jewl = hardwareMap.get(Servo.class, "jewl");
+//        gyro.initGyro(hardwareMap);
+//        robot.init(hardwareMap, gyro);
 //                hardwareMap.servo.get("jewl");
     }
 
