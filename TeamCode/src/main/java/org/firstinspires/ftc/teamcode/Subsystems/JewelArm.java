@@ -12,8 +12,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class JewelArm implements SubsystemTemplate
 {
-    private Servo jewlArm = null;
-    private ColorSensor jewlCheck = null;
+    private Servo jewlArm;
+    private ColorSensor jewlCheck;
 
 
     private boolean isArmDown = false;
@@ -34,12 +34,12 @@ public class JewelArm implements SubsystemTemplate
     {
         jewlArm = hardwareMap.servo.get("jewl");
 //        jewlCheck = hardwareMap.get(ColorSensor.class,"jewlCheck");
-        jewlCheck = hardwareMap.colorSensor.get("jewlCheck");
+//        jewlCheck = hardwareMap.colorSensor.get("jewlCheck");
 
         jewlArm.setDirection(Servo.Direction.FORWARD);
         jewlArm.scaleRange(0,1);
 
-        jewlCheck.enableLed(true);
+//        jewlCheck.enableLed(true);
     }
 
     public void armDown()

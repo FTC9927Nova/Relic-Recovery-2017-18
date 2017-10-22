@@ -38,16 +38,39 @@ public class MainTeleop extends OpMode
 
 
         //turtle mode
-        if (gamepad1.right_bumper || gamepad1.left_bumper)
-        {
-            lpwr = lpwr/2.0f;
-            rpwr = rpwr/2.0f;
-        }
+//        if (gamepad1.right_bumper || gamepad1.left_bumper)
+//        {
+//            lpwr = lpwr/2.0f;
+//            rpwr = rpwr/2.0f;
+//        }
 
         robot.driveTrain.setLeftPower(lpwr);
         robot.driveTrain.setRightPower(rpwr);
 
         telemetry.addData("",robot.driveTrain.display());
+
+        if(gamepad1.y){
+
+            robot.elevator.setPower(-0.5);
+
+        }
+
+        else if(gamepad1.x){
+
+            robot.elevator.setPower(0.5);
+
+        }
+        else{
+
+            robot.elevator.setPower(0.0);
+
+        }
+
+        if (gamepad1.right_bumper){
+            robot.claw.open();
+        } else if (gamepad1.left_bumper){
+            robot.claw.close();
+        }
 
         //Operator Code
         //claw

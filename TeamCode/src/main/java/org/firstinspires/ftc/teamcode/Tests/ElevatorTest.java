@@ -35,20 +35,37 @@ public class ElevatorTest extends OpMode {
     public void loop() {
 //        telemetry.addData("Pos", claw.getPosition());
 //        telemetry.update();
-        if (gamepad1.a){
-            robot.elevator.moveLevel(1);
-        } else if (gamepad1.b){
-            robot.elevator.moveLevel(2);
-        } else if (gamepad1.y){
-            robot.elevator.moveLevel(3);
-        } else {
+//        if (gamepad1.a){
+//            robot.elevator.moveLevel(1);
+//        } else if (gamepad1.b){
+//            robot.elevator.moveLevel(2);
+//        } else if (gamepad1.y){
+//            robot.elevator.moveLevel(3);
+//        } else {
+//            robot.elevator.setPower(0.0);
+//        }
+
+        if(gamepad1.y){
+
+            robot.elevator.setPower(-0.5);
+
+        }
+
+        else if(gamepad1.x){
+
+            robot.elevator.setPower(0.5);
+
+        }
+        else{
+
             robot.elevator.setPower(0.0);
+
         }
 
         if (gamepad1.right_bumper){
-            robot.claw.close();
-        } else if (gamepad1.left_bumper){
             robot.claw.open();
+        } else if (gamepad1.left_bumper){
+            robot.claw.close();
         }
 
 
