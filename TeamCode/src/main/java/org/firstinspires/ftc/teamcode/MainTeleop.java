@@ -44,8 +44,8 @@ public class MainTeleop extends OpMode
             rpwr = rpwr/2.0f;
         }
 
-        robot.driveTrain.setLeftPower(lpwr);
-        robot.driveTrain.setRightPower(rpwr);
+        robot.driveTrain.setLeftPower(rpwr);
+        robot.driveTrain.setRightPower(lpwr);
 
         telemetry.addData("",robot.driveTrain.display());
 
