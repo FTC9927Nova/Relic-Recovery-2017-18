@@ -34,7 +34,7 @@ public class JewelArm implements SubsystemTemplate
     {
         jewlArm = hardwareMap.servo.get("jewl");
 //        jewlCheck = hardwareMap.get(ColorSensor.class,"jewlCheck");
-        jewlCheck = hardwareMap.colorSensor.get("color");
+//        jewlCheck = hardwareMap.colorSensor.get("jewlCheck");
 
         jewlArm.setDirection(Servo.Direction.FORWARD);
         jewlArm.scaleRange(0,1);
