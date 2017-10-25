@@ -70,6 +70,19 @@ public class Elevator implements SubsystemTemplate
 
     }
 
+    public void resetEnc(){
+
+        elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+    }
+
+    public int getEnc(){
+
+        return elevator.getCurrentPosition();
+
+    }
+
     public void setPower(double power){
 
         elevator.setPower(power);

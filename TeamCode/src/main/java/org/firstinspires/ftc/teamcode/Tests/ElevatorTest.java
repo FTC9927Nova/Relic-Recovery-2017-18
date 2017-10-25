@@ -46,7 +46,8 @@ public class ElevatorTest extends OpMode {
 //            robot.elevator.setPower(0.0);
 //        }
 
-        telemetry.addData("Pos", robot.claw.showPos());
+        //telemetry.addData("Pos", robot.claw.showPos());
+        telemetry.addData("ElevatorEnc", robot.elevator.getEnc());
         telemetry.update();
         if(gamepad1.y){
 
@@ -66,9 +67,11 @@ public class ElevatorTest extends OpMode {
         }
 
         if (gamepad1.right_bumper){
-            robot.claw.open();
+            //robot.claw.open();
+            robot.elevator.resetEnc();
+
         } else if (gamepad1.left_bumper){
-            robot.claw.close();
+            //robot.claw.close();
         }
 
 
