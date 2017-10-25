@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
+import android.webkit.DownloadListener;
+
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -30,7 +32,8 @@ public class Claw implements SubsystemTemplate
     {
 
 //        clWheel = hardwareMap.dcMotor.get("clWheel");
-        grabber = hardwareMap.servo.get("claw");
+        grabber = hardwareMap.get(Servo.class, "claw");
+
 //        ultrasonicSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "ultrasonic");
 
 
@@ -47,13 +50,13 @@ public class Claw implements SubsystemTemplate
     public void open()
     {
         isOpen = true;
-        grabber.setPosition(1);
+        grabber.setPosition(0.58);
     }
 
     public void close()
     {
         isOpen = false;
-        grabber.setPosition(0);
+        grabber.setPosition(0.40);
     }
 
     //clWheel
@@ -76,6 +79,10 @@ public class Claw implements SubsystemTemplate
             doesNothing();
         }
 
+    }
+    public Double showPos(){
+
+        return grabber.getPosition();
     }
 
     public void doesNothing()

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Tests;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -17,6 +18,7 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  * Created by Ethan Pereira on 10/19/2017.
  */
 @TeleOp(name = "JewlTest")
+@Disabled
 public class JewlTest extends OpMode {
 //    Robot robot = new Robot();
 //    Gyro gyro = new Gyro();

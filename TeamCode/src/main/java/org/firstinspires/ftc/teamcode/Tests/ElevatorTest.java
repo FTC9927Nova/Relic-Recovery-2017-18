@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Tests;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -45,6 +46,8 @@ public class ElevatorTest extends OpMode {
 //            robot.elevator.setPower(0.0);
 //        }
 
+        telemetry.addData("Pos", robot.claw.showPos());
+        telemetry.update();
         if(gamepad1.y){
 
             robot.elevator.setPower(-0.5);
