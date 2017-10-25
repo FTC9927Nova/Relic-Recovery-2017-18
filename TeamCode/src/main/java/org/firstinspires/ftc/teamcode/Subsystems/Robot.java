@@ -28,7 +28,7 @@ public class Robot
     {
         driveTrain = new DriveTrain(hardwareMap);
         driveTrain.setGyro(gyrofromOpMode);
-        //claw = new Claw(hardwareMap);
+        claw = new Claw(hardwareMap);
         jewelArm = new JewelArm(hardwareMap);
         elevator = new Elevator(hardwareMap);
 
@@ -39,7 +39,7 @@ public class Robot
     {
         driveTrain = new DriveTrain(hardwareMap,linearOpMode);
         driveTrain.setGyro(gyrofromOpMode);
-        //claw = new Claw(hardwareMap);
+        claw = new Claw(hardwareMap);
         jewelArm = new JewelArm(hardwareMap);
         elevator = new Elevator(hardwareMap);
 

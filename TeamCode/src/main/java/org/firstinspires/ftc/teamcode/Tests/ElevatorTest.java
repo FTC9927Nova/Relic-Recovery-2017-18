@@ -67,11 +67,11 @@ public class ElevatorTest extends OpMode {
         }
 
         if (gamepad1.right_bumper){
-            //robot.claw.open();
+            robot.claw.open();
             robot.elevator.resetEnc();
 
         } else if (gamepad1.left_bumper){
-            //robot.claw.close();
+            robot.claw.close();
         }
 
 
