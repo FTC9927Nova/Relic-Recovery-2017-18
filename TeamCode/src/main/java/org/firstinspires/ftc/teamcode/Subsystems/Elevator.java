@@ -26,7 +26,7 @@ public class Elevator implements SubsystemTemplate
     boolean hasReached = false;
 
 
-    private PIDLoop elevatorCL = new PIDLoop();
+    private PIDLoop elevatorCL = new PIDLoop(0.005,0,0);
 
 
 
@@ -37,8 +37,15 @@ public class Elevator implements SubsystemTemplate
 
            // elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         }
+
+    public void setElevatorMode(DcMotor.RunMode runMode)
+    {
+        elevator.setMode(runMode);
+    }
+
 
 
 

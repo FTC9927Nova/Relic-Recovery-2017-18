@@ -26,7 +26,7 @@ public class ElevatorTest extends OpMode {
     Gyro gyro = new Gyro();
     int x;
     int y;
-    PIDLoop pidLoop;
+    PIDLoop pidLoop = new PIDLoop(.005,0,0);
     RobotConstants robotConstants = new RobotConstants();
     @Override
 
@@ -57,24 +57,28 @@ public class ElevatorTest extends OpMode {
         telemetry.update();
         if(gamepad1.y){
 
-            robot.elevator.setPower(-0.5);
+            robot.elevator.setPower(-0.3);
             x = robot.elevator.getEnc();
 
         }
 
         else if(gamepad1.x){
 
-            robot.elevator.setPower(0.5);
+            robot.elevator.setPower(0.3);
             x = robot.elevator.getEnc();
 
         }
-        else{
 
-            while ((x-robot.elevator.getEnc()) > robotConstants.getELEVATOR_TICKS_PER_INCH()){
-                pidLoop.pLoop((x-robot.elevator.getEnc())/robotConstants.getELEVATOR_TICKS_PER_INCH());
-            }
-
-
+        else {
+//            if (Math.abs(x - robot.elevator.getEnc()) > robotConstants.getELEVATOR_TICKS_PER_INCH()) {
+//                robot.elevator.setMoveDist((x - robot.elevator.getEnc()) / robotConstants.getELEVATOR_TICKS_PER_INCH());
+//            }
+//            else
+//            {
+//                robot.
+//                robot.elevator.setPower(0);
+//            }
+            robot.elevator.setPower(0);
         }
 
         if (gamepad1.right_bumper){
