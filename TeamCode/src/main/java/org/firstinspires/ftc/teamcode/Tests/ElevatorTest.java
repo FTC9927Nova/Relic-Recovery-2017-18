@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 import org.firstinspires.ftc.teamcode.Util.Gyro;
 import org.firstinspires.ftc.teamcode.Util.PIDLoop;
+import org.firstinspires.ftc.teamcode.Util.RobotConstants;
 
 /**
  * Created by Ethan Pereira on 10/19/2017.
@@ -26,6 +27,7 @@ public class ElevatorTest extends OpMode {
     int x;
     int y;
     PIDLoop pidLoop;
+    RobotConstants robotConstants = new RobotConstants();
     @Override
 
     public void init() {
@@ -68,8 +70,8 @@ public class ElevatorTest extends OpMode {
         }
         else{
 
-            while ((x-robot.elevator.getEnc()) > 50){
-                pidLoop.pLoop((x-robot.elevator.getEnc())/50);
+            while ((x-robot.elevator.getEnc()) > robotConstants.getELEVATOR_TICKS_PER_INCH()){
+                pidLoop.pLoop((x-robot.elevator.getEnc())/robotConstants.getELEVATOR_TICKS_PER_INCH());
             }
 
 
