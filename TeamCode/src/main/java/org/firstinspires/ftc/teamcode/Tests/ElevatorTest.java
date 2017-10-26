@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 import org.firstinspires.ftc.teamcode.Util.Gyro;
+import org.firstinspires.ftc.teamcode.Util.PIDLoop;
 
 /**
  * Created by Ethan Pereira on 10/19/2017.
@@ -22,6 +23,9 @@ public class ElevatorTest extends OpMode {
 
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
+    int x;
+    int y;
+    PIDLoop pidLoop;
     @Override
 
     public void init() {
@@ -52,17 +56,22 @@ public class ElevatorTest extends OpMode {
         if(gamepad1.y){
 
             robot.elevator.setPower(-0.5);
+            x = robot.elevator.getEnc();
 
         }
 
         else if(gamepad1.x){
 
             robot.elevator.setPower(0.5);
+            x = robot.elevator.getEnc();
 
         }
         else{
 
-            robot.elevator.setPower(0.0);
+            while ((x-robot.elevator.getEnc()) > 50){
+                pidLoop.pLoop((x-robot.elevator.getEnc())/50);
+            }
+
 
         }
 
