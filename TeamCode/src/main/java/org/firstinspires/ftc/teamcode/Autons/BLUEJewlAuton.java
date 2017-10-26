@@ -26,18 +26,23 @@ public class BLUEJewlAuton extends LinearOpMode{
         gyro.initGyro(hardwareMap);
         robot.init(hardwareMap, this, gyro);
         waitForStart();
+
+        robot.jewelArm.armDown();
+
         if(opModeIsActive()){
 
-            if(robot.jewelArm.getColor() == JewelArm.ColorDetected.RED){
+            if(String.valueOf(robot.jewelArm.getColor()) == "RED"){
+//JewelArm.ColorDetected.RED
+                sleep(1000);
 
                 robot.driveTrain.setMoveDist(2);
 
             }
 
 
-            else if(robot.jewelArm.getColor() == JewelArm.ColorDetected.BLUE){
-
-                robot.driveTrain.setMoveDist(-2);
+            else if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
+                sleep(1000);
+                robot.driveTrain.setMoveDist(-4);
 
             }
 
