@@ -27,9 +27,11 @@ public class BLUEJewlAuton extends LinearOpMode{
         robot.init(hardwareMap, this, gyro);
         waitForStart();
 
-        robot.jewelArm.armDown();
 
         if(opModeIsActive()){
+
+            robot.driveTrain.setMoveDist(-3);
+            robot.jewelArm.armDown();
 
             if(String.valueOf(robot.jewelArm.getColor()) == "RED"){
 //JewelArm.ColorDetected.RED
