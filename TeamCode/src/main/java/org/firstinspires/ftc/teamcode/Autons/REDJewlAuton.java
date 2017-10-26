@@ -28,6 +28,7 @@ public class REDJewlAuton extends LinearOpMode{
         waitForStart();
         if(opModeIsActive()){
 
+            robot.driveTrain.setMoveDist(-3);
             robot.jewelArm.armDown();
 
             if(String.valueOf(robot.jewelArm.getColor()) == "RED"){

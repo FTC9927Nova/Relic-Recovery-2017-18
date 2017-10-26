@@ -81,6 +81,7 @@ public class ElevatorTest extends OpMode {
             robot.elevator.setPower(0);
         }
 
+
         if (gamepad1.right_bumper){
             robot.claw.open();
             robot.elevator.resetEnc();
