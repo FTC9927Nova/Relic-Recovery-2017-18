@@ -11,12 +11,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  * Created by Sumanth on 10/21/17.
  */
 
-@Autonomous
+@Autonomous(name = "Blue Jewl Auto ")
 public class BLUEJewlAuton extends LinearOpMode{
 
     Robot robot = new Robot();
 
     Gyro gyro = new Gyro();
+
+    int dist = -45;
 
 
 
@@ -28,16 +30,17 @@ public class BLUEJewlAuton extends LinearOpMode{
         waitForStart();
 
 
+        robot.driveTrain.setMoveDist(-2);
+        robot.jewelArm.armDown();
         if(opModeIsActive()){
+//            robot.claw.close();
 
-            robot.driveTrain.setMoveDist(-3);
-            robot.jewelArm.armDown();
 
             if(String.valueOf(robot.jewelArm.getColor()) == "RED"){
-//JewelArm.ColorDetected.RED
                 sleep(1000);
 
                 robot.driveTrain.setMoveDist(2);
+                dist+=2;
 
             }
 
@@ -45,8 +48,15 @@ public class BLUEJewlAuton extends LinearOpMode{
             else if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
                 sleep(1000);
                 robot.driveTrain.setMoveDist(-4);
+                dist-=4;
 
             }
+            robot.jewelArm.armUp();
+
+            robot.driveTrain.setMoveDist(dist);
+            robot.driveTrain.rotateDeg(-90);
+
+
 
         }
 

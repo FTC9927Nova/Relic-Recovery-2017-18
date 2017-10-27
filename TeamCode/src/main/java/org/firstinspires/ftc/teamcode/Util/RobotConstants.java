@@ -9,7 +9,7 @@ public class RobotConstants
     private final double ROBOT_WIDTH = 17;
     private final double ROBOT_LENGTH = 17;
     private final double WHEEL_DIAMETER = 4;
-    private final int DRIVE_TOLERANCE = 5;
+    private final int DRIVE_TOLERANCE = 20;
     private final double TURN_TOLERANCE = .3;
     private final double WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
 

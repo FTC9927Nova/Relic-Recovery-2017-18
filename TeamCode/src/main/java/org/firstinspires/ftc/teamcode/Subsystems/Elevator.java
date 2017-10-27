@@ -37,7 +37,7 @@ public class Elevator implements SubsystemTemplate
 
            // elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//            elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         }
 
