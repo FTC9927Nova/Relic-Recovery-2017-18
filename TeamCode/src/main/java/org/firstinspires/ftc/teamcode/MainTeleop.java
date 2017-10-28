@@ -36,10 +36,12 @@ public class MainTeleop extends OpMode
         robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
         robot.driveTrain.setDrive(DriveTrain.Drive.SPEED);
 
+
     }
 
     public void loop()
     {
+        robot.jewelArm.armMid();
 
         //Driver Code
         float yval = -gamepad1.left_stick_y;

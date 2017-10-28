@@ -29,26 +29,22 @@ public class REDJewlAuton extends LinearOpMode{
         robot.init(hardwareMap, this, gyro);
         waitForStart();
 
-        robot.driveTrain.setLeftPower(-.2);
-        robot.driveTrain.setRightPower(-.2);
-        sleep(700);
-        robot.driveTrain.setLeftPower(0);
-        robot.driveTrain.setRightPower(0);
 
-        robot.jewelArm.armDown();
 
         if(opModeIsActive()){
 ////            robot.claw.close();
+            robot.driveTrain.setMoveDist(-2);
+
+            robot.jewelArm.armDown();
+
+            sleep(1000);
+
 //
 
             if(String.valueOf(robot.jewelArm.getColor()) == "RED"){
-                sleep(1000);
-                robot.driveTrain.setLeftPower(-.2);
-                robot.driveTrain.setRightPower(-.2);
-                sleep(700);
-                robot.driveTrain.setLeftPower(0);
-                robot.driveTrain.setRightPower(0);
-
+                robot.driveTrain.setLeftPower(-.3);
+                robot.driveTrain.setRightPower(-.3);
+                sleep(500);
                 robot.jewelArm.armUp();
                 dist-=2;
 
@@ -56,12 +52,11 @@ public class REDJewlAuton extends LinearOpMode{
 
 
             else if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
-                sleep(1000);
-                robot.driveTrain.setLeftPower(.2);
-                robot.driveTrain.setRightPower(.2);
-                sleep(700);
-                robot.driveTrain.setLeftPower(0);
-                robot.driveTrain.setRightPower(0);
+                robot.driveTrain.setLeftPower(.3);
+                robot.driveTrain.setRightPower(.3);
+                sleep(500);
+                robot.jewelArm.armUp();
+
 
                 dist+=4;
 

@@ -45,9 +45,13 @@ public class JewelArm implements SubsystemTemplate
     public void armDown()
     {
         isArmDown = true;
-        jewlArm.setPosition(0.88);
+        jewlArm.setPosition(0.93);
     }
 
+    public void armMid()
+    {
+        jewlArm.setPosition(0.4);
+    }
     public void armUp()
     {
         isArmDown = false;

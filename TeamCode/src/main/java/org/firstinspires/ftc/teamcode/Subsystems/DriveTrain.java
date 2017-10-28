@@ -90,7 +90,7 @@ public class DriveTrain implements SubsystemTemplate
 
 
 
-        setSpeedController(DriveSpeedController.BRAKE);
+//        setSpeedController(DriveSpeedController.BRAKE);
         setDrive(Drive.STOP_RESET);
 
 
@@ -213,10 +213,9 @@ public class DriveTrain implements SubsystemTemplate
         return (int)((r1.getCurrentPosition()+ r2.getCurrentPosition())/2.0);
     }
 
-
     public void setMoveDist(double dist) {
 
-
+        setSpeedController(DriveSpeedController.BRAKE);
         if (this.opMode.opModeIsActive()) {
 
             leftTarget = getLeftCurrentPosition()
@@ -229,28 +228,28 @@ public class DriveTrain implements SubsystemTemplate
             setLeftTarget(leftTarget);
             setRightTarget(rightTarget);
 
-            driveCL.setTarget((rightTarget +leftTarget)/2.0);
+            Log.i("target",""+leftTarget);
+            Log.i("targetR",""+rightTarget);
+
+
+
+            driveCL.setTarget(leftTarget);
 
             while(this.opMode.opModeIsActive() &&
                     (Math.abs((getLeftCurrentPosition()-leftTarget))>constant.getDRIVE_TOLERANCE() || Math.abs((getRightCurrentPosition()-rightTarget))>constant.getDRIVE_TOLERANCE()))
             {
+                this.opMode.telemetry.addData("",display());
 
-                    setLeftPower(0.3);
-                    setRightPower(0.3);
-
-//                this.opMode.telemetry.addData("",display());
-
-
-
+//                setLeftPower(driveCL.pLoop(getLeftCurrentPosition()));
+//                setRightPower(driveCL.pLoop(getLeftCurrentPosition()));
 //
-//                setLeftPower(0.3);
-//                setRightPower(0.3);
+                setLeftPower(0.3);
+                setRightPower(0.3);
                 getLogs();
             }
 
             setLeftPower(0);
             setRightPower(0);
-
             setDrive(Drive.SPEED);
 
         }
