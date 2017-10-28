@@ -25,12 +25,11 @@ public class REDJewlAuton extends LinearOpMode{
     @Override
     public void runOpMode() throws InterruptedException {
 
-//        robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
         gyro.initGyro(hardwareMap);
         robot.init(hardwareMap, this, gyro);
         waitForStart();
 
-        robot.driveTrain.setMoveDist(-4);
+        robot.driveTrain.setMoveDist(-2);
         robot.jewelArm.armDown();
 
         if(opModeIsActive()){
@@ -39,8 +38,12 @@ public class REDJewlAuton extends LinearOpMode{
 
             if(String.valueOf(robot.jewelArm.getColor()) == "RED"){
                 sleep(1000);
+                robot.driveTrain.setLeftPower(-.2);
+                robot.driveTrain.setRightPower(-.2);
+                sleep(700);
+                robot.driveTrain.setLeftPower(0);
+                robot.driveTrain.setRightPower(0);
 
-                robot.driveTrain.setMoveDist(2);
                 robot.jewelArm.armUp();
                 dist-=2;
 
@@ -49,19 +52,22 @@ public class REDJewlAuton extends LinearOpMode{
 
             else if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
                 sleep(1000);
-                robot.driveTrain.setMoveDist(-4);
-                robot.jewelArm.armUp();
+                robot.driveTrain.setLeftPower(.2);
+                robot.driveTrain.setRightPower(.2);
+                sleep(700);
+                robot.driveTrain.setLeftPower(0);
+                robot.driveTrain.setRightPower(0);
 
                 dist+=4;
 
             }
             robot.jewelArm.armUp();
-            sleep(500);
-            robot.driveTrain.setMoveDist(dist);
-            robot.driveTrain.rotateDeg(-90);
-            robot.driveTrain.setMoveDist(9.5);
-            robot.claw.open();
-            robot.driveTrain.setMoveDist(-2);
+//            sleep(500);
+//            robot.driveTrain.setMoveDist(dist);
+//            robot.driveTrain.rotateDeg(-90);
+//            robot.driveTrain.setMoveDist(9.5);
+//            robot.claw.open();
+//            robot.driveTrain.setMoveDist(-2);
 
 
 

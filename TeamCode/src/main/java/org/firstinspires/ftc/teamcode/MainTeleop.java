@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -20,8 +22,10 @@ public class MainTeleop extends OpMode
 {
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
-    PIDLoop rate = new PIDLoop(0.005, 0,0);
-    private int rightPos, leftPos, pastRightPos, pastLeftPos;
+    PIDLoop rate = new PIDLoop(.005, 0,0);
+    //0.01
+    private double pastAnlge = 0;
+    private double currentAnlge = 0;
 
 
     @Override
@@ -38,54 +42,67 @@ public class MainTeleop extends OpMode
     {
 
         //Driver Code
-        float yval = gamepad1.left_stick_y;
+        float yval = -gamepad1.left_stick_y;
         float xval = gamepad1.right_stick_x;
+
+//        pastAnlge = currentAnlge;
+
 
 
         float lpwr = (float) Math.pow(((yval + xval)), 3);
         float rpwr = (float) Math.pow((yval - xval), 3);
 
+//
+//        Log.i("Angle", String.valueOf(gyro.getYaw()));//Operator Code
+//        Log.i("Past Angle", String.valueOf(pastAnlge));
+
+
 
 //        turtle mode
-        if (gamepad1.right_trigger != 0 || gamepad1.left_trigger != 0)
+        if (gamepad1.left_bumper|| gamepad1.right_bumper)
         {
-            lpwr = lpwr/2.0f;
-            rpwr = rpwr/2.0f;
+            lpwr = lpwr/3.0f;
+            rpwr = rpwr/3.0f;
         }
+//        Log.i("Error", rate.display());
 
-        //left is greater right
-//        if((leftPos-rightPos) > 25)
-//        {
-//            rate.setTarget(leftPos);
-//            lpwr += (float)rate.pidLoop(rightPos,0.02);
-//        }
+//        telemetry.addData("nope","false");
 //
-//        //right is greater
-//        else if((rightPos-leftPos) > 25)
-//        {
-//            rate.setTarget(leftPos);
-//            rpwr +=  (float)rate.pidLoop(rightPos,0.02);
-//        }
-//        else
-//        {
-//            leftPos = robot.driveTrain.getLeftCurrentPosition();
-//            rightPos = robot.driveTrain.getRightCurrentPosition();
-//        }
+////        if(gamepad1.left_stick_y !=0 && Math.abs(gamepad1.right_stick_x - 0f)<0.1 ) {
+//            telemetry.addData("yup","true");
+//
+//            //left is greater right
+//            if ((pastAnlge - currentAnlge) > 3) {
+//                rate.setTarget(pastAnlge);
+//                lpwr += (float) rate.pLoop(gyro.getYaw());
+//              // Log.i("Error", rate.display());
+//            }
+//
+//            //right is greater
+//            else if ((pastAnlge - currentAnlge) < 3) {
+//                rate.setTarget(pastAnlge);
+//                lpwr -= (float) rate.pLoop(gyro.getYaw());
+//               // Log.i("Error", rate.display());
+//            }
+//
+////        }
 
 
+        robot.driveTrain.setLeftPower(lpwr);
+        robot.driveTrain.setRightPower(rpwr);
 
-        robot.driveTrain.setLeftPower(rpwr);
-        robot.driveTrain.setRightPower(lpwr);
+//        currentAnlge = gyro.getYaw();
+//        Log.i("Current Angle", String.valueOf(currentAnlge));
 
-        telemetry.addData("",robot.driveTrain.display());
+     //   telemetry.addData("",robot.driveTrain.display());
 
-        if(gamepad1.y){
+        if(gamepad2.y){
 
             robot.elevator.setPower(-0.5);
 
         }
 
-        else if(gamepad1.x){
+        else if(gamepad2.x){
 
             robot.elevator.setPower(0.5);
 
@@ -96,9 +113,9 @@ public class MainTeleop extends OpMode
 
         }
 
-        if (gamepad1.right_bumper){
+        if (gamepad2.left_bumper){
             robot.claw.open();
-        } else if (gamepad1.left_bumper){
+        } else if (gamepad2.right_bumper){
             robot.claw.close();
         }
 
@@ -106,12 +123,18 @@ public class MainTeleop extends OpMode
 
         telemetry.addData("rpwr: ", rpwr);
 
+        telemetry.addData("pastAngle",pastAnlge);
+        telemetry.addData("currentAngle", currentAnlge);
+
         telemetry.update();
 
 
-        //Operator Code
+
+
         //claw
+
         //elevator
+
 
     }
 

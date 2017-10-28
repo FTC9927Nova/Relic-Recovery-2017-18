@@ -50,7 +50,7 @@ public class Claw implements SubsystemTemplate
     public void open()
     {
         isOpen = true;
-        grabber.setPosition(0.56);
+        grabber.setPosition(0.6);
     }
 
     public void close()
