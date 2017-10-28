@@ -26,8 +26,6 @@ public class ElevatorTest extends OpMode {
     Gyro gyro = new Gyro();
     int x;
     int y;
-    PIDLoop pidLoop = new PIDLoop(.005,0,0);
-    RobotConstants robotConstants = new RobotConstants();
     @Override
 
     public void init() {
@@ -55,17 +53,15 @@ public class ElevatorTest extends OpMode {
         //telemetry.addData("Pos", robot.claw.showPos());
         telemetry.addData("ElevatorEnc", robot.elevator.getEnc());
         telemetry.update();
-        if(gamepad1.y){
+        if(gamepad2.y){
 
-            robot.elevator.setPower(-0.3);
-            x = robot.elevator.getEnc();
+            robot.elevator.setPower(-0.2);
 
         }
 
-        else if(gamepad1.x){
+        else if(gamepad2.x){
 
-            robot.elevator.setPower(0.3);
-            x = robot.elevator.getEnc();
+            robot.elevator.setPower(0.2);
 
         }
 
@@ -84,11 +80,30 @@ public class ElevatorTest extends OpMode {
 
         if (gamepad1.right_bumper){
             robot.claw.open();
-            robot.elevator.resetEnc();
+//            robot.elevator.resetEnc();
 
         } else if (gamepad1.left_bumper){
             robot.claw.close();
         }
+
+//        if(gamepad1.dpad_up){
+//
+//            robot.elevator.moveLevel(robot.elevator.getCurrentLevel() + 1);
+//
+//        }
+//
+//        else if(gamepad1.dpad_down){
+//
+//            robot.elevator.moveLevel(robot.elevator.getCurrentLevel() - 1);
+//
+//        }
+//        else
+//        {
+//            robot.elevator.getPastPos();
+//            robot.elevator.stayInPlace();
+//            telemetry.addData(robot.elevator.display(),"");
+//
+//        }
 
 
 
@@ -123,5 +138,23 @@ public class ElevatorTest extends OpMode {
 //        }
 //
 ////        Log.i("DataLogs", String.valueOf(jewl.getPosition()));
+        //Driver Code
+        float yval = gamepad1.left_stick_y;
+        float xval = gamepad1.right_stick_x;
+
+
+        float lpwr = (float) Math.pow((yval + xval), 3);
+        float rpwr = (float) Math.pow((yval - xval), 3);
+
+
+//        turtle mode
+        if (gamepad1.right_trigger != 0 || gamepad1.left_trigger != 0)
+        {
+            lpwr = lpwr/2.0f;
+            rpwr = rpwr/2.0f;
+        }
+
+        robot.driveTrain.setLeftPower(rpwr);
+        robot.driveTrain.setRightPower(lpwr);
     }
 }

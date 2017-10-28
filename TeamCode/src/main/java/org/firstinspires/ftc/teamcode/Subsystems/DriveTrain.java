@@ -36,10 +36,11 @@ public class DriveTrain implements SubsystemTemplate
 
 
     //TODO: ENTER Kp, Ki, Kd
-    private PIDLoop driveCL = new PIDLoop(.008,0,0);
+    private PIDLoop driveCL = new PIDLoop(.01,0,0);
     private PIDLoop turnCL = new PIDLoop();
+    private PIDLoop straightCL = new PIDLoop();
 
-    enum Drive
+    public enum Drive
     {
         ENCODERS,
         SPEED,
@@ -97,7 +98,7 @@ public class DriveTrain implements SubsystemTemplate
         this.gyro = gyro;
     }
 
-    private void setDrive(Drive d)
+    public void setDrive(Drive d)
     {
         DcMotor.RunMode runMode = null;
 
@@ -177,16 +178,20 @@ public class DriveTrain implements SubsystemTemplate
 
 
 
-    private int getLeftCurrentPosition()
+
+
+
+    public int getLeftCurrentPosition()
     {
         return (int)((l1.getCurrentPosition() + l2.getCurrentPosition())/2.0 );
     }
 
-    private int getRightCurrentPosition()
+    public int getRightCurrentPosition()
     {
 //
         return (int)((r1.getCurrentPosition()+ r2.getCurrentPosition())/2.0);
     }
+
 
     public void setMoveDist(double dist) {
 
@@ -203,15 +208,19 @@ public class DriveTrain implements SubsystemTemplate
             setLeftTarget(leftTarget);
             setRightTarget(rightTarget);
 
-            driveCL.setTarget(leftTarget);
+            driveCL.setTarget((rightTarget +leftTarget)/2);
 
             while(this.opMode.opModeIsActive() &&
                     (Math.abs((getLeftCurrentPosition()-leftTarget))>constant.getDRIVE_TOLERANCE() || Math.abs((getRightCurrentPosition()-rightTarget))>constant.getDRIVE_TOLERANCE()))
             {
-                this.opMode.telemetry.addData("",display());
 
-                setLeftPower(driveCL.pLoop(getLeftCurrentPosition()));
-                setRightPower(driveCL.pLoop(getLeftCurrentPosition()));
+                    setLeftPower(driveCL.pLoop(getLeftCurrentPosition()));
+                    setRightPower(driveCL.pLoop(getLeftCurrentPosition()));
+
+//                this.opMode.telemetry.addData("",display());
+
+
+
 //
 //                setLeftPower(0.3);
 //                setRightPower(0.3);
@@ -220,11 +229,54 @@ public class DriveTrain implements SubsystemTemplate
 
             setLeftPower(0);
             setRightPower(0);
+
             setDrive(Drive.SPEED);
 
         }
     }
-
+    public double getRightPwr(){
+        return (r1.getPower() + r2.getPower())/2;
+}
+    public double getLeftPwr(){
+        return (l1.getPower() + l2.getPower())/2;
+    }
+//
+//public void setMoveDist(double dist) {
+//
+//    setSpeedController(DriveSpeedController.BRAKE);
+//    if (this.opMode.opModeIsActive()) {
+//
+//        leftTarget = getLeftCurrentPosition()
+//                + (int) (dist * constant.getTICKS_PER_INCH());
+//        rightTarget = getRightCurrentPosition()
+//                + (int) (dist * constant.getTICKS_PER_INCH());
+//
+//        setDrive(Drive.ENCODERS);
+//
+//        setLeftTarget(leftTarget);
+//        setRightTarget(rightTarget);
+//
+//        driveCL.setTarget(leftTarget);
+//
+//        while(this.opMode.opModeIsActive() &&
+//                (Math.abs((getLeftCurrentPosition()-leftTarget))>constant.getDRIVE_TOLERANCE() || Math.abs((getRightCurrentPosition()-rightTarget))>constant.getDRIVE_TOLERANCE()))
+//        {
+//            this.opMode.telemetry.addData("",display());
+//
+//            setLeftPower(driveCL.pLoop(getLeftCurrentPosition()));
+//            setRightPower(driveCL.pLoop(getLeftCurrentPosition()));
+////
+////                setLeftPower(0.3);
+////                setRightPower(0.3);
+//            getLogs();
+//        }
+//
+//        setLeftPower(0);
+//        setRightPower(0);
+//        setDrive(Drive.SPEED);
+//
+//    }}
+//
     public void rotateDeg(double target)
     {
         this.turnTarget = target;

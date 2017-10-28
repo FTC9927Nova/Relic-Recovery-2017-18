@@ -9,7 +9,9 @@ public class RobotConstants
     private final double ROBOT_WIDTH = 17;
     private final double ROBOT_LENGTH = 17;
     private final double WHEEL_DIAMETER = 4;
-    private final int DRIVE_TOLERANCE = 5;
+    private final int DRIVE_TOLERANCE = 15;
+//    20
+    //It was 5 at first and worked really well
     private final double TURN_TOLERANCE = .3;
     private final double WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
 
@@ -17,8 +19,8 @@ public class RobotConstants
     private final int ENCODER_TICKS_PER_REVOLUTION = 831;
 
     //TODO: GET ELEVATOR MEASUREMENTS
-    private final int ELEVATOR_TICKS_PER_ONE_MOVEMENT = 1163;
-    private final int ELEVATOR_INCHES_PER_ONE_MOVEMENT = 16;
+    private final int ELEVATOR_TICKS_PER_ONE_MOVEMENT = -1163;
+    private final int ELEVATOR_INCHES_PER_ONE_MOVEMENT = 13;
 //    15.875
     private final int ELEVATOR_TICKS_PER_INCH = ELEVATOR_TICKS_PER_ONE_MOVEMENT / ELEVATOR_INCHES_PER_ONE_MOVEMENT;
 
