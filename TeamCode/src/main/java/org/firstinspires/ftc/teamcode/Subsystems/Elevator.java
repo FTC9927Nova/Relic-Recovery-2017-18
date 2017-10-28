@@ -21,12 +21,14 @@ public class Elevator implements SubsystemTemplate
 
     private int currentLevel = 0;
 
+    private int pastPos, currentPos;
+
     private int targetLevel;
 
     boolean hasReached = false;
 
 
-    private PIDLoop elevatorCL = new PIDLoop(0.005,0,0);
+    private PIDLoop elevatorCL = new PIDLoop(.005,0.005,0.001);
 
 
 
@@ -37,7 +39,7 @@ public class Elevator implements SubsystemTemplate
 
            // elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//            elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         }
 
@@ -77,6 +79,12 @@ public class Elevator implements SubsystemTemplate
 
     }
 
+    public int getCurrentLevel(){
+
+        return currentLevel;
+
+    }
+
     public void resetEnc(){
 
         elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -96,18 +104,35 @@ public class Elevator implements SubsystemTemplate
 
     }
 
+    public void getPastPos()
+    {
+        elevator.getCurrentPosition();
+    }
+
+    public double stayInPlace()
+    {
+        if(Math.abs(pastPos-target)< 15)
+        {
+            elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            elevatorCL.setTarget(target);
+            return elevatorCL.pidLoop(pastPos,0.01);
+        }
+        return 0;
+    }
+
     public void moveLevel(int level){
+        if(level <= 2 && level >= 0) {
+            targetLevel = level - currentLevel;
+            currentLevel = level;
+            setMoveDist(targetLevel * 6.25);
 
-        targetLevel = level - currentLevel;
-        currentLevel = level;
-
-        setMoveDist(targetLevel * 6);
+        }
 
     }
 
     //TODO: ADD DISPLAY
     @Override
     public String display() {
-        return null;
+        return  "error " +  elevatorCL.getError();
     }
 }

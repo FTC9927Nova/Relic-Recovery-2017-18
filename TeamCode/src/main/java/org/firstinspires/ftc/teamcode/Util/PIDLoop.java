@@ -65,6 +65,16 @@ public class PIDLoop
         return (kp*error);
     }
 
+    public double pidLoop(double input, double dt)
+    {
+        pastError = error;
+        error = target - input;
+        sumError += pastError;
+        if((sumError)>1)
+            sumError = 1 / sumError;
+        return kp * error + (((error)-pastError)/dt)*kd + ki*sumError;
+    }
+
 
 
 
