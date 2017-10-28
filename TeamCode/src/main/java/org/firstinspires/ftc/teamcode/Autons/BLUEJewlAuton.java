@@ -30,8 +30,12 @@ public class BLUEJewlAuton extends LinearOpMode{
         waitForStart();
 
 
-        robot.driveTrain.setMoveDist(-2);
-        robot.jewelArm.armDown();
+
+        robot.driveTrain.setLeftPower(-.2);
+        robot.driveTrain.setRightPower(-.2);
+        sleep(700);
+        robot.driveTrain.setLeftPower(0);
+        robot.driveTrain.setRightPower(0);        robot.jewelArm.armDown();
         if(opModeIsActive()){
 //            robot.claw.close();
 
