@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Tests;
 import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
@@ -25,6 +26,7 @@ import org.firstinspires.ftc.robotcore.internal.android.dx.dex.file.StringDataIt
  */
 
 @Autonomous(name="Concept: Change PID", group = "Concept")
+@Disabled
 public class ConceptChangePID extends LinearOpMode {
 
     // our DC motor.

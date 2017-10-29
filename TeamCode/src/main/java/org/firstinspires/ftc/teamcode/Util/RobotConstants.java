@@ -9,7 +9,7 @@ public class RobotConstants
     private final double ROBOT_WIDTH = 17;
     private final double ROBOT_LENGTH = 17;
     private final double WHEEL_DIAMETER = 4;
-    private final int DRIVE_TOLERANCE = 30;
+    private final int DRIVE_TOLERANCE = 10;
 //    20
     //It was 5 at first and worked really well
     private final double TURN_TOLERANCE = .3;

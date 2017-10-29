@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  * Created by Sumanth on 10/21/17.
  */
 
-@Autonomous(name = "Red Jewl Auto ")
+@Autonomous(name = "Blue Jewl Auto ")
 public class BLUEJewlAuton extends LinearOpMode{
 
     Robot robot = new Robot();
