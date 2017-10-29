@@ -236,9 +236,9 @@ public class DriveTrain implements SubsystemTemplate
             driveCL.setTarget(leftTarget);
 
             while(this.opMode.opModeIsActive() &&
-                    (Math.abs((getLeftCurrentPosition()-leftTarget))>constant.getDRIVE_TOLERANCE() || Math.abs((getRightCurrentPosition()-rightTarget))>constant.getDRIVE_TOLERANCE()))
-            {
-                this.opMode.telemetry.addData("",display());
+                    (Math.abs((getLeftCurrentPosition()-leftTarget))>constant.getDRIVE_TOLERANCE() || Math.abs((getRightCurrentPosition()-rightTarget))>constant.getDRIVE_TOLERANCE())) {
+// ||
+// this.opMode.telemetry.addData("", display());
 
 
 //                setLeftPower(driveCL.pLoop(getLeftCurrentPosition()));
@@ -246,15 +246,18 @@ public class DriveTrain implements SubsystemTemplate
 //
                 setLeftPower(0.3);
                 setRightPower(0.3);
-                getLogs();
-                this.opMode.telemetry.update();
+//                getLogs();
+//                this.opMode.telemetry.update();
+//            }
             }
 
+//            this.opMode.telemetry.addData("good","yup");
             setLeftPower(0);
             setRightPower(0);
-            setDrive(Drive.SPEED);
 
-        }
+            setDrive(Drive.SPEED);
+//
+}
     }
     public double getRightPwr(){
         return (r1.getPower() + r2.getPower())/2;

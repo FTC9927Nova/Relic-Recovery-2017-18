@@ -35,7 +35,9 @@ public class SetMoveDistTest extends LinearOpMode {
         waitForStart();
         if (opModeIsActive()) {
 
-            robot.driveTrain.setMoveDist(10);
+            robot.driveTrain.setMoveDist(30);
+            sleep(1000);
+            robot.driveTrain.setMoveDist(-30);
 
 
 
