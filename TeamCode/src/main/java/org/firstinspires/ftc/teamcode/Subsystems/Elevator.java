@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Util.*;
 
@@ -27,6 +28,8 @@ public class Elevator implements SubsystemTemplate
 
     boolean hasReached = false;
 
+    private int encoderZero, maintainPos;
+
 
     private PIDLoop elevatorCL = new PIDLoop(.005,0.005,0.001);
 
@@ -41,6 +44,8 @@ public class Elevator implements SubsystemTemplate
             elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+            encoderZero = getEnc();
+
         }
 
     public void setElevatorMode(DcMotor.RunMode runMode)
@@ -50,39 +55,35 @@ public class Elevator implements SubsystemTemplate
 
 
 
+        //TODO: Uncomment if ever needed for auton
+//    public void setMoveDist(double dist) {
+//
+//        if (!hasReached) {
+//
+//            target = elevator.getCurrentPosition()
+//                    + (int) (dist * constant.getELEVATOR_TICKS_PER_INCH());
+//
+//            elevator.setTargetPosition(target);
+//
+//            elevatorCL.setTarget(target);
+//
+//            while(!hasReached && (Math.abs((elevator.getCurrentPosition() - target)) > constant.getDRIVE_TOLERANCE()))
+//            {
+//                elevator.setPower(elevatorCL.pLoop(elevator.getCurrentPosition()));
+//            }
+//
+//            hasReached = true;
+//
+//            elevator.setPower(0);
+//
+//        }
+//
+//        hasReached = false;
+//
+//
+//    }
 
-    public void setMoveDist(double dist) {
 
-        if (!hasReached) {
-
-            target = elevator.getCurrentPosition()
-                    + (int) (dist * constant.getELEVATOR_TICKS_PER_INCH());
-
-            elevator.setTargetPosition(target);
-
-            elevatorCL.setTarget(target);
-
-            while(!hasReached && (Math.abs((elevator.getCurrentPosition() - target)) > constant.getDRIVE_TOLERANCE()))
-            {
-                elevator.setPower(elevatorCL.pLoop(elevator.getCurrentPosition()));
-            }
-
-            hasReached = true;
-
-            elevator.setPower(0);
-
-        }
-
-        hasReached = false;
-
-
-    }
-
-    public int getCurrentLevel(){
-
-        return currentLevel;
-
-    }
 
     public void resetEnc(){
 
@@ -103,29 +104,50 @@ public class Elevator implements SubsystemTemplate
 
     }
 
-    public void getPastPos()
+    public void stayInPlace()
     {
-        elevator.getCurrentPosition();
-    }
 
-    public double stayInPlace()
-    {
-        if(Math.abs(pastPos-target)< 15)
+        if((maintainPos-getEnc()) > 15)
         {
-            elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            elevatorCL.setTarget(target);
-            return elevatorCL.pidLoop(pastPos,0.01);
+
+            elevator.setPower(Range.clip(25 *(maintainPos - getEnc())/ (maintainPos) , -1, 1));
+
         }
-        return 0;
+
+        else if((getEnc() - maintainPos) > 15){
+
+            elevator.setPower(Range.clip(25 *(getEnc() - maintainPos)/ (maintainPos) , -1, 1));
+        }
+
+        else{
+
+            elevator.setPower(0);
+
+        }
+
     }
 
-    public void moveLevel(int level){
-        if(level <= 2 && level >= 0) {
-            targetLevel = level - currentLevel;
-            currentLevel = level;
-            setMoveDist(targetLevel * 6.25);
+    public void moveUp(){
 
-        }
+        elevator.setPower(-Math.pow((encoderZero - getEnc())/ (encoderZero), 2));
+
+    }
+
+    public void moveDown(){
+
+        elevator.setPower(Math.pow((encoderZero - getEnc())/ (encoderZero), 2));
+
+    }
+
+    public void setELevatorZero(int encVal){
+
+        encoderZero = encVal;
+
+    }
+
+    public void setMaintainPos(int encVal){
+
+        maintainPos = encVal;
 
     }
 
