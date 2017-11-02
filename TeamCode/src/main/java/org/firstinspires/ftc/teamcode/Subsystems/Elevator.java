@@ -40,7 +40,6 @@ public class Elevator implements SubsystemTemplate
 
             elevator = hardwareMap.dcMotor.get("elevator");
 
-           // elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 

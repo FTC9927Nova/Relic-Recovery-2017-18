@@ -32,6 +32,7 @@ public class Robot
         jewelArm = new JewelArm(hardwareMap);
         elevator = new Elevator(hardwareMap);
 
+
 //        vumarkDetect = new VumarkDetect(hardwareMap);
     }
 
