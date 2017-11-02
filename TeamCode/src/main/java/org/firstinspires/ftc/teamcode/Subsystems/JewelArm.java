@@ -50,7 +50,7 @@ public class JewelArm implements SubsystemTemplate
 
     public void armMid()
     {
-        jewlArm.setPosition(0.4);
+        jewlArm.setPosition(0.3);
     }
     public void armUp()
     {

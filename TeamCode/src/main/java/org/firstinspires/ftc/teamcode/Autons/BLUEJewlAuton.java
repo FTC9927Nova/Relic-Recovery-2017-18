@@ -18,7 +18,7 @@ public class BLUEJewlAuton extends LinearOpMode{
 
     Gyro gyro = new Gyro();
 
-    int dist = -45;
+    int dist = -35;
 
 
 
@@ -32,7 +32,7 @@ public class BLUEJewlAuton extends LinearOpMode{
 
 
         if(opModeIsActive()){
-////            robot.claw.close();
+            robot.claw.close();
             robot.driveTrain.setMoveDist(-2);
 
             robot.jewelArm.armDown();
@@ -42,26 +42,30 @@ public class BLUEJewlAuton extends LinearOpMode{
 //
 
             if(String.valueOf(robot.jewelArm.getColor()) == "RED"){
-                robot.driveTrain.setLeftPower(.3);
-                robot.driveTrain.setRightPower(.3);
-                sleep(500);
-                robot.jewelArm.armUp();
+//                robot.driveTrain.setLeftPower(.3);
+//                robot.driveTrain.setRightPower(.3);
+//                sleep(500);
+//                robot.driveTrain.setRightPower(0);
+//                robot.driveTrain.setLeftPower(0);
+                robot.driveTrain.setMoveDist(4);
                 dist-=2;
 
             }
 
 
             else if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
-                robot.driveTrain.setLeftPower(-.3);
-                robot.driveTrain.setRightPower(-.3);
-                sleep(500);
-                robot.jewelArm.armUp();
+//                robot.driveTrain.setLeftPower(-.3);
+//                robot.driveTrain.setRightPower(-.3);
+//                sleep(500);
+//                robot.driveTrain.setRightPower(0);
+//                robot.driveTrain.setLeftPower(0);
+                robot.driveTrain.setMoveDist(-4);
 
 
                 dist+=4;
 
             }
-            robot.jewelArm.armUp();
+            robot.jewelArm.armMid();
 //            sleep(500);
 //            robot.driveTrain.setMoveDist(dist);
 //            robot.driveTrain.rotateDeg(-90);
