@@ -128,13 +128,13 @@ public class Elevator implements SubsystemTemplate
 
     public void moveUp(){
 
-        elevator.setPower(-Math.pow((encoderZero - getEnc())/ (encoderZero), 2));
+        elevator.setPower(Range.clip(1-(-Math.pow((encoderZero - getEnc())/ (encoderZero), 2)), -1 , 1));
 
     }
 
     public void moveDown(){
 
-        elevator.setPower(Math.pow((encoderZero - getEnc())/ (encoderZero), 2));
+        elevator.setPower(Range.clip(1-(Math.pow((encoderZero - getEnc())/ (encoderZero), 2)), -1, 1));
     }
 
     public void setELevatorZero(int encVal){
