@@ -75,6 +75,11 @@ public class PIDLoop
         return kp * error + (((error)-pastError)/dt)*kd + ki*sumError;
     }
 
+    public String display()
+    {
+        return String.valueOf(error);
+    }
+
 
 
 

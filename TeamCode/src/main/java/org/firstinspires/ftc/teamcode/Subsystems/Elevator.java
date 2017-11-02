@@ -30,7 +30,7 @@ public class Elevator implements SubsystemTemplate
 
     private PIDLoop elevatorCL = new PIDLoop(.005,0.005,0.001);
 
-
+    private PIDLoop correction = new PIDLoop();
 
     public Elevator(HardwareMap hardwareMap)
         {
@@ -57,7 +57,6 @@ public class Elevator implements SubsystemTemplate
 
             target = elevator.getCurrentPosition()
                     + (int) (dist * constant.getELEVATOR_TICKS_PER_INCH());
-
 
             elevator.setTargetPosition(target);
 

@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
 /**
  * Created by therat0981 on 10/1/17.
  */
-@TeleOp(name = "Tepeop1GP")
+@TeleOp(name = "TankDrive Teleop")
 @Disabled
 public class TestTeleop extends OpMode
 {
@@ -26,36 +26,47 @@ public class TestTeleop extends OpMode
 
     public void loop()
     {
+        //tank drive
+        float Lyval = -gamepad1.left_stick_y;
+        float Ryval = -gamepad1.right_stick_y;
 
-        //Driver Code
-        float yval = gamepad1.left_stick_y;
-        float xval = gamepad1.right_stick_x;
+        float lpwr = (float) Math.pow(((Lyval)), 3);
+        float rpwr = (float) Math.pow((Ryval), 3);
 
-
-        float lpwr = (float) Math.pow((yval + xval), 3);
-        float rpwr = (float) Math.pow((yval - xval), 3);
-
-
-        //turtle mode
-        if (gamepad1.right_bumper || gamepad1.left_bumper)
+        if(gamepad1.left_trigger!=0 ||
+                gamepad1.right_trigger!=0)
         {
-            lpwr = lpwr/2.0f;
-            rpwr = rpwr/2.0f;
+            lpwr/=3.0f;
+            rpwr/=3.0f;
         }
 
-        robot.driveTrain.setLeftPower(lpwr);
         robot.driveTrain.setRightPower(rpwr);
+        robot.driveTrain.setLeftPower(lpwr);
 
-        telemetry.addData("",robot.driveTrain.display());
+        //Operator
+        if(gamepad2.y){
 
-        if(gamepad1.a)
-            robot.jewelArm.armUp();
-        else if (gamepad1.b)
-            robot.jewelArm.armDown();
+            robot.elevator.setPower(-0.5);
 
-        //Operator Code
-        //claw
-        //elevator
+        }
+
+        else if(gamepad2.x){
+
+            robot.elevator.setPower(0.5);
+
+        }
+        else{
+
+            robot.elevator.setPower(0.0);
+
+        }
+
+        if (gamepad2.left_bumper){
+            robot.claw.open();
+        } else if (gamepad2.right_bumper){
+            robot.claw.close();
+        }
+
 
     }
 
