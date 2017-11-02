@@ -15,6 +15,7 @@ public class RobotConstants
     private final double TURN_TOLERANCE = .3;
     private final double WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
 
+    private final double FOUR_BAR_TOLERANCE = 0;
 
     //TODO: WITH TESTING
     private final int ENCODER_TICKS_PER_REVOLUTION = 831;
@@ -42,6 +43,7 @@ public class RobotConstants
         return TURN_TOLERANCE;
     }
 
+    public double getFOUR_BAR_TOLERANCE() { return FOUR_BAR_TOLERANCE;}
 
 
 

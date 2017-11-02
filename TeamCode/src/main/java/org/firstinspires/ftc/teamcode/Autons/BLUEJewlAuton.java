@@ -16,6 +16,7 @@ public class BLUEJewlAuton extends LinearOpMode{
 
     Robot robot = new Robot();
 
+
     Gyro gyro = new Gyro();
 
     int dist = -45;
