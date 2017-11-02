@@ -13,5 +13,4 @@ public interface Action
      boolean isFinished();
 
      void stop();
-
 }
