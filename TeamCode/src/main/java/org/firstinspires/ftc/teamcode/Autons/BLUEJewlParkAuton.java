@@ -43,11 +43,7 @@ public class BLUEJewlParkAuton extends LinearOpMode{
 //
 
             if(String.valueOf(robot.jewelArm.getColor()) == "RED"){
-//                robot.driveTrain.setLeftPower(.3);
-//                robot.driveTrain.setRightPower(.3);
-//                sleep(500);
-//                robot.driveTrain.setRightPower(0);
-//                robot.driveTrain.setLeftPower(0);
+
                 robot.driveTrain.setMoveDist(4);
                 dist-=2;
 
@@ -55,11 +51,7 @@ public class BLUEJewlParkAuton extends LinearOpMode{
 
 
             else if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
-//                robot.driveTrain.setLeftPower(-.3);
-//                robot.driveTrain.setRightPower(-.3);
-//                sleep(500);
-//                robot.driveTrain.setRightPower(0);
-//                robot.driveTrain.setLeftPower(0);
+
                 robot.driveTrain.setMoveDist(-4);
 
                 dist+=4;
@@ -82,8 +74,6 @@ public class BLUEJewlParkAuton extends LinearOpMode{
             robot.elevator.moveLevel(1);
             sleep(1000);
             robot.driveTrain.setMoveDist(-2);
-//
-
 
         }
 

@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.Util.*;
  * Created by therat0981 on 10/1/17.
  */
 
-public class Elevator implements SubsystemTemplate
+public class Lift implements SubsystemTemplate
 {
 
 
@@ -35,7 +35,7 @@ public class Elevator implements SubsystemTemplate
 
     private PIDLoop correction = new PIDLoop();
 
-    public Elevator(HardwareMap hardwareMap)
+    public Lift(HardwareMap hardwareMap)
         {
 
             elevator = hardwareMap.dcMotor.get("elevator");

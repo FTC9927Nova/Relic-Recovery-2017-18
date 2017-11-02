@@ -14,7 +14,7 @@ public class Robot
 {
     public DriveTrain driveTrain;
     public Claw claw;
-    public Elevator elevator;
+    public Lift elevator;
     public JewelArm jewelArm;
     public VumarkDetect vumarkDetect;
     Gyro gyro = new Gyro();
@@ -30,7 +30,7 @@ public class Robot
         driveTrain.setGyro(gyrofromOpMode);
         claw = new Claw(hardwareMap);
         jewelArm = new JewelArm(hardwareMap);
-        elevator = new Elevator(hardwareMap);
+        elevator = new Lift(hardwareMap);
 
 
 //        vumarkDetect = new VumarkDetect(hardwareMap);
@@ -42,7 +42,7 @@ public class Robot
         driveTrain.setGyro(gyrofromOpMode);
         claw = new Claw(hardwareMap);
         jewelArm = new JewelArm(hardwareMap);
-        elevator = new Elevator(hardwareMap);
+        elevator = new Lift(hardwareMap);
 
 //        vumarkDetect = new VumarkDetect(hardwareMap);
     }

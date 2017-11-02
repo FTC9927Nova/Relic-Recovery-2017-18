@@ -63,7 +63,7 @@ public class DriveTrain implements SubsystemTemplate
         l2 = hardwareMap.dcMotor.get("l2");
         r1 = hardwareMap.dcMotor.get("r1");
         r2 = hardwareMap.dcMotor.get("r2");
-//        gyro.initGyro(hardwareMap);
+
         setDrive(Drive.SPEED);
 
         l1.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -81,21 +81,15 @@ public class DriveTrain implements SubsystemTemplate
         l2 = hardwareMap.dcMotor.get("l2");
         r1 = hardwareMap.dcMotor.get("r1");
         r2 = hardwareMap.dcMotor.get("r2");
-//        gyro.initGyro(hardwareMap);
 
-        //
 
+        l1.setDirection(DcMotorSimple.Direction.FORWARD);
+        l2.setDirection(DcMotorSimple.Direction.REVERSE);
         r1.setDirection(DcMotorSimple.Direction.REVERSE);
-        r2.setDirection(DcMotorSimple.Direction.REVERSE);
+        r2.setDirection(DcMotorSimple.Direction.FORWARD);
 
 
-
-//        setSpeedController(DriveSpeedController.BRAKE);
         setDrive(Drive.STOP_RESET);
-
-
-
-
 
         this.opMode = opMode;
     }
@@ -196,12 +190,6 @@ public class DriveTrain implements SubsystemTemplate
 
     }
 
-
-
-
-
-
-
     public int getLeftCurrentPosition()
     {
         return (int)((l1.getCurrentPosition() + l2.getCurrentPosition())/2.0 );
@@ -209,11 +197,12 @@ public class DriveTrain implements SubsystemTemplate
 
     public int getRightCurrentPosition()
     {
-//
+
         return (int)((r1.getCurrentPosition()+ r2.getCurrentPosition())/2.0);
     }
 
-    public void setMoveDist(double dist) {
+    public void setMoveDist(double dist)
+    {
 
         setSpeedController(DriveSpeedController.BRAKE);
         if (this.opMode.opModeIsActive()) {
@@ -228,36 +217,22 @@ public class DriveTrain implements SubsystemTemplate
             setLeftTarget(leftTarget);
             setRightTarget(rightTarget);
 
-            Log.i("target",""+leftTarget);
-            Log.i("targetR",""+rightTarget);
-
 
 
             driveCL.setTarget(leftTarget);
 
             while(this.opMode.opModeIsActive() &&
                     (Math.abs((getLeftCurrentPosition()-leftTarget))>constant.getDRIVE_TOLERANCE() && Math.abs((getRightCurrentPosition()-rightTarget))>constant.getDRIVE_TOLERANCE())) {
-// ||
-// this.opMode.telemetry.addData("", display());
-
-
-//                setLeftPower(driveCL.pLoop(getLeftCurrentPosition()));
-//                setRightPower(driveCL.pLoop(getLeftCurrentPosition()));
-//
-                setLeftPower(0.2);
-                setRightPower(0.2);
-//                getLogs();
-//                this.opMode.telemetry.update();
-//            }
+                setLeftPower(driveCL.pLoop(getLeftCurrentPosition()));
+                setRightPower(driveCL.pLoop(getRightCurrentPosition()));
             }
 
-//            this.opMode.telemetry.addData("good","yup");
             setLeftPower(0);
             setRightPower(0);
 
             setDrive(Drive.SPEED);
-//
-}
+
+        }
     }
     public double getRightPwr(){
         return (r1.getPower() + r2.getPower())/2;
@@ -266,6 +241,8 @@ public class DriveTrain implements SubsystemTemplate
         return (l1.getPower() + l2.getPower())/2;
     }
 
+
+    //TODO: TURN W/O PID LOOP
     public void rotateDeg(double target)
     {
         this.turnTarget = target;
