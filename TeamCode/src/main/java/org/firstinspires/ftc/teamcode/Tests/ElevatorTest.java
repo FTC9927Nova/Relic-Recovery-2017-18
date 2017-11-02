@@ -20,6 +20,7 @@ import org.firstinspires.ftc.teamcode.Util.RobotConstants;
  * Created by Ethan Pereira on 10/19/2017.
  */
 @TeleOp(name = "ElevatorTest")
+@Disabled
 public class ElevatorTest extends OpMode {
 
     Robot robot = new Robot();

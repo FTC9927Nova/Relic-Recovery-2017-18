@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Tests;
 import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
@@ -25,6 +26,7 @@ import org.firstinspires.ftc.robotcore.internal.android.dx.dex.file.StringDataIt
  */
 
 @Autonomous(name="Concept: Change PID", group = "Concept")
+@Disabled
 public class ConceptChangePID extends LinearOpMode {
 
     // our DC motor.
@@ -43,7 +45,7 @@ public class ConceptChangePID extends LinearOpMode {
         // get reference to DC motor.
         // since we are using the Expansion Hub,
         // cast this motor to a DcMotorEx object.
-        motorExLeft = (DcMotorEx) hardwareMap.get(DcMotor.class, "left_drive");
+        motorExLeft = (DcMotorEx) hardwareMap.get(DcMotor.class, "l1");
         // wait for start command.
         waitForStart();
 
@@ -64,11 +66,14 @@ public class ConceptChangePID extends LinearOpMode {
                     pidOrig.p, pidOrig.i, pidOrig.d);
             telemetry.addData("P,I,D (modified)", "%.04f, %.04f, %.04f",
                     pidModified.p, pidModified.i, pidModified.d);
-            motorExLeft.setVelocity(30,AngleUnit.DEGREES);
-            motorExLeft.setPower(.3);
+            motorExLeft.setVelocity(90,AngleUnit.DEGREES);
+            if(gamepad1.a)
+                motorExLeft.setPower(0.5);
+            else if (gamepad1.b)
+                motorExLeft.setPower(1);
             Log.i("velocity", String.valueOf(motorExLeft.getVelocity(AngleUnit.DEGREES)));
             Log.i("power", String.valueOf((motorExLeft.getPower())));
-//            Log.i("voltage", String.valueOf(()))
+
 
 
             telemetry.update();

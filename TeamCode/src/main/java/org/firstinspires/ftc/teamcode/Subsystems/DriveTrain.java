@@ -90,7 +90,7 @@ public class DriveTrain implements SubsystemTemplate
 
 
 
-        setSpeedController(DriveSpeedController.BRAKE);
+//        setSpeedController(DriveSpeedController.BRAKE);
         setDrive(Drive.STOP_RESET);
 
 
@@ -213,47 +213,51 @@ public class DriveTrain implements SubsystemTemplate
         return (int)((r1.getCurrentPosition()+ r2.getCurrentPosition())/2.0);
     }
 
-
     public void setMoveDist(double dist) {
 
-
+        setSpeedController(DriveSpeedController.BRAKE);
         if (this.opMode.opModeIsActive()) {
 
-            leftTarget = getLeftCurrentPosition()
-                    + (int) (dist * constant.getTICKS_PER_INCH());
-            rightTarget = getRightCurrentPosition()
-                    + (int) (dist * constant.getTICKS_PER_INCH());
+            setDrive(Drive.STOP_RESET);
+
+            leftTarget = (int) (dist * constant.getTICKS_PER_INCH());
+            rightTarget = (int) (dist * constant.getTICKS_PER_INCH());
 
             setDrive(Drive.ENCODERS);
 
             setLeftTarget(leftTarget);
             setRightTarget(rightTarget);
 
-            driveCL.setTarget((rightTarget +leftTarget)/2.0);
+            Log.i("target",""+leftTarget);
+            Log.i("targetR",""+rightTarget);
+
+
+
+            driveCL.setTarget(leftTarget);
 
             while(this.opMode.opModeIsActive() &&
-                    (Math.abs((getLeftCurrentPosition()-leftTarget))>constant.getDRIVE_TOLERANCE() || Math.abs((getRightCurrentPosition()-rightTarget))>constant.getDRIVE_TOLERANCE()))
-            {
-
-                    setLeftPower(0.3);
-                    setRightPower(0.3);
-
-//                this.opMode.telemetry.addData("",display());
+                    (Math.abs((getLeftCurrentPosition()-leftTarget))>constant.getDRIVE_TOLERANCE() && Math.abs((getRightCurrentPosition()-rightTarget))>constant.getDRIVE_TOLERANCE())) {
+// ||
+// this.opMode.telemetry.addData("", display());
 
 
-
+//                setLeftPower(driveCL.pLoop(getLeftCurrentPosition()));
+//                setRightPower(driveCL.pLoop(getLeftCurrentPosition()));
 //
-//                setLeftPower(0.3);
-//                setRightPower(0.3);
-                getLogs();
+                setLeftPower(0.2);
+                setRightPower(0.2);
+//                getLogs();
+//                this.opMode.telemetry.update();
+//            }
             }
 
+//            this.opMode.telemetry.addData("good","yup");
             setLeftPower(0);
             setRightPower(0);
 
             setDrive(Drive.SPEED);
-
-        }
+//
+}
     }
     public double getRightPwr(){
         return (r1.getPower() + r2.getPower())/2;

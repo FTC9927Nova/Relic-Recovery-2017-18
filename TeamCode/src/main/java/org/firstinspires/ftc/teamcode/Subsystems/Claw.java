@@ -18,35 +18,17 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Claw implements SubsystemTemplate
 {
-    private DcMotor clWheel  = null;
     private Servo grabber =  null;
-    private ModernRoboticsI2cRangeSensor ultrasonicSensor = null;
 
-    boolean isGrabbed = false;
+
     boolean isOpen = false;
 
-    //TODO: adjust spin
-    private double spin = 0.5;
 
     public Claw(HardwareMap hardwareMap)
     {
-
-//        clWheel = hardwareMap.dcMotor.get("clWheel");
         grabber = hardwareMap.get(Servo.class, "claw");
-
-//        ultrasonicSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "ultrasonic");
-
-
-        //TODO: Set up min max
-        // grabber.scaleRange(0,1);
-
-        //TODO: set cl wheel direction
-       //    clWheel.setDirection(DcMotorSimple.Direction.);
     }
 
-    //TODO: adjust position
-
-    //grabber
     public void open()
     {
         isOpen = true;
@@ -59,55 +41,13 @@ public class Claw implements SubsystemTemplate
         grabber.setPosition(0.39);
     }
 
-    //clWheel
-    public void intake()
-    {
-        clWheel.setPower(spin);
-        checkisgrabbed();
-        if(isGrabbed)
-        {
-            doesNothing();
-        }
-    }
-
-    public void outtake()
-    {
-        clWheel.setPower(-spin);
-        checkisgrabbed();
-        if(isGrabbed)
-        {
-            doesNothing();
-        }
-
-    }
-    public Double showPos(){
-
-        return grabber.getPosition();
-    }
-
-    public void doesNothing()
-    {
-        clWheel.setPower(0);
-    }
-
-
-    // ultrasonicsensor
-    private void checkisgrabbed()
-    {
-        if (ultrasonicSensor.getDistance(DistanceUnit.INCH)< 0.5)
-            isGrabbed = true;
-        else if(ultrasonicSensor.getDistance(DistanceUnit.INCH)>6)
-            isGrabbed = false;
-    }
 
     //TODO: ADD DISPLAY
     @Override
     public String display()
     {
         return "Claw"
-                +"\n  Spin: " + spin
-                +"\n  OpDistance: " + (ultrasonicSensor.cmOptical()/2.54)
-                +"\n  isGrabbed  " + isGrabbed
+                +"\n  claw pos:  " + grabber.getPosition()
                 +"\n  is Claw open:  " + isOpen;
     }
 }

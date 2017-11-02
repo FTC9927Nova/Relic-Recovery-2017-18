@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  * Created by therat0981 on 10/1/17.
  */
 @TeleOp(name = "TankDrive Teleop")
+@Disabled
 public class TestTeleop extends OpMode
 {
     Robot robot = new Robot();
