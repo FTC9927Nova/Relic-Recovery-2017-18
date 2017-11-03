@@ -71,7 +71,6 @@ public class BLUEJewlParkAuton extends LinearOpMode{
             sleep(1000);
             robot.claw.open();
             sleep(1000);
-            robot.elevator.moveLevel(1);
             sleep(1000);
             robot.driveTrain.setMoveDist(-2);
 
