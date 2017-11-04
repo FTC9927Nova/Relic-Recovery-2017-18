@@ -100,18 +100,21 @@ public class MainTeleop extends OpMode
 
         if(gamepad2.y){
 
-            robot.elevator.setPower(-0.5);
+            robot.elevator.moveUp();
+            robot.elevator.setMaintainPos(robot.elevator.getEnc());
+
 
         }
 
         else if(gamepad2.x){
 
-            robot.elevator.setPower(0.5);
+            robot.elevator.moveDown();
+            robot.elevator.setMaintainPos(robot.elevator.getEnc());
 
         }
         else{
 
-            robot.elevator.setPower(0.0);
+            robot.elevator.stayInPlace();
 
         }
 

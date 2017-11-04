@@ -4,7 +4,7 @@
           package="com.qualcomm.ftcrobotcontroller"
 
           android:versionCode="25"
-          android:versionName="3.5">
+          android:versionName="get on my level">
 
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
