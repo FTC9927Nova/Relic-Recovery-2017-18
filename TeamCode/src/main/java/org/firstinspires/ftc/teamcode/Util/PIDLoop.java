@@ -47,7 +47,6 @@ public class PIDLoop
         return this.ki;
     }
 
-
     public void setTarget(double target)
     {
         this.target = target;
