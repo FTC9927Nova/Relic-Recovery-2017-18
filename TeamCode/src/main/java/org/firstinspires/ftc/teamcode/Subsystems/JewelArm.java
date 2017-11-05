@@ -47,6 +47,7 @@ public class JewelArm implements SubsystemTemplate
         jewlArm.setPosition(0.93);
     }
 
+
     public void armMid()
     {
         jewlArm.setPosition(0.3);
