@@ -53,8 +53,9 @@ public class JewelArm implements SubsystemTemplate
     }
     public void armUp()
     {
-        isArmDown = false;
         jewlArm.setPosition(0.17);
+        isArmDown = false;
+
     }
 
     //if hue is closer to 180 it is blue cos(pi) is -1
