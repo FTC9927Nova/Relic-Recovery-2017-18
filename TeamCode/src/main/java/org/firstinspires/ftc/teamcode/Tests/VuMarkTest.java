@@ -69,17 +69,21 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 @Autonomous(name="Concept: VuMark Id", group ="Concept")
 public class VuMarkTest extends LinearOpMode {
 
-    public static final String TAG = "Vuforia VuMark Sample";
 
-    OpenGLMatrix lastLocation = null;
+        public static final String TAG = "Vuforia VuMark Sample";
 
-    /**
-     * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
-     * localization engine.
-     */
-    VuforiaLocalizer vuforia;
+        OpenGLMatrix lastLocation = null;
 
-    @Override public void runOpMode() {
+        /**
+         * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
+         * localization engine.
+         */
+        VuforiaLocalizer vuforia;
+
+
+
+
+            @Override public void runOpMode() {
 
         /*
          * To start up Vuforia, tell it the view that we wish to use for camera monitor (on the RC phone);

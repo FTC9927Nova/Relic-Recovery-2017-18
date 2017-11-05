@@ -48,7 +48,7 @@ public class DriveTrain implements SubsystemTemplate
         NOTHING
     }
 
-    enum DriveSpeedController
+    public enum DriveSpeedController
     {
         BRAKE,
         COAST,
@@ -126,7 +126,7 @@ public class DriveTrain implements SubsystemTemplate
         r2.setMode(runMode);
     }
 
-    private void setSpeedController(DriveSpeedController s)
+    public void setSpeedController(DriveSpeedController s)
     {
         DcMotor.ZeroPowerBehavior zeroPowerBehavior = null;
         switch(s)
@@ -165,14 +165,14 @@ public class DriveTrain implements SubsystemTemplate
         r2.setPower(power);
     }
 
-    private void setLeftTarget(int target)
+    public void setLeftTarget(int target)
     {
         l1.setTargetPosition(target);
         l2.setTargetPosition(target);
         leftTarget = target;
     }
 
-    private void setRightTarget(int target)
+    public void setRightTarget(int target)
     {
         r1.setTargetPosition(target);
         r2.setTargetPosition(target);

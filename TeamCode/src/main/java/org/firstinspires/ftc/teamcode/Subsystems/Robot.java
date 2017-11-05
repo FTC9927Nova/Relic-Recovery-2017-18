@@ -12,17 +12,27 @@ import org.firstinspires.ftc.teamcode.Util.VumarkDetect;
 
 public class Robot
 {
-    public DriveTrain driveTrain;
-    public Claw claw;
-    public Lift elevator;
-    public JewelArm jewelArm;
-    public VumarkDetect vumarkDetect;
-    Gyro gyro = new Gyro();
+    private static DriveTrain driveTrain;
+    private Claw claw;
+    private static Lift elevator;
+    private static JewelArm jewelArm;
 
     public Robot()
     {
 
     }
+
+    public static DriveTrain getDriveTrainInstance()
+    {
+       return driveTrain;
+    }
+    public static Lift getLiftInstance()
+    {
+        return elevator;
+    }
+
+
+
 
     public void init(HardwareMap hardwareMap, Gyro gyrofromOpMode)
     {
