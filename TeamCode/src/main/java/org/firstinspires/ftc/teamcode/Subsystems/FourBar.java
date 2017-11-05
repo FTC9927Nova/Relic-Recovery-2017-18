@@ -16,7 +16,6 @@ import org.firstinspires.ftc.teamcode.Util.RobotConstants;
 
 public class FourBar implements SubsystemTemplate {
 
-
     private DcMotor fourBar;
     private int targetPos;
     private int desiredPosEnc;
