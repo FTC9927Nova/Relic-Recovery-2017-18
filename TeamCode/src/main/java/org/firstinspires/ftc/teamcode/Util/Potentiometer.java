@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Robot;
  * Created by Ethan Pereira on 11/2/2017.
  */
 
-public class Pentiometer {
+public class Potentiometer {
     AnalogInput potentiometer;
 
     float voltage;
@@ -19,7 +19,7 @@ public class Pentiometer {
     float angle;
     //Initializes the fourbar
 
-    public Pentiometer (HardwareMap hardwareMap) {
+    public Potentiometer(HardwareMap hardwareMap) {
         potentiometer = hardwareMap.analogInput.get("pentiometer");
     }
 

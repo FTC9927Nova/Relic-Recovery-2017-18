@@ -17,7 +17,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  */
 
 @Autonomous(name = "REDJewelGlyphPark")
-public class REDVuforiaJewlParkFar extends LinearOpMode{
+public class BLUEVuforiaJewlParkClose extends LinearOpMode{
 
     Robot robot = new Robot();
 
@@ -57,7 +57,6 @@ public class REDVuforiaJewlParkFar extends LinearOpMode{
 
         telemetry.addData(">", "Press Play to start");
         telemetry.update();
-
         waitForStart();
 
         relicTrackables.activate();
@@ -75,10 +74,8 @@ public class REDVuforiaJewlParkFar extends LinearOpMode{
                     robot.driveTrain.setMoveDist(-2);
                     hitJewl();
 
-                    robot.driveTrain.setMoveDist(-20);
-                    robot.driveTrain.rotateDeg(90);
-                    robot.driveTrain.setMoveDist(12);
-                    robot.driveTrain.rotateDeg(90);
+                    robot.driveTrain.setMoveDist(32);
+                    robot.driveTrain.rotateDeg(-90);
                     robot.driveTrain.setMoveDist(15);
                     //TODO: Wheel spit out here
                     robot.driveTrain.setMoveDist(-2.5);
@@ -92,10 +89,8 @@ public class REDVuforiaJewlParkFar extends LinearOpMode{
                     robot.driveTrain.setMoveDist(-2);
                     hitJewl();
 
-                    robot.driveTrain.setMoveDist(-20);
-                    robot.driveTrain.rotateDeg(90);
-                    robot.driveTrain.setMoveDist(18);
-                    robot.driveTrain.rotateDeg(90);
+                    robot.driveTrain.setMoveDist(26);
+                    robot.driveTrain.rotateDeg(-90);
                     robot.driveTrain.setMoveDist(15);
                     //TODO: Wheel spit out here
                     robot.driveTrain.setMoveDist(-2.5);
@@ -110,10 +105,8 @@ public class REDVuforiaJewlParkFar extends LinearOpMode{
                     robot.driveTrain.setMoveDist(-2);
                     hitJewl();
 
-                    robot.driveTrain.setMoveDist(-20);
-                    robot.driveTrain.rotateDeg(90);
-                    robot.driveTrain.setMoveDist(6);
-                    robot.driveTrain.rotateDeg(90);
+                    robot.driveTrain.setMoveDist(38);
+                    robot.driveTrain.rotateDeg(-90);
                     robot.driveTrain.setMoveDist(15);
                     //TODO: Wheel spit out here
                     robot.driveTrain.setMoveDist(-2.5);
@@ -140,11 +133,13 @@ public class REDVuforiaJewlParkFar extends LinearOpMode{
 
         sleep(1000);
 
-        if(String.valueOf(robot.jewelArm.getColor()) == "RED"){
+        if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
 
             robot.driveTrain.setMoveDist(-4);
             sleep(1000);
             robot.jewelArm.armMid();
+            sleep(1000);
+            robot.driveTrain.setMoveDist(8);
 
 
         }
@@ -155,8 +150,7 @@ public class REDVuforiaJewlParkFar extends LinearOpMode{
             robot.driveTrain.setMoveDist(4);
             sleep(2000);
             robot.jewelArm.armMid();
-            sleep(1000);
-            robot.driveTrain.setMoveDist(-8);
+
 
         }
 
