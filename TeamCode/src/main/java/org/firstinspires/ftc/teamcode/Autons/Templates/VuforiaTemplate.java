@@ -52,7 +52,6 @@ public class VuforiaTemplate extends LinearOpMode {
         waitForStart();
 
         relicTrackables.activate();
-
         while (opModeIsActive()) {
 
 
