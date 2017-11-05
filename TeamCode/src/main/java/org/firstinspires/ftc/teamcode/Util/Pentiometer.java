@@ -12,30 +12,31 @@ import org.firstinspires.ftc.teamcode.Subsystems.Robot;
  */
 
 public class Pentiometer {
-AnalogInput potentiometer;
-DcMotor fourBar;
-RobotConstants constants = new RobotConstants();
-PIDLoop pidLoop = new PIDLoop();
+    AnalogInput potentiometer;
+
+    float voltage;
+    float percentTurned;
+    float angle;
     //Initializes the fourbar
+
     public Pentiometer (HardwareMap hardwareMap) {
         potentiometer = hardwareMap.analogInput.get("pentiometer");
-        double value = potentiometer.getVoltage();
     }
 
-    public void setSlidePosition(int target, double power)
+    public void getInput()
     {
-        power = Math.abs(power);   // make sure power is positive.
-        if (potentiometer.getVoltage() > target) {
-            power = -1*power;  // if current position is past target, make the motor go backward.
-        }
-        while (Math.abs(target - potentiometer.getVoltage()) > constants.getFOUR_BAR_TOLERANCE())
-        {
-            fourBar.setPower(power);
-        }
-        fourBar.setPower(0.0);
+        voltage = (float)potentiometer.getVoltage();
+        percentTurned = (voltage/5.0f);
+        angle = percentTurned * 250;
     }
 
-    //Or
+    public String display()
+    {
+        return "voltage: " + voltage
+                +"\nPercent Turned: " + percentTurned
+                +"\nAngle: " + angle;
+    }
+
 
 
 }
