@@ -20,6 +20,10 @@ public class RobotConstants
     //TODO: WITH TESTING
     private final int ENCODER_TICKS_PER_REVOLUTION = 831;
 
+    //TODO: GET FOURBAR MEASURMENTS
+    private final int FOURBAR_TICKS_PER_ONE_MOVEMENT = 0;
+    private final int FOURBAR_TICKS_PER_LEVEL = FOURBAR_TICKS_PER_ONE_MOVEMENT/4;
+    private final int FOURBAR_TOLERANCE = 10;
     //TODO: GET ELEVATOR MEASUREMENTS
     private final int ELEVATOR_TICKS_PER_ONE_MOVEMENT = -1163;
     private final int ELEVATOR_INCHES_PER_ONE_MOVEMENT = 13;
@@ -45,6 +49,8 @@ public class RobotConstants
 
     public double getFOUR_BAR_TOLERANCE() { return FOUR_BAR_TOLERANCE;}
 
+    public int getFOURBAR_TICKS_PER_LEVEL(){ return FOURBAR_TICKS_PER_LEVEL;}
+    public int getFOURBAR_TOLERANCE(){ return FOURBAR_TOLERANCE;}
 
 
 }
