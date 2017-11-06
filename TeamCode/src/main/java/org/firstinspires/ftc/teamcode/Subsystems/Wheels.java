@@ -67,6 +67,18 @@ public class Wheels implements SubsystemTemplate{
         leftWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 // while (leftWheels.getCurrentPosition() - constant.getWHEELS_TOLERANCE())
     }
+
+    public void moveRotationsRight(int numberOfRotations){
+
+        setMode(Mode.STOP_RESET);
+        EncDesiredPos = numberOfRotations * constant.getWHEELS_TICKS_PER_ROTATION();
+        while (Math.abs(EncDesiredPos - rightWheels.getCurrentPosition()) > constant.getWHEELS_TOLERANCE()){
+            rightWheels.setPower(1);
+        }
+        rightWheels.setPower(0);
+        rightWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+// while (leftWheels.getCurrentPosition() - constant.getWHEELS_TOLERANCE())
+    }
     public void intake(){
 
         leftWheels.setPower(1);
