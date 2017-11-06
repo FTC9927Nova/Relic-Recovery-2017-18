@@ -13,11 +13,11 @@ import org.firstinspires.ftc.teamcode.Util.VumarkDetect;
 public class Robot
 {
     public DriveTrain driveTrain;
-    public Claw claw;
-    public Lift elevator;
+    public FourBar fourBar;
     public JewelArm jewelArm;
+    public Wheels wheels;
+    public LimitDevices limitDevices;
     public VumarkDetect vumarkDetect;
-    Gyro gyro = new Gyro();
 
     public Robot()
     {
@@ -28,9 +28,11 @@ public class Robot
     {
         driveTrain = new DriveTrain(hardwareMap);
         driveTrain.setGyro(gyrofromOpMode);
-        claw = new Claw(hardwareMap);
-        jewelArm = new JewelArm(hardwareMap);
-        elevator = new Lift(hardwareMap);
+//        jewelArm = new JewelArm(hardwareMap);
+        fourBar = new FourBar(hardwareMap);
+        wheels = new Wheels(hardwareMap);
+        limitDevices = new LimitDevices(hardwareMap);
+//        elevator = new Lift(hardwareMap);
 
 
 //        vumarkDetect = new VumarkDetect(hardwareMap);
@@ -40,10 +42,10 @@ public class Robot
     {
         driveTrain = new DriveTrain(hardwareMap,linearOpMode);
         driveTrain.setGyro(gyrofromOpMode);
-        claw = new Claw(hardwareMap);
-        jewelArm = new JewelArm(hardwareMap);
-        elevator = new Lift(hardwareMap);
-
+//        jewelArm = new JewelArm(hardwareMap);
+        fourBar = new FourBar(hardwareMap);
+        wheels = new Wheels(hardwareMap);
+        limitDevices = new LimitDevices(hardwareMap);
 //        vumarkDetect = new VumarkDetect(hardwareMap);
     }
 

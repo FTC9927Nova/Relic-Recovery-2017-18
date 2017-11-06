@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.*;
 public class Wheels implements SubsystemTemplate{
 
     private DcMotor leftWheels, rightWheels;
-
+    private int EncDesiredPos;
 
     public Wheels(HardwareMap hardwareMap)
     {
@@ -56,6 +56,17 @@ public class Wheels implements SubsystemTemplate{
 
     }
 
+    public void moveRotationsLeft(int numberOfRotations){
+
+        setMode(Mode.STOP_RESET);
+        EncDesiredPos = numberOfRotations * constant.getWHEELS_TICKS_PER_ROTATION();
+        while (Math.abs(EncDesiredPos - leftWheels.getCurrentPosition()) > constant.getWHEELS_TOLERANCE()){
+            leftWheels.setPower(1);
+        }
+        leftWheels.setPower(0);
+        leftWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+// while (leftWheels.getCurrentPosition() - constant.getWHEELS_TOLERANCE())
+    }
     public void intake(){
 
         leftWheels.setPower(1);
@@ -69,6 +80,10 @@ public class Wheels implements SubsystemTemplate{
 
     }
 
+    public void intakeBlock(){
+        leftWheels.setPower(1);
+
+    }
     @Override
     public String display() {
 
