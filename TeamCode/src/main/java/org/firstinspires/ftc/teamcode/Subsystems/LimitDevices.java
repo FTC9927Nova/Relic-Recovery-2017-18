@@ -16,6 +16,14 @@ public class LimitDevices implements SubsystemTemplate {
         limitDevice = hardwareMap.digitalChannel.get("limitDevice");
     }
 
+    public Boolean isHit(){
+        if (String.valueOf(limitDevice.getState()) == "true"){
+            return false;
+        } else{
+            return true;
+        }
+
+    }
     public String getReading(){
         return String.valueOf(limitDevice.getState());
     }

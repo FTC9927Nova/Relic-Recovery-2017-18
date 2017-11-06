@@ -12,6 +12,7 @@ public class Wheels implements SubsystemTemplate{
     private DcMotor leftWheels, rightWheels;
     private int EncDesiredPos;
 
+    private LimitDevices limitDevices;
     public Wheels(HardwareMap hardwareMap)
     {
 
@@ -60,19 +61,19 @@ public class Wheels implements SubsystemTemplate{
 
         setMode(Mode.STOP_RESET);
         EncDesiredPos = numberOfRotations * constant.getWHEELS_TICKS_PER_ROTATION();
-        while (Math.abs(EncDesiredPos - leftWheels.getCurrentPosition()) > constant.getWHEELS_TOLERANCE()){
+        while (Math.abs(EncDesiredPos - leftWheels.getCurrentPosition()) > constant.getWHEELS_TOLERANCE() && !limitDevices.isHit()){
+
             leftWheels.setPower(1);
         }
         leftWheels.setPower(0);
         leftWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-// while (leftWheels.getCurrentPosition() - constant.getWHEELS_TOLERANCE())
     }
 
     public void moveRotationsRight(int numberOfRotations){
 
         setMode(Mode.STOP_RESET);
         EncDesiredPos = numberOfRotations * constant.getWHEELS_TICKS_PER_ROTATION();
-        while (Math.abs(EncDesiredPos - rightWheels.getCurrentPosition()) > constant.getWHEELS_TOLERANCE()){
+        while (Math.abs(EncDesiredPos - rightWheels.getCurrentPosition()) > constant.getWHEELS_TOLERANCE() && !limitDevices.isHit()){
             rightWheels.setPower(1);
         }
         rightWheels.setPower(0);
@@ -85,17 +86,23 @@ public class Wheels implements SubsystemTemplate{
         rightWheels.setPower(1);
 
     }
-    public void outtake(){
+    public void outtake(double speed){
 
-        leftWheels.setPower(-1);
-        rightWheels.setPower(-1);
+        leftWheels.setPower(speed);
+        rightWheels.setPower(speed);
+    }
+
+
+    public void leftIntakeBlock(double speed){
+        leftWheels.setPower(speed);
 
     }
 
-    public void intakeBlock(){
-        leftWheels.setPower(1);
-
+    public void rightIntakeBlock(double speed){
+        rightWheels.setPower(speed);
     }
+
+
     @Override
     public String display() {
 
