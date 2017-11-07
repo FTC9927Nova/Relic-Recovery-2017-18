@@ -20,7 +20,7 @@ public class Potentiometer {
     //Initializes the fourbar
 
     public Potentiometer(HardwareMap hardwareMap) {
-        potentiometer = hardwareMap.analogInput.get("pentiometer");
+        potentiometer = hardwareMap.analogInput.get("pot");
     }
 
     public void getInput()
