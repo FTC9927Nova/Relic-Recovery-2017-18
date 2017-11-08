@@ -27,8 +27,8 @@ public class TeleOpNew extends OpMode
     @Override
     public void init()
     {
-        gyro.initGyro(hardwareMap);
-        robot.init(hardwareMap, gyro);
+        gyro.initGyro(this.hardwareMap);
+        robot.init(this.hardwareMap, gyro);
         robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
         robot.driveTrain.setDrive(DriveTrain.Drive.SPEED);
 
@@ -113,28 +113,28 @@ public class TeleOpNew extends OpMode
         }
 
         if (gamepad2.left_bumper){
-            robot.wheels.intakeLeft();
+            robot.wheels.setLeftWheelPwr(1);
         }
         else if(gamepad2.left_trigger != 0){
 
-            robot.wheels.outtakeLeft();
+            robot.wheels.setLeftWheelPwr(-1);
 
         }
         else{
 
-            robot.wheels.stopLeft();
+            robot.wheels.setLeftWheelPwr(0);
         }
 
-        if (gamepad2.right_bumper){
-            robot.wheels.intakeRight();
+        if (gamepad1.y){
+            robot.wheels.setRightWheels(1);
         }
-        else if(gamepad2.right_trigger != 0) {
+        else if(gamepad1.x) {
 
-            robot.wheels.outtakeRight();
+            robot.wheels.setRightWheels(-1);
 
         }
         else{
-            robot.wheels.stopRight();
+            robot.wheels.setRightWheels(0);
         }
         telemetry.update();
 
