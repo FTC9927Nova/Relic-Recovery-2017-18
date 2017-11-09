@@ -19,6 +19,7 @@ public class Potentiometer {
     float angle;
     //Initializes the fourbar
 
+
     public Potentiometer(HardwareMap hardwareMap) {
         potentiometer = hardwareMap.analogInput.get("pot");
     }
