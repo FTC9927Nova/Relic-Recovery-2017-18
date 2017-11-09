@@ -96,14 +96,19 @@ public class TeleOpNew extends OpMode
 
         if(gamepad2.y){
 
-            robot.bar4.setPower(.35);
+            robot.bar4.setPower(.5);
 
 
         }
 
         else if(gamepad2.x){
 
-            robot.bar4.setPower(-.125);
+            robot.bar4.setPower(-0.125);
+
+        }
+        else if(gamepad2.a){
+
+            robot.bar4.setPower(0.05);
 
         }
         else{
@@ -125,10 +130,10 @@ public class TeleOpNew extends OpMode
             robot.wheels.setLeftWheelPwr(0);
         }
 
-        if (gamepad1.y){
+        if (gamepad2.right_bumper){
             robot.wheels.setRightWheels(1);
         }
-        else if(gamepad1.x) {
+        else if(gamepad2.right_trigger != 0) {
 
             robot.wheels.setRightWheels(-1);
 
@@ -136,15 +141,25 @@ public class TeleOpNew extends OpMode
         else{
             robot.wheels.setRightWheels(0);
         }
+
+
+        if(gamepad2.dpad_up)
+        {
+            robot.relic.setPower(1);
+        }
+        else if(gamepad2.dpad_down)
+        {
+            robot.relic.setPower(-1);
+        }
+        else
+        {
+            robot.relic.setPower(0);
+        }
+
+
+
         telemetry.update();
 
-
-
-
-
-        //claw
-
-        //elevator
 
 
     }

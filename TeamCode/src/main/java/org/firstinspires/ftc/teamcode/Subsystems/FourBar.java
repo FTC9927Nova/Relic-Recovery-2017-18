@@ -28,8 +28,9 @@ public class FourBar implements SubsystemTemplate {
     private PIDLoop pidLoop = new PIDLoop(0.05, 0, 0);
 
     public FourBar(HardwareMap hardwareMap){
-        fourBar = hardwareMap.dcMotor.get("fourBar");
+        fourBar = hardwareMap.dcMotor.get("bar4");
         fourBar.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fourBar.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
 

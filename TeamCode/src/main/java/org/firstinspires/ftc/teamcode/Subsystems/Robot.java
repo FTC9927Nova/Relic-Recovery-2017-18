@@ -14,11 +14,11 @@ public class Robot
 {
     public DriveTrain driveTrain;
     public Claw claw;
-    public Lift elevator;
     public JewelArm jewelArm;
     public VumarkDetect vumarkDetect;
     public FourBar bar4;
     public Wheels wheels;
+    public RelicMech relic;
     Gyro gyro = new Gyro();
 
     public Robot()
@@ -33,6 +33,7 @@ public class Robot
         jewelArm = new JewelArm(hardwareMap);
         bar4 = new FourBar(hardwareMap);
         wheels = new Wheels(hardwareMap);
+        relic = new RelicMech(hardwareMap);
 
 
 

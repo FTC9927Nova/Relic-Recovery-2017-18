@@ -100,19 +100,23 @@ public class MainTeleop extends OpMode
 
         if(gamepad2.y){
 
-            robot.bar4.setPower(.2);
+            robot.bar4.setPower(.5);
 
 
         }
 
         else if(gamepad2.x){
 
-            robot.bar4.setPower(0);
+            robot.bar4.setPower(-0.125);
+
+        }
+        else if(gamepad2.a){
+
+            robot.bar4.setPower(0.05);
 
         }
         else{
 
-            robot.elevator.stayInPlace();
 
         }
 

@@ -191,7 +191,7 @@ public class DriveTrain implements SubsystemTemplate
 
     public int getLeftCurrentPosition()
     {
-        return (int)((l1.getCurrentPosition() + l2.getCurrentPosition())/2.0 );
+        return l1.getCurrentPosition();
     }
 
     public int getRightCurrentPosition()
