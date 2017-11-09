@@ -1,15 +1,13 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 import android.hardware.Sensor;
-import android.util.Printer;
 import android.util.Range;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.Util.PIDLoop;
-import org.firstinspires.ftc.teamcode.Util.Potentiometer;
-import org.firstinspires.ftc.teamcode.Util.RobotConstants;
+import org.firstinspires.ftc.teamcode.Util.*;
+
 
 /**
  * Created by Ethan Pereira on 11/5/2017.
@@ -18,16 +16,19 @@ import org.firstinspires.ftc.teamcode.Util.RobotConstants;
 public class FourBar implements SubsystemTemplate {
 
     private DcMotor fourBar;
-    private int targetPos;
+    private double targetAngle;;
     private int desiredPosEnc;
-    private Potentiometer potentiometer;
-    private Boolean isReachedPos;
+    private boolean shouldStay = true;
+
     private Sensor LimitSwitch_Zero;
     //TODO:CHECK IF 2 LIMIT SWITCHES ARE NEEDED
     // Maybe:
     //private Sensor LimitSwitch_Max;
     private RobotConstants constants = new RobotConstants();
-    private PIDLoop pidLoop = new PIDLoop(0.05, 0, 0);
+
+    //MAKE SURE NOT TO MESS WITH KD TERM!!!!!!!!!!!!!
+    private PIDLoop pidLoop = new PIDLoop(0.01, 0, 0);
+    private Potentiometer pot;
 
     public FourBar(HardwareMap hardwareMap){
         fourBar = hardwareMap.dcMotor.get("bar4");
@@ -36,47 +37,53 @@ public class FourBar implements SubsystemTemplate {
 
     }
 
-    public void setPos(int desiredPos) {
-        if (Math.abs(desiredPosEnc - fourBar.getCurrentPosition()) > constants.getFOUR_BAR_TOLERANCE()) {
-            isReachedPos = false;
-            desiredPosEnc = constants.getFOURBAR_TICKS_PER_LEVEL() - fourBar.getCurrentPosition();
-            while (Math.abs(desiredPosEnc - fourBar.getCurrentPosition()) > constants.getFOUR_BAR_TOLERANCE()) {
-                fourBar.setPower(com.qualcomm.robotcore.util.Range.clip(pidLoop.pLoop(desiredPos), -1, 1));
-            }
-            fourBar.setPower(0);
-            fourBar.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    public void getPotentiometer(Potentiometer pot)
+    {
+        this.pot = pot;
+    }
+
+    public double setHeight(double height)
+    {
+
+        return Math.toDegrees(Math.acos(1 - ((Math.pow(height, 2))/(2 * Math.pow(constants.getFOURBARLENGTH(), 2)))));
+
+    }
+
+    public void setTargetAngle()
+    {
+        if(shouldStay)
+            targetAngle = pot.getAngle();
+        shouldStay = false;
+    }
+
+    public double getTargetAngle(){
+
+        return targetAngle;
+
+    }
+
+    public void shouldStayTrue(){
+
+        shouldStay = true;
+
+    }
+
+    public void setMoveAngle(double targetAngle)
+    {
+        pot.getInput();
+
+        pidLoop.setTarget(targetAngle);
+        if(pot.getAngle()<targetAngle)
+        {
+            fourBar.setPower(pidLoop.pidLoop(targetAngle,1));
         }
-        isReachedPos = true;
-
-
-    }
-
-    public void stayInPlace(){
-        targetPos = fourBar.getCurrentPosition();
-        if ((targetPos-fourBar.getCurrentPosition()) > constants.getFOUR_BAR_TOLERANCE()){
-            fourBar.setPower(com.qualcomm.robotcore.util.Range.clip(pidLoop.pLoop(targetPos-fourBar.getCurrentPosition()) , -1, 1));
-        } else if ((targetPos-fourBar.getCurrentPosition()) < -constants.getFOUR_BAR_TOLERANCE()){
-            fourBar.setPower(com.qualcomm.robotcore.util.Range.clip(pidLoop.pLoop(targetPos-fourBar.getCurrentPosition()) , -1, 1));
-        } else{
-            fourBar.setPower(0);
-            fourBar.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        else if(pot.getAngle()>targetAngle)
+        {
+            setPower(0);
         }
-        //TODO:Check if fourBar going up is Negative vals or Positive Vals
-
     }
 
-    public void resetEnc(){
 
-        fourBar.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        fourBar.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-    }
-
-    public int getEnc(){
-
-        return fourBar.getCurrentPosition();
-
-    }
 
     public void setPower(double power){
 

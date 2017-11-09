@@ -50,10 +50,6 @@ public class TeleOpNew extends OpMode
         float lpwr = (float) Math.pow(((yval + xval)), 3);
         float rpwr = (float) Math.pow((yval - xval), 3);
 
-//
-//        Log.i("Angle", String.valueOf(gyro.getYaw()));//Operator Code
-//        Log.i("Past Angle", String.valueOf(pastAnlge));
-
 
 
 //        turtle mode
@@ -62,58 +58,49 @@ public class TeleOpNew extends OpMode
             lpwr = lpwr/3.0f;
             rpwr = rpwr/3.0f;
         }
-//        Log.i("Error", rate.display());
-
-//        telemetry.addData("nope","false");
-//
-////        if(gamepad1.left_stick_y !=0 && Math.abs(gamepad1.right_stick_x - 0f)<0.1 ) {
-//            telemetry.addData("yup","true");
-//
-//            //left is greater right
-//            if ((pastAnlge - currentAnlge) > 3) {
-//                rate.setTarget(pastAnlge);
-//                lpwr += (float) rate.pLoop(gyro.getYaw());
-//              // Log.i("Error", rate.display());
-//            }
-//
-//            //right is greater
-//            else if ((pastAnlge - currentAnlge) < 3) {
-//                rate.setTarget(pastAnlge);
-//                lpwr -= (float) rate.pLoop(gyro.getYaw());
-//               // Log.i("Error", rate.display());
-//            }
-//
-////        }
 
 
         robot.driveTrain.setLeftPower(lpwr);
         robot.driveTrain.setRightPower(rpwr);
 
-//        currentAnlge = gyro.getYaw();
-//        Log.i("Current Angle", String.valueOf(currentAnlge));
 
-        //   telemetry.addData("",robot.driveTrain.display());
 
         if(gamepad2.y){
 
-            robot.bar4.setPower(.5);
+            robot.bar4.shouldStayTrue();
+            robot.bar4.setMoveAngle(robot.bar4.setHeight(18.5));
 
 
         }
+        else if(gamepad2.b){
 
-        else if(gamepad2.x){
-
-            robot.bar4.setPower(-0.125);
+            robot.bar4.shouldStayTrue();
+            robot.bar4.setMoveAngle(robot.bar4.setHeight(12.5));
 
         }
         else if(gamepad2.a){
 
-            robot.bar4.setPower(0.05);
+            robot.bar4.shouldStayTrue();
+            robot.bar4.setMoveAngle(robot.bar4.setHeight(6.5));
+
+        }
+        else if(gamepad2.x){
+
+            robot.bar4.shouldStayTrue();
+            robot.bar4.setMoveAngle(robot.bar4.setHeight(18.5));
+
+        }
+
+        else if(gamepad2.left_stick_y != 0){
+
+            robot.bar4.shouldStayTrue();
+            robot.bar4.setPower(-gamepad2.left_stick_y);
 
         }
         else{
 
-            robot.bar4.setPower(0);
+            robot.bar4.setTargetAngle();
+            robot.bar4.setMoveAngle(robot.bar4.getTargetAngle());
 
         }
 

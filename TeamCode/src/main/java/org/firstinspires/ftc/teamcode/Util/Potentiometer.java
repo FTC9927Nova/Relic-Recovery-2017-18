@@ -31,14 +31,20 @@ public class Potentiometer {
     public void getInput()
     {
         voltageCalc = potentiometer.getVoltage();
-        voltageCalc = (voltageCalc * 10) + 0.5;
-        voltageCalc = (int) voltageCalc;
+        voltageCalc = (int)(voltageCalc * 10) + 0.5;
+        voltageCalc =  voltageCalc;
         voltage = voltageCalc/10;
         maxVoltage = potentiometer.getMaxVoltage();
         percentTurned = (int) (voltage/maxVoltage) * 100;
         percentTurnedDecimal = (voltage/maxVoltage);
         angle = percentTurnedDecimal * 270;
     }
+
+    public double getAngle()
+    {
+        return angle;
+    }
+
 
 
     public String display()

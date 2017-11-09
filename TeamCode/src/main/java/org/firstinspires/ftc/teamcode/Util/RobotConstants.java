@@ -10,10 +10,16 @@ public class RobotConstants
     private final double ROBOT_LENGTH = 17;
     private final double WHEEL_DIAMETER = 4;
     private final int DRIVE_TOLERANCE = 30;
+
+    //TODO: GET FASTERERERER
+    private final double MAX_ANGLE = 0;
 //    20
     //It was 5 at first and worked really well
     private final double TURN_TOLERANCE = 2;
     private final double WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
+
+    private final double ARM_LENGTH = 12.0;
+    private final double TARTGET_HEIGHT_1 = 6.5, TARGET_HEIGHT_2 = 12.5, TARGET_HEIGHT_3 = 18.5;
 
     private final double FOUR_BAR_TOLERANCE = 0;
 
@@ -53,6 +59,8 @@ public class RobotConstants
     }
 
     public double getFOUR_BAR_TOLERANCE() { return FOUR_BAR_TOLERANCE;}
+
+    public double getFOURBARLENGTH(){ return ARM_LENGTH;}
 
     public int getFOURBAR_TICKS_PER_LEVEL(){ return FOURBAR_TICKS_PER_LEVEL;}
     public int getFOURBAR_TOLERANCE(){ return FOURBAR_TOLERANCE;}
