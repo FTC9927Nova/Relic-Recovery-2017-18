@@ -14,7 +14,7 @@ public class RelicMech implements SubsystemTemplate
     public RelicMech(HardwareMap hardwareMap)
     {
         relic = hardwareMap.dcMotor.get("relic");
-        relic.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        relic.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void setPower(double pwr)

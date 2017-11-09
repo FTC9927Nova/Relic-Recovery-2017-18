@@ -13,16 +13,16 @@ import org.firstinspires.ftc.teamcode.Util.Potentiometer;
 @TeleOp(name = "Potentiometer Test")
 public class PotTest extends LinearOpMode
 {
-    Potentiometer pet;
+    Potentiometer potentiometer;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        pet = new Potentiometer(hardwareMap);
+        potentiometer = new Potentiometer(hardwareMap);
         waitForStart();
         while (opModeIsActive())
         {
-            pet.getInput();
-            telemetry.addData("Pot",pet.display());
+            potentiometer.getInput();
+            telemetry.addData("Pot", potentiometer.display());
             telemetry.update();
         }
     }

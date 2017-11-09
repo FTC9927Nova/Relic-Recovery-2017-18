@@ -33,7 +33,6 @@ public class BLUEJewlParkAuton extends LinearOpMode{
 
 
         if(opModeIsActive()){
-            robot.claw.close();
             robot.driveTrain.setMoveDist(-2);
 
             robot.jewelArm.armDown();
@@ -69,7 +68,6 @@ public class BLUEJewlParkAuton extends LinearOpMode{
             }
             robot.driveTrain.setMoveDist(25);
             sleep(1000);
-            robot.claw.open();
             sleep(1000);
             sleep(1000);
             robot.driveTrain.setMoveDist(-2);

@@ -1,31 +1,30 @@
 package org.firstinspires.ftc.teamcode.Tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 import org.firstinspires.ftc.teamcode.Util.Gyro;
 
 /**
- * Created by Ethan Pereira on 10/24/2017.
+ * Created by Sumanth on 11/9/17.
  */
-@Autonomous(name = "csTest")
-@Disabled
-public class ColorSensorTest extends LinearOpMode{
 
-
+@Autonomous(name = "SetMoveDist")
+public class DriveSetMoveDistTest extends LinearOpMode
+{
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
+
     @Override
     public void runOpMode() throws InterruptedException {
-        robot.init(hardwareMap, this, gyro );
         gyro.initGyro(hardwareMap);
-        waitForStart();
-        while (opModeIsActive()){
-            telemetry.addData("Color", robot.jewelArm.getColor());
-            telemetry.update();
+        robot.init(hardwareMap,this,gyro);
+        if(opModeIsActive())
+        {
+            robot.driveTrain.setMoveDist(24);
+            telemetry.addData("dt",robot.driveTrain.display());
         }
+
     }
 }
