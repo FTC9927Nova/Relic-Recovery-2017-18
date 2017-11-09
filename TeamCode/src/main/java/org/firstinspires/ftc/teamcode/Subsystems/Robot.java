@@ -12,35 +12,29 @@ import org.firstinspires.ftc.teamcode.Util.VumarkDetect;
 
 public class Robot
 {
-    private static DriveTrain driveTrain;
-    private Claw claw;
-    private static Lift elevator;
-    private static JewelArm jewelArm;
+    public DriveTrain driveTrain;
+    public Claw claw;
+    public JewelArm jewelArm;
+    public VumarkDetect vumarkDetect;
+    public FourBar bar4;
+    public Wheels wheels;
+    public RelicMech relic;
+    Gyro gyro = new Gyro();
 
     public Robot()
     {
 
     }
 
-    public static DriveTrain getDriveTrainInstance()
-    {
-       return driveTrain;
-    }
-    public static Lift getLiftInstance()
-    {
-        return elevator;
-    }
-
-
-
-
     public void init(HardwareMap hardwareMap, Gyro gyrofromOpMode)
     {
         driveTrain = new DriveTrain(hardwareMap);
         driveTrain.setGyro(gyrofromOpMode);
-        claw = new Claw(hardwareMap);
         jewelArm = new JewelArm(hardwareMap);
-        elevator = new Lift(hardwareMap);
+        bar4 = new FourBar(hardwareMap);
+        wheels = new Wheels(hardwareMap);
+        relic = new RelicMech(hardwareMap);
+
 
 
 //        vumarkDetect = new VumarkDetect(hardwareMap);
@@ -50,9 +44,10 @@ public class Robot
     {
         driveTrain = new DriveTrain(hardwareMap,linearOpMode);
         driveTrain.setGyro(gyrofromOpMode);
-        claw = new Claw(hardwareMap);
         jewelArm = new JewelArm(hardwareMap);
-        elevator = new Lift(hardwareMap);
+        bar4 = new FourBar(hardwareMap);
+        wheels = new Wheels(hardwareMap);
+
 
 //        vumarkDetect = new VumarkDetect(hardwareMap);
     }

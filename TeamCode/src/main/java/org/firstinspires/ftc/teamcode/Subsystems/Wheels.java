@@ -17,10 +17,15 @@ public class Wheels implements SubsystemTemplate{
 
         leftWheels = hardwareMap.dcMotor.get("leftIntake");
         rightWheels = hardwareMap.dcMotor.get("rightIntake");
+//        leftWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        rightWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        setMode(Mode.STOP_RESET);
-        leftWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        setMode(Mode.STOP_RESET);
+//        leftWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        rightWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        leftWheels.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightWheels.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
 
@@ -56,19 +61,47 @@ public class Wheels implements SubsystemTemplate{
 
     }
 
-    public void intake(){
+    public void intakeLeft(){
 
         leftWheels.setPower(1);
+
+    }
+    public void intakeRight(){
+
         rightWheels.setPower(1);
 
     }
-    public void outtake(){
+    public void outtakeLeft(){
 
         leftWheels.setPower(-1);
+
+    }
+
+    public void outtakeRight(){
+
         rightWheels.setPower(-1);
 
     }
 
+    public void stopLeft()
+    {
+        leftWheels.setPower(0);
+    }
+
+    public void stopRight(){
+
+        rightWheels.setPower(0);
+
+    }
+
+    public void setLeftWheelPwr(double a)
+    {
+        leftWheels.setPower(a);
+    }
+    public void setRightWheels(double b)
+    {
+        rightWheels.setPower(b);
+    }
     @Override
     public String display() {
 

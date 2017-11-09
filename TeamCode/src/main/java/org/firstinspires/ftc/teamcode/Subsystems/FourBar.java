@@ -16,7 +16,6 @@ import org.firstinspires.ftc.teamcode.Util.RobotConstants;
 
 public class FourBar implements SubsystemTemplate {
 
-
     private DcMotor fourBar;
     private int targetPos;
     private int desiredPosEnc;
@@ -27,8 +26,10 @@ public class FourBar implements SubsystemTemplate {
     //private Sensor LimitSwitch_Max;
     private RobotConstants constants = new RobotConstants();
     private PIDLoop pidLoop = new PIDLoop(0.05, 0, 0);
+
     public FourBar(HardwareMap hardwareMap){
-        fourBar = hardwareMap.dcMotor.get("fourBar");
+        fourBar = hardwareMap.dcMotor.get("bar4");
+        fourBar.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         fourBar.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
@@ -65,7 +66,7 @@ public class FourBar implements SubsystemTemplate {
     public void resetEnc(){
 
         fourBar.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        fourBar.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        fourBar.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 

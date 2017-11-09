@@ -67,9 +67,9 @@ public class DriveTrain implements SubsystemTemplate
         setDrive(Drive.SPEED);
 
         l1.setDirection(DcMotorSimple.Direction.FORWARD);
-        l2.setDirection(DcMotorSimple.Direction.FORWARD);
+        l2.setDirection(DcMotorSimple.Direction.REVERSE);
         r1.setDirection(DcMotorSimple.Direction.REVERSE);
-        r2.setDirection(DcMotorSimple.Direction.REVERSE);
+        r2.setDirection(DcMotorSimple.Direction.FORWARD);
 
         setSpeedController(DriveSpeedController.BRAKE);
     }
@@ -83,10 +83,10 @@ public class DriveTrain implements SubsystemTemplate
         r2 = hardwareMap.dcMotor.get("r2");
 
 
-        l1.setDirection(DcMotorSimple.Direction.FORWARD);
-        l2.setDirection(DcMotorSimple.Direction.REVERSE);
-        r1.setDirection(DcMotorSimple.Direction.REVERSE);
-        r2.setDirection(DcMotorSimple.Direction.FORWARD);
+        l1.setDirection(DcMotorSimple.Direction.REVERSE);
+        l2.setDirection(DcMotorSimple.Direction.FORWARD);
+        r1.setDirection(DcMotorSimple.Direction.FORWARD);
+        r2.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         setDrive(Drive.STOP_RESET);
@@ -144,7 +144,6 @@ public class DriveTrain implements SubsystemTemplate
 
         l1.setZeroPowerBehavior(zeroPowerBehavior);
         l2.setZeroPowerBehavior(zeroPowerBehavior);
-
         r1.setZeroPowerBehavior(zeroPowerBehavior);
         r2.setZeroPowerBehavior(zeroPowerBehavior);
 
@@ -192,7 +191,7 @@ public class DriveTrain implements SubsystemTemplate
 
     public int getLeftCurrentPosition()
     {
-        return (int)((l1.getCurrentPosition() + l2.getCurrentPosition())/2.0 );
+        return l1.getCurrentPosition();
     }
 
     public int getRightCurrentPosition()

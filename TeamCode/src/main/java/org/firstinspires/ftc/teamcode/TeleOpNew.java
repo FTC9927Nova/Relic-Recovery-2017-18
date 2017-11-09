@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 
 import org.firstinspires.ftc.teamcode.Subsystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
@@ -16,23 +17,18 @@ import org.firstinspires.ftc.teamcode.Util.PIDLoop;
 /**
  * Created by therat0981 on 10/1/17.
  */
-@TeleOp(name = "TeleOp")
+@TeleOp(name = "TeleOpNew")
 
-public class MainTeleop extends OpMode
+public class TeleOpNew extends OpMode
 {
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
-    PIDLoop rate = new PIDLoop(.005, 0,0);
-    //0.01
-    private double pastAnlge = 0;
-    private double currentAnlge = 0;
-
 
     @Override
     public void init()
     {
-        gyro.initGyro(hardwareMap);
-        robot.init(hardwareMap, gyro);
+        gyro.initGyro(this.hardwareMap);
+        robot.init(this.hardwareMap, gyro);
         robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
         robot.driveTrain.setDrive(DriveTrain.Drive.SPEED);
 
@@ -41,7 +37,7 @@ public class MainTeleop extends OpMode
 
     public void loop()
     {
-        robot.jewelArm.armMid();
+//        robot.jewelArm.armMid();
 
         //Driver Code
         float yval = -gamepad1.left_stick_y;
@@ -96,7 +92,7 @@ public class MainTeleop extends OpMode
 //        currentAnlge = gyro.getYaw();
 //        Log.i("Current Angle", String.valueOf(currentAnlge));
 
-     //   telemetry.addData("",robot.driveTrain.display());
+        //   telemetry.addData("",robot.driveTrain.display());
 
         if(gamepad2.y){
 
@@ -117,30 +113,53 @@ public class MainTeleop extends OpMode
         }
         else{
 
+            robot.bar4.setPower(0);
 
         }
 
         if (gamepad2.left_bumper){
-            robot.claw.open();
-        } else if (gamepad2.right_bumper){
-            robot.claw.close();
+            robot.wheels.setLeftWheelPwr(1);
+        }
+        else if(gamepad2.left_trigger != 0){
+
+            robot.wheels.setLeftWheelPwr(-1);
+
+        }
+        else{
+
+            robot.wheels.setLeftWheelPwr(0);
         }
 
-        telemetry.addData("lpwr: ", lpwr);
+        if (gamepad2.right_bumper){
+            robot.wheels.setRightWheels(1);
+        }
+        else if(gamepad2.right_trigger != 0) {
 
-        telemetry.addData("rpwr: ", rpwr);
+            robot.wheels.setRightWheels(-1);
 
-        telemetry.addData("pastAngle",pastAnlge);
-        telemetry.addData("currentAngle", currentAnlge);
+        }
+        else{
+            robot.wheels.setRightWheels(0);
+        }
+
+
+        if(gamepad2.dpad_up)
+        {
+            robot.relic.setPower(1);
+        }
+        else if(gamepad2.dpad_down)
+        {
+            robot.relic.setPower(-1);
+        }
+        else
+        {
+            robot.relic.setPower(0);
+        }
+
+
 
         telemetry.update();
 
-
-
-
-        //claw
-
-        //elevator
 
 
     }
