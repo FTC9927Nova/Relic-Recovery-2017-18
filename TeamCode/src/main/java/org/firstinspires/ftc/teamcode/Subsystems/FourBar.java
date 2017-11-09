@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Util.PIDLoop;
+import org.firstinspires.ftc.teamcode.Util.Potentiometer;
 import org.firstinspires.ftc.teamcode.Util.RobotConstants;
 
 /**
@@ -19,6 +20,7 @@ public class FourBar implements SubsystemTemplate {
     private DcMotor fourBar;
     private int targetPos;
     private int desiredPosEnc;
+    private Potentiometer potentiometer;
     private Boolean isReachedPos;
     private Sensor LimitSwitch_Zero;
     //TODO:CHECK IF 2 LIMIT SWITCHES ARE NEEDED
