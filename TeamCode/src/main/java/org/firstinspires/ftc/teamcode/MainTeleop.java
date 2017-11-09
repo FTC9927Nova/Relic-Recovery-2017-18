@@ -120,11 +120,6 @@ public class MainTeleop extends OpMode
 
         }
 
-        if (gamepad2.left_bumper){
-            robot.claw.open();
-        } else if (gamepad2.right_bumper){
-            robot.claw.close();
-        }
 
         telemetry.addData("lpwr: ", lpwr);
 

@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.Util.VumarkDetect;
 public class Robot
 {
     public DriveTrain driveTrain;
-    public Claw claw;
+//    public Claw claw;
     public JewelArm jewelArm;
     public VumarkDetect vumarkDetect;
     public FourBar bar4;

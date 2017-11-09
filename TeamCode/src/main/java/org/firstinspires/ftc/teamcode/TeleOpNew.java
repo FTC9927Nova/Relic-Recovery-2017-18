@@ -27,8 +27,8 @@ public class TeleOpNew extends OpMode
     @Override
     public void init()
     {
-        gyro.initGyro(this.hardwareMap);
-        robot.init(this.hardwareMap, gyro);
+        gyro.initGyro(hardwareMap);
+        robot.init(hardwareMap, gyro);
         robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
         robot.driveTrain.setDrive(DriveTrain.Drive.SPEED);
 
