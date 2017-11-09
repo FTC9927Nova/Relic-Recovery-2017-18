@@ -30,6 +30,7 @@ public class Potentiometer {
         angle = percentTurned * 250;
     }
 
+
     public String display()
     {
         return "voltage: " + voltage
