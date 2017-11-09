@@ -62,33 +62,25 @@ public class Wheels implements SubsystemTemplate{
 
     public void intakeLeft(){
 
-        while (!bumper.getState()){
-            leftWheels.setPower(1);
-        }
-        leftWheels.setPower(0);
-    }
-    public void intakeRight(){
+        leftWheels.setPower(1);
 
-        while (!bumper.getState()){
-            rightWheels.setPower(1);
-        }
-        rightWheels.setPower(0);
     }
+    public void intakeRight() {
+
+        rightWheels.setPower(1);
+    }
+
     public void outtakeLeft(){
 
-        while (!bumper.getState()){
-            leftWheels.setPower(-1);
-        }
-        leftWheels.setPower(0);
+        leftWheels.setPower(-1);
+
     }
 
     public void outtakeRight(){
 
-        while (!bumper.getState()){
-            rightWheels.setPower(-1);
-        }
-        rightWheels.setPower(0);
+        rightWheels.setPower(-1);
     }
+
 
     public void stopLeft()
     {
@@ -103,17 +95,13 @@ public class Wheels implements SubsystemTemplate{
 
     public void setLeftWheelPwr(double a)
     {
-        while (!bumper.getState()){
             leftWheels.setPower(a);
-        }
-        leftWheels.setPower(0);    }
+    }
     public void setRightWheels(double b)
     {
-        while (!bumper.getState()){
             rightWheels.setPower(b);
-        }
-        rightWheels.setPower(0);
     }
+
 
 
     @Override
