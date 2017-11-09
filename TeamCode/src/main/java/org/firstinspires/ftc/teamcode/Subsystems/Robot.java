@@ -3,7 +3,10 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcontroller.external.samples.PushbotAutoDriveByEncoder_Linear;
+import org.firstinspires.ftc.teamcode.Util.Bumper;
 import org.firstinspires.ftc.teamcode.Util.Gyro;
+import org.firstinspires.ftc.teamcode.Util.Potentiometer;
 import org.firstinspires.ftc.teamcode.Util.VumarkDetect;
 
 /**
@@ -19,6 +22,8 @@ public class Robot
     public FourBar bar4;
     public Wheels wheels;
     public RelicMech relic;
+    public Bumper bumper;
+    public Potentiometer potentiometer;
     Gyro gyro = new Gyro();
 
     public Robot()
@@ -34,6 +39,8 @@ public class Robot
         bar4 = new FourBar(hardwareMap);
         wheels = new Wheels(hardwareMap);
         relic = new RelicMech(hardwareMap);
+        bumper = new Bumper(hardwareMap);
+//        potentiometer = new Potentiometer(hardwareMap);
 
 
 
@@ -47,6 +54,8 @@ public class Robot
         jewelArm = new JewelArm(hardwareMap);
         bar4 = new FourBar(hardwareMap);
         wheels = new Wheels(hardwareMap);
+        bumper = new Bumper(hardwareMap);
+//        potentiometer = new Potentiometer(hardwareMap);
 
 
 //        vumarkDetect = new VumarkDetect(hardwareMap);

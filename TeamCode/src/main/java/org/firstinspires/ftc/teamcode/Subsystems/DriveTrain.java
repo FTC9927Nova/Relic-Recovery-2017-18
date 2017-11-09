@@ -71,7 +71,7 @@ public class DriveTrain implements SubsystemTemplate
         r1.setDirection(DcMotorSimple.Direction.REVERSE);
         r2.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        setSpeedController(DriveSpeedController.BRAKE);
+        setSpeedController(DriveSpeedController.COAST);
     }
 
 

@@ -10,8 +10,7 @@ import com.qualcomm.robotcore.hardware.*;
 public class Wheels implements SubsystemTemplate{
 
     private DcMotor leftWheels, rightWheels;
-
-
+    private DigitalChannel bumper;
     public Wheels(HardwareMap hardwareMap)
     {
 
@@ -63,24 +62,32 @@ public class Wheels implements SubsystemTemplate{
 
     public void intakeLeft(){
 
-        leftWheels.setPower(1);
-
+        while (!bumper.getState()){
+            leftWheels.setPower(1);
+        }
+        leftWheels.setPower(0);
     }
     public void intakeRight(){
 
-        rightWheels.setPower(1);
-
+        while (!bumper.getState()){
+            rightWheels.setPower(1);
+        }
+        rightWheels.setPower(0);
     }
     public void outtakeLeft(){
 
-        leftWheels.setPower(-1);
-
+        while (!bumper.getState()){
+            leftWheels.setPower(-1);
+        }
+        leftWheels.setPower(0);
     }
 
     public void outtakeRight(){
 
-        rightWheels.setPower(-1);
-
+        while (!bumper.getState()){
+            rightWheels.setPower(-1);
+        }
+        rightWheels.setPower(0);
     }
 
     public void stopLeft()
@@ -96,12 +103,19 @@ public class Wheels implements SubsystemTemplate{
 
     public void setLeftWheelPwr(double a)
     {
-        leftWheels.setPower(a);
-    }
+        while (!bumper.getState()){
+            leftWheels.setPower(a);
+        }
+        leftWheels.setPower(0);    }
     public void setRightWheels(double b)
     {
-        rightWheels.setPower(b);
+        while (!bumper.getState()){
+            rightWheels.setPower(b);
+        }
+        rightWheels.setPower(0);
     }
+
+
     @Override
     public String display() {
 
