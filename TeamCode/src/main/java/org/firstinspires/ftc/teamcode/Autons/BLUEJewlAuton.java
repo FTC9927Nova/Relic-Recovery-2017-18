@@ -33,7 +33,6 @@ public class BLUEJewlAuton extends LinearOpMode{
 
 
         if(opModeIsActive()){
-            robot.claw.close();
             robot.driveTrain.setMoveDist(-2);
 
             robot.jewelArm.armDown();

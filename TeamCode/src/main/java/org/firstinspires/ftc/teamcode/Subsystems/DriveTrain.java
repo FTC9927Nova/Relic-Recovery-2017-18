@@ -23,10 +23,10 @@ public class DriveTrain implements SubsystemTemplate
     //TODO: ADD SECOND MOTOR;
     private LinearOpMode opMode;
 
-    private DcMotor l1 = null;
-    private DcMotor l2 = null;
-    private DcMotor r1 = null;
-    private DcMotor r2 = null;
+    private DcMotor l1;
+    private DcMotor l2;
+    private DcMotor r1;
+    private DcMotor r2;
     public Gyro gyro;
 
     private int leftTarget;
@@ -168,7 +168,6 @@ public class DriveTrain implements SubsystemTemplate
     {
         l1.setTargetPosition(target);
         l2.setTargetPosition(target);
-        leftTarget = target;
     }
 
     private void setRightTarget(int target)
@@ -200,30 +199,38 @@ public class DriveTrain implements SubsystemTemplate
         return (int)((r1.getCurrentPosition()+ r2.getCurrentPosition())/2.0);
     }
 
+    public boolean checkEncoders()
+    {
+        return true;
+    }
+
     public void setMoveDist(double dist)
     {
+//        setDrive(Drive.ENCODERS);
 
         setSpeedController(DriveSpeedController.BRAKE);
         if (this.opMode.opModeIsActive()) {
 
             setDrive(Drive.STOP_RESET);
 
+            setDrive(Drive.ENCODERS);
+
             leftTarget = (int) (dist * constant.getTICKS_PER_INCH());
             rightTarget = (int) (dist * constant.getTICKS_PER_INCH());
-
-            setDrive(Drive.ENCODERS);
 
             setLeftTarget(leftTarget);
             setRightTarget(rightTarget);
 
-
-
-            driveCL.setTarget(leftTarget);
-
             while(this.opMode.opModeIsActive() &&
-                    (Math.abs((getLeftCurrentPosition()-leftTarget))>constant.getDRIVE_TOLERANCE() && Math.abs((getRightCurrentPosition()-rightTarget))>constant.getDRIVE_TOLERANCE())) {
-                setLeftPower(driveCL.pLoop(getLeftCurrentPosition()));
-                setRightPower(driveCL.pLoop(getRightCurrentPosition()));
+                    (Math.abs(getLeftCurrentPosition()-leftTarget)>constant.getDRIVE_TOLERANCE() || Math.abs(getRightCurrentPosition()-rightTarget)>constant.getDRIVE_TOLERANCE())) {
+                setLeftPower(.5);
+                setRightPower(.5);
+                this.opMode.telemetry.addData("",display());
+                Log.i("R1", String.valueOf(r1.getCurrentPosition()));
+                Log.i("R2", String.valueOf(r2.getCurrentPosition()));
+                Log.i("L1", String.valueOf(l1.getCurrentPosition()));
+                Log.i("L2", String.valueOf(l2.getCurrentPosition()));
+
             }
 
             setLeftPower(0);

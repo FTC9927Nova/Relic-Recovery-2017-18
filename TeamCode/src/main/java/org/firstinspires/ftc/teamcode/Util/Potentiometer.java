@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Hardware;
+import org.firstinspires.ftc.
 
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 
@@ -12,29 +13,13 @@ import org.firstinspires.ftc.teamcode.Subsystems.Robot;
  */
 
 public class Potentiometer {
-    AnalogInput potentiometer;
 
-    float voltage;
-    float percentTurned;
-    float angle;
-    //Initializes the fourbar
+    Potentiometer potentiometer;
 
     public Potentiometer(HardwareMap hardwareMap) {
+
         potentiometer = hardwareMap.analogInput.get("pot");
-    }
 
-    public void getInput()
-    {
-        voltage = (float)potentiometer.getVoltage();
-        percentTurned = (voltage/5.0f);
-        angle = percentTurned * 250;
-    }
-
-    public String display()
-    {
-        return "voltage: " + voltage
-                +"\nPercent Turned: " + percentTurned
-                +"\nAngle: " + angle;
     }
 
 
