@@ -14,9 +14,13 @@ import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 public class Potentiometer {
     AnalogInput potentiometer;
 
-    float voltage;
-    float percentTurned;
-    float angle;
+    double voltage;
+    double voltageCalc;
+    int percentTurned;
+    double percentTurnedDecimal;
+    double angle;
+    double maxVoltage;
+
     //Initializes the fourbar
 
 
@@ -26,15 +30,21 @@ public class Potentiometer {
 
     public void getInput()
     {
-        voltage = (float)potentiometer.getVoltage();
-        percentTurned = (voltage/5.0f);
-        angle = percentTurned * 250;
+        voltageCalc = potentiometer.getVoltage();
+        voltageCalc = (voltageCalc * 10) + 0.5;
+        voltageCalc = (int) voltageCalc;
+        voltage = voltageCalc/10;
+        maxVoltage = potentiometer.getMaxVoltage();
+        percentTurned = (int) (voltage/maxVoltage) * 100;
+        percentTurnedDecimal = (voltage/maxVoltage);
+        angle = percentTurnedDecimal * 270;
     }
 
 
     public String display()
     {
         return "voltage: " + voltage
+                +"\nMax Voltage: " + maxVoltage
                 +"\nPercent Turned: " + percentTurned
                 +"\nAngle: " + angle;
     }
