@@ -41,29 +41,23 @@ public class BLUEJewlAuton extends LinearOpMode{
 //
 
             if(String.valueOf(robot.jewelArm.getColor()) == "RED"){
-//                robot.driveTrain.setLeftPower(.3);
-//                robot.driveTrain.setRightPower(.3);
-//                sleep(500);
-//                robot.driveTrain.setRightPower(0);
-//                robot.driveTrain.setLeftPower(0);
-                robot.driveTrain.setMoveDist(4);
-                dist-=2;
+
+//                robot.driveTrain.setMoveDist(4);
+                telemetry.addData("color", "blue");
+
 
             }
 
 
             else if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
-//                robot.driveTrain.setLeftPower(-.3);
-//                robot.driveTrain.setRightPower(-.3);
-//                sleep(500);
-//                robot.driveTrain.setRightPower(0);
-//                robot.driveTrain.setLeftPower(0);
-                robot.driveTrain.setMoveDist(-4);
+
+//                robot.driveTrain.setMoveDist(-4);
+                telemetry.addData("color", "red");
 
 
-                dist+=4;
 
             }
+            telemetry.update();
             robot.jewelArm.armMid();
 //            sleep(500);
 //            robot.driveTrain.setMoveDist(dist);
