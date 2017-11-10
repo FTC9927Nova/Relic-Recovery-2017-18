@@ -12,12 +12,12 @@ import static java.lang.Thread.sleep;
 
 public class RelicMech implements SubsystemTemplate
 {
-    DcMotor relic;
-    Servo claw, extender;
+    public DcMotor relic;
+    public Servo claw, extender;
 
     public RelicMech(HardwareMap hardwareMap)
     {
-        relic = hardwareMap.dcMotor.get("relic");
+//        relic = hardwareMap.dcMotor.get("relic");
         relic.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         claw = hardwareMap.servo.get("claw");
         extender = hardwareMap.servo.get("extender");
