@@ -14,9 +14,9 @@ import org.firstinspires.ftc.teamcode.Util.Sound;
 public class BumperTest extends OpMode
 {
     DigitalChannel dt;
-    boolean state;
     Sound sound = new Sound();
     @Override
+
     public void init() {
         dt = hardwareMap.digitalChannel.get("bumper");
     }
@@ -25,8 +25,10 @@ public class BumperTest extends OpMode
     public void loop() {
         if (dt.getState()){
             sound.startSound();
+
         } else {
             sound.stopSound();
+            telemetry.addData("Stop Sound", "sound stopped");
         }
 
         telemetry.addData("state", String.valueOf(dt.getState()));
