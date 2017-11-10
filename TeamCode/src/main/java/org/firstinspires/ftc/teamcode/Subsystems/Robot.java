@@ -40,7 +40,7 @@ public class Robot
         wheels = new Wheels(hardwareMap);
         relic = new RelicMech(hardwareMap);
         bumper = new Bumper(hardwareMap);
-//        potentiometer = new Potentiometer(hardwareMap);
+        potentiometer = new Potentiometer(hardwareMap);
 
 
 
@@ -55,7 +55,7 @@ public class Robot
         bar4 = new FourBar(hardwareMap);
         wheels = new Wheels(hardwareMap);
         bumper = new Bumper(hardwareMap);
-//        potentiometer = new Potentiometer(hardwareMap);
+        potentiometer = new Potentiometer(hardwareMap);
 
 
 //        vumarkDetect = new VumarkDetect(hardwareMap);
