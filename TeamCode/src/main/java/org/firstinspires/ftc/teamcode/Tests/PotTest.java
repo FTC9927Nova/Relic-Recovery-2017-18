@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Tests;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.Util.Potentiometer;
 
 
 @TeleOp(name = "Potentiometer Test")
+@Disabled
 public class PotTest extends LinearOpMode
 {
     Potentiometer potentiometer;

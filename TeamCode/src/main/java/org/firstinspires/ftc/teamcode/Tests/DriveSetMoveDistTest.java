@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  */
 
 @Autonomous(name = "SetMoveDist")
+
 public class DriveSetMoveDistTest extends LinearOpMode
 {
     Robot robot = new Robot();

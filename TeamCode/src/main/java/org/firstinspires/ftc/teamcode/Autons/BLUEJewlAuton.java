@@ -42,8 +42,8 @@ public class BLUEJewlAuton extends LinearOpMode{
 
             if(String.valueOf(robot.jewelArm.getColor()) == "RED"){
 
-//                robot.driveTrain.setMoveDist(4);
-                telemetry.addData("color", "blue");
+                robot.driveTrain.setMoveDist(-4);
+                telemetry.addData("color", "red");
 
 
             }
@@ -51,8 +51,8 @@ public class BLUEJewlAuton extends LinearOpMode{
 
             else if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
 
-//                robot.driveTrain.setMoveDist(-4);
-                telemetry.addData("color", "red");
+                robot.driveTrain.setMoveDist(4);
+                telemetry.addData("color", "blue");
 
 
 

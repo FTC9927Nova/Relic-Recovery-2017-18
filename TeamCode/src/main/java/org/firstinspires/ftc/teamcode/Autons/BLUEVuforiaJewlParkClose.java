@@ -77,7 +77,7 @@ public class BLUEVuforiaJewlParkClose extends LinearOpMode{
                     robot.driveTrain.setMoveDist(32);
                     robot.driveTrain.rotateDeg(-90);
                     robot.driveTrain.setMoveDist(15);
-                    //TODO: Wheel spit out here
+                    spitBlock();
                     robot.driveTrain.setMoveDist(-2.5);
 
                     isDone = true;
@@ -92,7 +92,7 @@ public class BLUEVuforiaJewlParkClose extends LinearOpMode{
                     robot.driveTrain.setMoveDist(26);
                     robot.driveTrain.rotateDeg(-90);
                     robot.driveTrain.setMoveDist(15);
-                    //TODO: Wheel spit out here
+                    spitBlock();
                     robot.driveTrain.setMoveDist(-2.5);
 
                     isDone = true;
@@ -108,7 +108,7 @@ public class BLUEVuforiaJewlParkClose extends LinearOpMode{
                     robot.driveTrain.setMoveDist(38);
                     robot.driveTrain.rotateDeg(-90);
                     robot.driveTrain.setMoveDist(15);
-                    //TODO: Wheel spit out here
+                    spitBlock();
                     robot.driveTrain.setMoveDist(-2.5);
 
                     isDone = true;
@@ -154,6 +154,10 @@ public class BLUEVuforiaJewlParkClose extends LinearOpMode{
 
         }
 
+    }
+    public void spitBlock(){
+        robot.wheels.setLeftWheelPwr(-1);
+        robot.wheels.setRightWheelsPwr(-1);
     }
 
 

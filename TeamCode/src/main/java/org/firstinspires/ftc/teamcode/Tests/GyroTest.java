@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Tests;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -11,15 +12,16 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  */
 
 @TeleOp(name = "gyro tester ")
+@Disabled
 public class GyroTest extends LinearOpMode
 {
-    Robot robot = new Robot();
+//    Robot robot = new Robot();
     Gyro gyro = new Gyro();
     @Override
     public void runOpMode() throws InterruptedException
     {
         gyro.initGyro(hardwareMap);
-        robot.init(hardwareMap,this,gyro);
+//        robot.init(hardwareMap,this,gyro);
         while(opModeIsActive())
         {
             telemetry.addData("angle 1", gyro.getYaw());

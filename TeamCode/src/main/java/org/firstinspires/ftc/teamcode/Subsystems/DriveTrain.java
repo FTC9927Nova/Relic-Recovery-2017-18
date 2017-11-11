@@ -71,7 +71,7 @@ public class DriveTrain implements SubsystemTemplate
         r1.setDirection(DcMotorSimple.Direction.REVERSE);
         r2.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        setSpeedController(DriveSpeedController.COAST);
+        setSpeedController(DriveSpeedController.BRAKE);
     }
 
 
@@ -83,11 +83,10 @@ public class DriveTrain implements SubsystemTemplate
         r2 = hardwareMap.dcMotor.get("r2");
 
 
-        l1.setDirection(DcMotorSimple.Direction.REVERSE);
-        l2.setDirection(DcMotorSimple.Direction.FORWARD);
-        r1.setDirection(DcMotorSimple.Direction.FORWARD);
-        r2.setDirection(DcMotorSimple.Direction.REVERSE);
-
+        l1.setDirection(DcMotorSimple.Direction.FORWARD);
+        l2.setDirection(DcMotorSimple.Direction.REVERSE);
+        r1.setDirection(DcMotorSimple.Direction.REVERSE);
+        r2.setDirection(DcMotorSimple.Direction.FORWARD);
 
         setDrive(Drive.STOP_RESET);
 
@@ -222,9 +221,10 @@ public class DriveTrain implements SubsystemTemplate
             setRightTarget(rightTarget);
 
             while(this.opMode.opModeIsActive() &&
-                    (Math.abs(getLeftCurrentPosition()-leftTarget)>constant.getDRIVE_TOLERANCE() || Math.abs(getRightCurrentPosition()-rightTarget)>constant.getDRIVE_TOLERANCE())) {
-                setLeftPower(.5);
-                setRightPower(.5);
+                    (Math.abs(getLeftCurrentPosition()-leftTarget)>constant.getDRIVE_TOLERANCE() && Math.abs(getRightCurrentPosition()-rightTarget)>constant.getDRIVE_TOLERANCE()))
+            {
+                setLeftPower(driveCL.pLoop(getLeftCurrentPosition()));
+                setRightPower(driveCL.pLoop(getRightCurrentPosition()));
                 this.opMode.telemetry.addData("",display());
                 Log.i("R1", String.valueOf(r1.getCurrentPosition()));
                 Log.i("R2", String.valueOf(r2.getCurrentPosition()));

@@ -38,6 +38,7 @@ public class Robot
         relic = new RelicMech(hardwareMap);
         bumper = new Bumper(hardwareMap);
         potentiometer = new Potentiometer(hardwareMap);
+        bar4.getPotentiometer(potentiometer);
 
 
 
@@ -53,6 +54,8 @@ public class Robot
         wheels = new Wheels(hardwareMap);
         bumper = new Bumper(hardwareMap);
         potentiometer = new Potentiometer(hardwareMap);
+        bar4.getPotentiometer(potentiometer);
+
 
 
 //        vumarkDetect = new VumarkDetect(hardwareMap);
