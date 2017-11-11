@@ -34,6 +34,7 @@ public class BLUEJewlAuton extends LinearOpMode{
 
         if(opModeIsActive()){
 
+
             robot.jewelArm.armDown();
 
             sleep(1000);
