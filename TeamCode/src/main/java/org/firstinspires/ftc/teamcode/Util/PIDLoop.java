@@ -21,9 +21,6 @@ public class PIDLoop
     private double deltaError;
     private double timeC;
 
-    public  PIDLoop()
-    {}
-
 
     public PIDLoop(double kp, double ki, double kd)
     {
