@@ -17,7 +17,7 @@ public class RelicMech implements SubsystemTemplate
 
     public RelicMech(HardwareMap hardwareMap)
     {
-//        relic = hardwareMap.dcMotor.get("relic");
+        relic = hardwareMap.dcMotor.get("relic");
         relic.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         claw = hardwareMap.servo.get("claw");
         extender = hardwareMap.servo.get("extender");
@@ -40,10 +40,10 @@ public class RelicMech implements SubsystemTemplate
     public void clawOpen(){
         claw.setPosition(0.5);
     }
-
     public void clawClose(){
         claw.setPosition(0.2);
     }
+
     public void goAllOut(){
         relic.setPower(1);
         try {

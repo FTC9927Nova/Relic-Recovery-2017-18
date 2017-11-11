@@ -14,15 +14,15 @@ public class ServoTest extends LinearOpMode {
     int extenderPos = 0;
     @Override
     public void runOpMode() throws InterruptedException {
-    if (gamepad1.dpad_up){
-        pos += 0.15;
-        relicMech.claw.setPosition(pos);
-    }else if (gamepad1.dpad_down){
-        pos -= 0.15;
-        relicMech.claw.setPosition(pos);
-    } else {
-        relicMech.claw.setPosition(pos);
-    }
+        if (gamepad1.dpad_up){
+            pos += 0.15;
+            relicMech.claw.setPosition(pos);
+        }else if (gamepad1.dpad_down){
+            pos -= 0.15;
+            relicMech.claw.setPosition(pos);
+        } else {
+            relicMech.claw.setPosition(pos);
+        }
 
         if (gamepad2.dpad_up){
             extenderPos += 0.15;

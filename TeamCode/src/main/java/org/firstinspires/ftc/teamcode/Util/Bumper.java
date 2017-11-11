@@ -14,11 +14,15 @@ public class Bumper {
     DigitalChannel dt;
 
     public Bumper(HardwareMap hardwareMap){
+
         dt = hardwareMap.digitalChannel.get("bumper");
+
     }
 
     public boolean getState(){
+
         return dt.getState();
+
     }
 
 
