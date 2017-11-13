@@ -14,7 +14,6 @@ import org.firstinspires.ftc.teamcode.Util.Potentiometer;
 public class Robot
 {
     public DriveTrain driveTrain;
-//    public Claw claw;
     public JewelArm jewelArm;
     public FourBar bar4;
     public Wheels wheels;

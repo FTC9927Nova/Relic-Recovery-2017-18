@@ -27,9 +27,6 @@ public class BLUEVuforiaJewlParkFar extends LinearOpMode{
 
     boolean isDone = false;
 
-    RobotConstants constants = new RobotConstants();
-
-
     public static final String TAG = "Vuforia VuMark Sample";
 
 //    OpenGLMatrix lastLocation = null;
@@ -71,7 +68,6 @@ public class BLUEVuforiaJewlParkFar extends LinearOpMode{
 
                     telemetry.addData("Status: ", "I see center");
 
-                    //TODO: Wheel intake here
                     robot.driveTrain.setMoveDist(-2);
                     hitJewl();
 
@@ -80,15 +76,13 @@ public class BLUEVuforiaJewlParkFar extends LinearOpMode{
                     robot.driveTrain.setMoveDist(12);
                     robot.driveTrain.rotateDeg(-90);
                     robot.driveTrain.setMoveDist(15);
-                    //TODO: Wheel spit out here
+                    OuttakeBlock();
                     robot.driveTrain.setMoveDist(-2.5);
-
                     isDone = true;
 
                 }
                 if(vuMark == RelicRecoveryVuMark.LEFT){
 
-                    //TODO: Wheel intake here
                     robot.driveTrain.setMoveDist(-2);
                     hitJewl();
 
@@ -97,7 +91,7 @@ public class BLUEVuforiaJewlParkFar extends LinearOpMode{
                     robot.driveTrain.setMoveDist(6);
                     robot.driveTrain.rotateDeg(-90);
                     robot.driveTrain.setMoveDist(15);
-                    //TODO: Wheel spit out here
+                    OuttakeBlock();
                     robot.driveTrain.setMoveDist(-2.5);
 
                     isDone = true;
@@ -106,7 +100,6 @@ public class BLUEVuforiaJewlParkFar extends LinearOpMode{
                 }
                 if(vuMark == RelicRecoveryVuMark.RIGHT){
 
-                    //TODO: Wheel intake here
                     robot.driveTrain.setMoveDist(-2);
                     hitJewl();
 
@@ -115,7 +108,7 @@ public class BLUEVuforiaJewlParkFar extends LinearOpMode{
                     robot.driveTrain.setMoveDist(18);
                     robot.driveTrain.rotateDeg(-90);
                     robot.driveTrain.setMoveDist(15);
-                    //TODO: Wheel spit out here
+                    OuttakeBlock();
                     robot.driveTrain.setMoveDist(-2.5);
 
                     isDone = true;
@@ -161,6 +154,14 @@ public class BLUEVuforiaJewlParkFar extends LinearOpMode{
 
         }
 
+    }
+
+    public void OuttakeBlock(){
+        robot.wheels.setLeftWheelPwr(-1);
+        robot.wheels.setRightWheels(-1);
+        sleep(2000);
+        robot.wheels.setRightWheels(0);
+        robot.wheels.setLeftWheelPwr(0);
     }
 
 

@@ -33,7 +33,6 @@ public class REDJewlParkAuton extends LinearOpMode{
 
 
         if(opModeIsActive()){
-            robot.driveTrain.setMoveDist(-2);
 
             robot.jewelArm.armDown();
 

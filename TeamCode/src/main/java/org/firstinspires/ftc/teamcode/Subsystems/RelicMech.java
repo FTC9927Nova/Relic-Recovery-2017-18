@@ -40,10 +40,10 @@ public class RelicMech implements SubsystemTemplate
     public void clawOpen(){
         claw.setPosition(0);
     }
-
     public void clawClose(){
         claw.setPosition(1);
     }
+
     public void goAllOut(){
         relic.setPower(1);
         try {
