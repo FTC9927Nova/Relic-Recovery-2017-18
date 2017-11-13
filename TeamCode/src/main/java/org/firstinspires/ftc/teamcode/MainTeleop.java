@@ -143,6 +143,17 @@ public class MainTeleop extends OpMode
             robot.relic.setPower(0);
         }
 
+        if(-gamepad2.right_stick_y > 10){
+
+            robot.jewelArm.armMid();
+
+        }
+        else if(-gamepad2.right_stick_y < -10){
+
+            robot.jewelArm.armUp();
+
+        }
+
         telemetry.addData("bump: ", robot.bumper.getState());
         telemetry.update();
     }

@@ -97,7 +97,7 @@ public class Wheels implements SubsystemTemplate{
     {
             leftWheels.setPower(a);
     }
-    public void setRightWheelsPwr(double b)
+    public void setRightWheels(double b)
     {
             rightWheels.setPower(b);
     }

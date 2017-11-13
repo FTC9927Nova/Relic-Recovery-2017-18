@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  */
 
 @Autonomous
-public class REDJewlAuton extends LinearOpMode{
+public class BLUEJewlAutonFar extends LinearOpMode{
 
     Robot robot = new Robot();
 
@@ -32,16 +32,16 @@ public class REDJewlAuton extends LinearOpMode{
         if (opModeIsActive()) {
             sleep(2000);
 
-            if (String.valueOf(robot.jewelArm.getColor()).equals("RED")) {
+            if (String.valueOf(robot.jewelArm.getColor()).equals("BLUE")) {
 
                 sleep(2000);
                 robot.driveTrain.setLeftPower(1);
                 robot.driveTrain.setRightPower(1);
                 sleep(500);
 
-            } else if (String.valueOf(robot.jewelArm.getColor()).equals("BLUE")) {
-
+            } else if (String.valueOf(robot.jewelArm.getColor()).equals("RED")) {
                 sleep(2000);
+
                 robot.driveTrain.setLeftPower(-1);
                 robot.driveTrain.setRightPower(-1);
                 sleep(500);
@@ -52,8 +52,8 @@ public class REDJewlAuton extends LinearOpMode{
 
             robot.jewelArm.armMid();
             sleep(1000);
-            robot.driveTrain.setLeftPower(1);
-            robot.driveTrain.setRightPower(1);
+            robot.driveTrain.setLeftPower(-1);
+            robot.driveTrain.setRightPower(-1);
             sleep(3000);
 
 

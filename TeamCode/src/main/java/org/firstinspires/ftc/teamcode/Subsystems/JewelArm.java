@@ -44,7 +44,7 @@ public class JewelArm implements SubsystemTemplate
     public void armDown()
     {
 //        isArmDown = true;
-        jewlArm.setPosition(0.93);
+        jewlArm.setPosition(0.785);
     }
 
 
@@ -90,6 +90,14 @@ public class JewelArm implements SubsystemTemplate
 
 
 
+    public String getStringVal(){
+        if (jewlCheck.blue() > jewlCheck.red()){
+            return "BLUE";
+        } else if (jewlCheck.blue() < jewlCheck.red()){
+            return "RED";
+        }
+        return "NOTHING";
+    }
     @Override
     public String display() {
 

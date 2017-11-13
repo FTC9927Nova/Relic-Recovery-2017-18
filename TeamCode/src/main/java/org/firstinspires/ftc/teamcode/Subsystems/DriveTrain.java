@@ -82,13 +82,14 @@ public class DriveTrain implements SubsystemTemplate
         r1 = hardwareMap.dcMotor.get("r1");
         r2 = hardwareMap.dcMotor.get("r2");
 
+        setDrive(Drive.SPEED);
 
         l1.setDirection(DcMotorSimple.Direction.FORWARD);
         l2.setDirection(DcMotorSimple.Direction.REVERSE);
         r1.setDirection(DcMotorSimple.Direction.REVERSE);
         r2.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        setDrive(Drive.STOP_RESET);
+        setSpeedController(DriveSpeedController.BRAKE);
 
         this.opMode = opMode;
     }

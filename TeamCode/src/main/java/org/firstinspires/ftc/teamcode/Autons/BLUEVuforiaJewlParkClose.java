@@ -157,7 +157,7 @@ public class BLUEVuforiaJewlParkClose extends LinearOpMode{
     }
     public void spitBlock(){
         robot.wheels.setLeftWheelPwr(-1);
-        robot.wheels.setRightWheelsPwr(-1);
+        robot.wheels.setRightWheels(-1);
     }
 
 
