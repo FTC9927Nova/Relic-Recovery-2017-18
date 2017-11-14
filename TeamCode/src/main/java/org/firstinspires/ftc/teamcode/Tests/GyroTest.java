@@ -11,23 +11,22 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  * Created by Sumanth on 11/9/17.
  */
 
-@TeleOp(name = "gyro tester ")
-@Disabled
+@TeleOp(name = "gyro lark tester ")
 public class GyroTest extends LinearOpMode
 {
-//    Robot robot = new Robot();
+    Robot robot = new Robot();
     Gyro gyro = new Gyro();
     @Override
     public void runOpMode() throws InterruptedException
     {
         gyro.initGyro(hardwareMap);
-//        robot.init(hardwareMap,this,gyro);
-        while(opModeIsActive())
+        robot.init(hardwareMap,this, gyro);
+
+        waitForStart();
+
+        if(opModeIsActive())
         {
-            telemetry.addData("angle 1", gyro.getYaw());
-            telemetry.addData("angle 2", gyro.getRoll());
-            telemetry.addData("angle 3", gyro.getPitch());
-            telemetry.update();
+            robot.driveTrain.rotateDeg(180);
         }
 
     }

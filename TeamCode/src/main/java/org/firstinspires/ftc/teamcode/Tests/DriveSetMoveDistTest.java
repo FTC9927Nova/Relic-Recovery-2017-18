@@ -20,8 +20,12 @@ public class DriveSetMoveDistTest extends LinearOpMode
 
     @Override
     public void runOpMode() throws InterruptedException {
+
         gyro.initGyro(hardwareMap);
-        robot.init(hardwareMap,this,gyro);
+        robot.init(hardwareMap,this, this.gyro);
+
+        waitForStart();
+
         if(opModeIsActive())
         {
             robot.driveTrain.setMoveDist(24);

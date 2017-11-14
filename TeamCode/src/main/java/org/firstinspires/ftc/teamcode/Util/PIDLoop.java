@@ -15,7 +15,7 @@ public class PIDLoop
 
     private double target;
 
-    private double error;
+    private double error = 1;
     private double pastError;
     private double sumError;
     private double deltaError;
@@ -47,9 +47,9 @@ public class PIDLoop
         return this.ki;
     }
 
-    public void setTarget(double target)
+    public void setTarget(double larkget)
     {
-        this.target = target;
+        target = larkget;
     }
 
     public double getError()
@@ -62,6 +62,21 @@ public class PIDLoop
     {
         error = target - input;
         return (kp*error);
+    }
+
+    public double turnPloop(double input)
+    {
+
+        error = target - input;
+
+        if(error > 180)
+            error -= 360;
+
+        else if (error < -180)
+            error += 360;
+
+        return kp*error;
+
     }
 
     public double pidLoop(double input, double dt)
