@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  */
 
 @Autonomous(name = "SetMoveDist")
+
 public class DriveSetMoveDistTest extends LinearOpMode
 {
     Robot robot = new Robot();
@@ -18,8 +20,12 @@ public class DriveSetMoveDistTest extends LinearOpMode
 
     @Override
     public void runOpMode() throws InterruptedException {
+
         gyro.initGyro(hardwareMap);
-        robot.init(hardwareMap,this,gyro);
+        robot.init(hardwareMap,this, this.gyro);
+
+        waitForStart();
+
         if(opModeIsActive())
         {
             robot.driveTrain.setMoveDist(24);

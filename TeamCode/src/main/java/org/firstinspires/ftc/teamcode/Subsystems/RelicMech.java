@@ -12,8 +12,8 @@ import static java.lang.Thread.sleep;
 
 public class RelicMech implements SubsystemTemplate
 {
-    public DcMotor relic;
-    public Servo claw, extender;
+    private DcMotor relic;
+    private Servo claw, extender;
 
     public RelicMech(HardwareMap hardwareMap)
     {
@@ -38,10 +38,10 @@ public class RelicMech implements SubsystemTemplate
 
     //TODO: FIND BETTER CLAW VALUES
     public void clawOpen(){
-        claw.setPosition(0.5);
+        claw.setPosition(0);
     }
     public void clawClose(){
-        claw.setPosition(0.2);
+        claw.setPosition(1);
     }
 
     public void goAllOut(){

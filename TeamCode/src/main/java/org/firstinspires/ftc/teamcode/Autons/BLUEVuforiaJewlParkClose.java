@@ -70,14 +70,14 @@ public class BLUEVuforiaJewlParkClose extends LinearOpMode{
 
                     telemetry.addData("Status: ", "I see center");
 
-                    //
+                    //TODO: Wheel intake here
                     robot.driveTrain.setMoveDist(-2);
                     hitJewl();
 
                     robot.driveTrain.setMoveDist(32);
                     robot.driveTrain.rotateDeg(-90);
                     robot.driveTrain.setMoveDist(15);
-                    OuttakeBlock();
+                    spitBlock();
                     robot.driveTrain.setMoveDist(-2.5);
 
                     isDone = true;
@@ -85,14 +85,14 @@ public class BLUEVuforiaJewlParkClose extends LinearOpMode{
                 }
                 if(vuMark == RelicRecoveryVuMark.LEFT){
 
-                    //
+                    //TODO: Wheel intake here
                     robot.driveTrain.setMoveDist(-2);
                     hitJewl();
 
                     robot.driveTrain.setMoveDist(26);
                     robot.driveTrain.rotateDeg(-90);
                     robot.driveTrain.setMoveDist(15);
-                    OuttakeBlock();
+                    spitBlock();
                     robot.driveTrain.setMoveDist(-2.5);
 
                     isDone = true;
@@ -101,14 +101,14 @@ public class BLUEVuforiaJewlParkClose extends LinearOpMode{
                 }
                 if(vuMark == RelicRecoveryVuMark.RIGHT){
 
-                    //
+                    //TODO: Wheel intake here
                     robot.driveTrain.setMoveDist(-2);
                     hitJewl();
 
                     robot.driveTrain.setMoveDist(38);
                     robot.driveTrain.rotateDeg(-90);
                     robot.driveTrain.setMoveDist(15);
-                    OuttakeBlock();
+                    spitBlock();
                     robot.driveTrain.setMoveDist(-2.5);
 
                     isDone = true;
@@ -155,12 +155,9 @@ public class BLUEVuforiaJewlParkClose extends LinearOpMode{
         }
 
     }
-    public void OuttakeBlock(){
+    public void spitBlock(){
         robot.wheels.setLeftWheelPwr(-1);
         robot.wheels.setRightWheels(-1);
-        sleep(2000);
-        robot.wheels.setRightWheels(0);
-        robot.wheels.setLeftWheelPwr(0);
     }
 
 

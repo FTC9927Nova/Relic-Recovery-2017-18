@@ -17,8 +17,9 @@ public class FourBar implements SubsystemTemplate {
 
     private DcMotor fourBar;
     private double targetAngle;;
-    private int desiredPosEnc;
+    public boolean isOn = false;
     private boolean shouldStay = true;
+    private double currentAngle = 0;
 
     private Sensor LimitSwitch_Zero;
     //TODO:CHECK IF 2 LIMIT SWITCHES ARE NEEDED
@@ -27,7 +28,7 @@ public class FourBar implements SubsystemTemplate {
     private RobotConstants constants = new RobotConstants();
 
     //MAKE SURE NOT TO MESS WITH KD TERM!!!!!!!!!!!!!
-    private PIDLoop pidLoop = new PIDLoop(0.007, 0, 0);
+    private PIDLoop pidLoop = new PIDLoop((1.0/143), (1.0/200), 0);
     private Potentiometer pot;
 
     public FourBar(HardwareMap hardwareMap){
@@ -45,7 +46,7 @@ public class FourBar implements SubsystemTemplate {
     public double setHeight(double height)
     {
 
-        return Math.toDegrees(Math.acos(1 - ((Math.pow(height, 2))/(2 * Math.pow(constants.getFOURBARLENGTH(), 2)))));
+        return (Math.toDegrees(Math.acos(1 - ((Math.pow(height, 2))/(2 * Math.pow(constants.getFOURBARLENGTH(), 2))))) + 126);
 
     }
 
@@ -68,19 +69,24 @@ public class FourBar implements SubsystemTemplate {
 
     }
 
-    public void setMoveAngle(double targetAngle)
+    public void setIsOnFalse(){
+        isOn = false;
+    }
+
+
+    public void getCurrentAngle()
     {
         pot.getInput();
+        currentAngle = pot.getAngle();
+    }
 
+
+
+
+    public void setMoveAngle(double targetAngle)
+    {
         pidLoop.setTarget(targetAngle);
-        if(pot.getAngle()<targetAngle)
-        {
-            fourBar.setPower(pidLoop.pidLoop(targetAngle,1));
-        }
-        else if(pot.getAngle()>targetAngle)
-        {
-            setPower(0);
-        }
+        fourBar.setPower(pidLoop.pLoop(pot.getAngle()));
     }
 
 
@@ -94,6 +100,11 @@ public class FourBar implements SubsystemTemplate {
 
     @Override
     public String display() {
-        return null;
+        return
+                "\nTarget Angle: " + targetAngle
+                +"\nCurrent Angle: " + currentAngle
+                +"\nPower " + fourBar.getPower()
+                +"\nShould Stay? " + shouldStay
+                +"\n isOn " + isOn;
     }
 }

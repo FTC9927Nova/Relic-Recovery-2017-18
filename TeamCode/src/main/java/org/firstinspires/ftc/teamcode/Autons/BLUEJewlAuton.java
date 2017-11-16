@@ -11,15 +11,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  * Created by Sumanth on 10/21/17.
  */
 
-@Autonomous(name = "Blue Jewl Auto ")
+@Autonomous
 public class BLUEJewlAuton extends LinearOpMode{
 
     Robot robot = new Robot();
 
-
     Gyro gyro = new Gyro();
-
-    int dist = -35;
 
 
 
@@ -30,49 +27,42 @@ public class BLUEJewlAuton extends LinearOpMode{
         robot.init(hardwareMap, this, gyro);
         waitForStart();
 
+        robot.jewelArm.armDown();
 
+        if (opModeIsActive()) {
+            sleep(2000);
 
-        if(opModeIsActive()){
+            if (String.valueOf(robot.jewelArm.getColor()).equals("BLUE")) {
 
+                sleep(2000);
+                robot.driveTrain.setLeftPower(1);
+                robot.driveTrain.setRightPower(1);
+                sleep(250);
+                robot.driveTrain.setRightPower(0);
+                robot.driveTrain.setLeftPower(0);
 
-            robot.jewelArm.armDown();
+            } else if (String.valueOf(robot.jewelArm.getColor()).equals("RED")) {
+                sleep(2000);
+
+                robot.driveTrain.setLeftPower(-1);
+                robot.driveTrain.setRightPower(-1);
+                sleep(250);
+                robot.driveTrain.setLeftPower(0);
+                robot.driveTrain.setRightPower(0);
+
+            }
 
             sleep(1000);
-
-//
-
-            if(String.valueOf(robot.jewelArm.getColor()) == "RED"){
-
-//                robot.driveTrain.setMoveDist(4);
-                telemetry.addData("color", "blue");
-
-
-            }
-
-
-            else if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
-
-//                robot.driveTrain.setMoveDist(-4);
-                telemetry.addData("color", "red");
-
-
-
-            }
-            telemetry.update();
             robot.jewelArm.armMid();
-//            sleep(500);
-//            robot.driveTrain.setMoveDist(dist);
-//            robot.driveTrain.rotateDeg(-90);
-//            robot.driveTrain.setMoveDist(9.5);
-//            robot.claw.open();
-//            robot.driveTrain.setMoveDist(-2);
-
-
+            sleep(1000);
+            robot.driveTrain.setLeftPower(1);
+            robot.driveTrain.setRightPower(1);
+            sleep(3000);
+            robot.driveTrain.setLeftPower(0);
+            robot.driveTrain.setRightPower(0);
 
         }
-
-
     }
-
-
 }
+
+

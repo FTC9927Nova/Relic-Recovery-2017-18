@@ -36,8 +36,8 @@ public class DriveTrain implements SubsystemTemplate
 
 
     //TODO: ENTER Kp, Ki, Kd
-    private PIDLoop driveCL = new PIDLoop(.01,0,0);
-    private PIDLoop turnCL = new PIDLoop();
+    private PIDLoop driveCL = new PIDLoop(0.01,0,0);
+    private PIDLoop turnCL = new PIDLoop(0.0075, 0.0005, 0);
     private PIDLoop straightCL = new PIDLoop();
 
     public enum Drive
@@ -71,7 +71,7 @@ public class DriveTrain implements SubsystemTemplate
         r1.setDirection(DcMotorSimple.Direction.REVERSE);
         r2.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        setSpeedController(DriveSpeedController.COAST);
+        setSpeedController(DriveSpeedController.BRAKE);
     }
 
 
@@ -82,14 +82,14 @@ public class DriveTrain implements SubsystemTemplate
         r1 = hardwareMap.dcMotor.get("r1");
         r2 = hardwareMap.dcMotor.get("r2");
 
+        setDrive(Drive.SPEED);
 
-        l1.setDirection(DcMotorSimple.Direction.REVERSE);
-        l2.setDirection(DcMotorSimple.Direction.FORWARD);
-        r1.setDirection(DcMotorSimple.Direction.FORWARD);
-        r2.setDirection(DcMotorSimple.Direction.REVERSE);
+        l1.setDirection(DcMotorSimple.Direction.FORWARD);
+        l2.setDirection(DcMotorSimple.Direction.REVERSE);
+        r1.setDirection(DcMotorSimple.Direction.REVERSE);
+        r2.setDirection(DcMotorSimple.Direction.FORWARD);
 
-
-        setDrive(Drive.STOP_RESET);
+        setSpeedController(DriveSpeedController.BRAKE);
 
         this.opMode = opMode;
     }
@@ -204,38 +204,38 @@ public class DriveTrain implements SubsystemTemplate
         return true;
     }
 
-    public void setMoveDist(double dist)
-    {
-//        setDrive(Drive.ENCODERS);
+    public void setMoveDist(double dist) {
 
         setSpeedController(DriveSpeedController.BRAKE);
         if (this.opMode.opModeIsActive()) {
 
-            setDrive(Drive.STOP_RESET);
+            leftTarget = getLeftCurrentPosition()
+                    + (int) (dist * constant.getTICKS_PER_INCH());
+            rightTarget = getRightCurrentPosition()
+                    + (int) (dist * constant.getTICKS_PER_INCH());
 
             setDrive(Drive.ENCODERS);
-
-            leftTarget = (int) (dist * constant.getTICKS_PER_INCH());
-            rightTarget = (int) (dist * constant.getTICKS_PER_INCH());
 
             setLeftTarget(leftTarget);
             setRightTarget(rightTarget);
 
-            while(this.opMode.opModeIsActive() &&
-                    (Math.abs(getLeftCurrentPosition()-leftTarget)>constant.getDRIVE_TOLERANCE() || Math.abs(getRightCurrentPosition()-rightTarget)>constant.getDRIVE_TOLERANCE())) {
-                setLeftPower(.5);
-                setRightPower(.5);
-                this.opMode.telemetry.addData("",display());
-                Log.i("R1", String.valueOf(r1.getCurrentPosition()));
-                Log.i("R2", String.valueOf(r2.getCurrentPosition()));
-                Log.i("L1", String.valueOf(l1.getCurrentPosition()));
-                Log.i("L2", String.valueOf(l2.getCurrentPosition()));
+            driveCL.setTarget(leftTarget);
 
+            while(this.opMode.opModeIsActive() &&
+                    (Math.abs((getLeftCurrentPosition()-leftTarget))>constant.getDRIVE_TOLERANCE() && Math.abs((getRightCurrentPosition()-rightTarget))>constant.getDRIVE_TOLERANCE()))
+            {
+                this.opMode.telemetry.addData("",display());
+
+                setLeftPower(driveCL.pLoop(getLeftCurrentPosition()));
+                setRightPower(driveCL.pLoop(getLeftCurrentPosition()));
+//
+//                setLeftPower(0.3);
+//                setRightPower(0.3);
+                getLogs();
             }
 
             setLeftPower(0);
             setRightPower(0);
-
             setDrive(Drive.SPEED);
 
         }
@@ -251,17 +251,26 @@ public class DriveTrain implements SubsystemTemplate
     //TODO: TURN W/O PID LOOP
     public void rotateDeg(double target)
     {
-        this.turnTarget = target;
+        turnTarget = -gyro.getYaw() + target;
 
-        setDrive(Drive.NOTHING);
-        turnCL.setTarget(target);
+        if(turnTarget > 180)
+            turnTarget -= 360;
+
+        else if (turnTarget < -180)
+            turnTarget += 360;
+
+        setDrive(Drive.SPEED);
+        setSpeedController(DriveSpeedController.BRAKE);
+
+        turnCL.setTarget(turnTarget);
+
         while(this.opMode.opModeIsActive() &&
-                (Math.abs((gyro.getYaw()-turnTarget))>constant.getTurnTolerance()))
+                (Math.abs((-gyro.getYaw()-turnTarget))>constant.getTurnTolerance()))
         {
             this.opMode.telemetry.addData("",display());
-            setLeftPower(turnCL.pLoop(gyro.getYaw()));
-            setRightPower(-turnCL.pLoop(gyro.getYaw()));
-            opMode.telemetry.addData("Deg", gyro.getYaw());
+            setLeftPower(turnCL.turnPloop(-gyro.getYaw()));
+            setRightPower(-turnCL.turnPloop(-gyro.getYaw()));
+            opMode.telemetry.addData("Deg", -gyro.getYaw());
             opMode.telemetry.update();
         }
         setLeftPower(0);

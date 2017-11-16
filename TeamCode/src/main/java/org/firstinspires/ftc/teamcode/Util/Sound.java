@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.TaskStackBuilder;
 import android.media.MediaPlayer;
 
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import org.firstinspires.ftc.teamcode.R;
 
 /**
@@ -19,7 +21,7 @@ public class Sound extends Activity {
         mp.start();
     }
 
-    public void stopSound(){
-        mp.stop();
-    }
+//    public void stopSound(){
+//        mp.stop();
+//    }
 }

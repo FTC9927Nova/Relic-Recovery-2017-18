@@ -5,6 +5,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.*;
 import org.firstinspires.ftc.teamcode.Util.*;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 /**
@@ -33,6 +34,7 @@ public class BLUEJewlParkAuton extends LinearOpMode{
 
 
         if(opModeIsActive()){
+            //robot.driveTrain.setMoveDist(-2);
 
             robot.jewelArm.armDown();
 
