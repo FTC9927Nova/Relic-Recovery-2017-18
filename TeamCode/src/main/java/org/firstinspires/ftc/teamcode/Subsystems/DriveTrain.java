@@ -37,6 +37,7 @@ public class DriveTrain implements SubsystemTemplate
 
     //TODO: ENTER Kp, Ki, Kd
     private PIDLoop driveCL = new PIDLoop(0.01,0,0);
+    //TurnCl: kp:0.0075, ki: 0.0005, kd: 0
     private PIDLoop turnCL = new PIDLoop(0.0075, 0.0005, 0);
 
     public enum Drive
@@ -271,6 +272,7 @@ public class DriveTrain implements SubsystemTemplate
             setRightPower(-turnCL.turnPloop(-gyro.getYaw()));
             opMode.telemetry.addData("Deg", -gyro.getYaw());
             opMode.telemetry.update();
+            Log.i("Error", String.valueOf(turnCL.getError()));
         }
         setLeftPower(0);
         setRightPower(0);

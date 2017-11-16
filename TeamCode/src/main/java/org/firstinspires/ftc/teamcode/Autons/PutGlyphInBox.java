@@ -27,6 +27,10 @@ public class PutGlyphInBox extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+
+        gyro.initGyro(hardwareMap);
+        robot.init(hardwareMap, this, gyro);
+
         waitForStart();
         if (opModeIsActive()){
             initialYaw = gyro.getYaw();
@@ -68,6 +72,12 @@ public class PutGlyphInBox extends LinearOpMode {
                     robot.driveTrain.setMoveDist(14);
                     placeBlock();
                     break;
+                }
+                default:{
+
+                    placeBlock();
+                    break;
+
                 }
             }
 
