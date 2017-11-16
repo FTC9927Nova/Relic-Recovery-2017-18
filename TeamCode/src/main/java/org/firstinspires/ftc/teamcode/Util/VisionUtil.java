@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Util;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
@@ -65,6 +66,34 @@ public class VisionUtil{
         return RelicRecoveryVuMark.UNKNOWN;
 
     }
+    public int getPicNumber(HardwareMap hardwareMap){
+
+
+        int graph = 4;
+
+        RelicRecoveryVuMark reading = readGraph(hardwareMap);
+
+        if(reading == RelicRecoveryVuMark.CENTER){
+
+            graph = 2;
+            return graph;
+        }
+        else if(reading == RelicRecoveryVuMark.LEFT){
+
+            graph = 1;
+            return graph;
+        }
+        else if(reading == RelicRecoveryVuMark.RIGHT){
+
+            graph = 3;
+            return graph;
+        }
+        else if(reading == RelicRecoveryVuMark.UNKNOWN){
+            graph = 0;
+            return graph;
+        }
+        return 4;
+        }
 
 
 }
