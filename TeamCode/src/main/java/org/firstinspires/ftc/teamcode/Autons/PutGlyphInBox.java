@@ -18,7 +18,6 @@ public class PutGlyphInBox extends LinearOpMode {
     Gyro gyro = new Gyro();
 
 
-    int pos;
     boolean isFound = false;
 
     int dist = 0;
@@ -32,14 +31,17 @@ public class PutGlyphInBox extends LinearOpMode {
         gyro.initGyro(hardwareMap);
         robot.init(hardwareMap, this, gyro);
 
+        VisionUtil visionUtil = new VisionUtil();
+
+        RelicRecoveryVuMark reading = visionUtil.readGraph(this);
+
         waitForStart();
         if (opModeIsActive()){
 
 //            robot.driveTrain.setMoveDist(16);
 
-            VisionUtil visionUtil = new VisionUtil();
+            sleep(3000);
 
-            RelicRecoveryVuMark reading = visionUtil.readGraph(this);
 
 //            dist += 16;
             if(reading == RelicRecoveryVuMark.CENTER){
@@ -74,7 +76,7 @@ public class PutGlyphInBox extends LinearOpMode {
 
             visionUtil.stopLooking();
 
-            switch (pos){
+            switch (graph){
                 case 1:{
                     placeBlock();
                     break;

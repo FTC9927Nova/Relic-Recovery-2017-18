@@ -53,7 +53,7 @@ public class VisionUtil{
 
         long startTime = System.nanoTime();
 
-        while (keepLooking == true) {
+        while (keepLooking) {
 
 
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
