@@ -11,7 +11,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  */
 
 @Autonomous (name = "VisionUtilTest", group = "")
-@Disabled
 public class ConceptVisionUtil extends LinearOpMode{
 
     @Override
@@ -21,7 +20,7 @@ public class ConceptVisionUtil extends LinearOpMode{
 
         int graph = 4;
 
-        RelicRecoveryVuMark reading = vuMarkTheLark.readGraph(hardwareMap);
+        RelicRecoveryVuMark reading = vuMarkTheLark.readGraph(this);
 
         waitForStart();
 
@@ -46,8 +45,6 @@ public class ConceptVisionUtil extends LinearOpMode{
                 graph = 0;
             }
 
-            telemetry.addData("graph", graph);
-            telemetry.update();
 
         }
 

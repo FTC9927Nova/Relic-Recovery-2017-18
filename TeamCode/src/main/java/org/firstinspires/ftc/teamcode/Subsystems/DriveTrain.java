@@ -209,10 +209,10 @@ public class DriveTrain implements SubsystemTemplate
         setSpeedController(DriveSpeedController.BRAKE);
         if (this.opMode.opModeIsActive()) {
 
-            leftTarget = getLeftCurrentPosition()
-                    + (int) (dist * constant.getTICKS_PER_INCH());
-            rightTarget = getRightCurrentPosition()
-                    + (int) (dist * constant.getTICKS_PER_INCH());
+            setDrive(Drive.STOP_RESET);
+
+            leftTarget = (int) (dist * constant.getTICKS_PER_INCH());
+            rightTarget = (int) (dist * constant.getTICKS_PER_INCH());
 
             setDrive(Drive.ENCODERS);
 

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Autons;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 import org.firstinspires.ftc.teamcode.Util.Gyro;
 import org.firstinspires.ftc.teamcode.Util.VisionUtil;
@@ -16,46 +17,62 @@ public class PutGlyphInBox extends LinearOpMode {
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
 
-    VisionUtil visionUtil = new VisionUtil();
 
     int pos;
     boolean isFound = false;
 
     int dist = 0;
-    double initialYaw;
+    int graph = 0;
 
 
     @Override
     public void runOpMode() throws InterruptedException {
+
 
         gyro.initGyro(hardwareMap);
         robot.init(hardwareMap, this, gyro);
 
         waitForStart();
         if (opModeIsActive()){
-            initialYaw = gyro.getYaw();
-            robot.driveTrain.setMoveDist(8);
-            dist += 8;
-            while (!isFound){
-                if (visionUtil.getPicNumber(hardwareMap) == 1){
-                    pos = 1;
-                    isFound = true;
-                } else if (visionUtil.getPicNumber(hardwareMap) == 2){
-                    pos = 2;
-                    isFound = true;
-                } else if (visionUtil.getPicNumber(hardwareMap) == 3){
-                    pos = 3;
-                    isFound = true;
-                } else {
-                    robot.driveTrain.setMoveDist(1);
-                    dist += 1;
+
+//            robot.driveTrain.setMoveDist(16);
+
+            VisionUtil visionUtil = new VisionUtil();
+
+            RelicRecoveryVuMark reading = visionUtil.readGraph(this);
+
+//            dist += 16;
+            if(reading == RelicRecoveryVuMark.CENTER){
+
+                    graph = 2;
+
+                }
+                else if(reading == RelicRecoveryVuMark.LEFT){
+
+                    graph = 1;
+
+                }
+                else if(reading == RelicRecoveryVuMark.RIGHT){
+
+                    graph = 3;
+
+                }
+                else if(reading == RelicRecoveryVuMark.UNKNOWN){
+                    graph = 0;
                 }
 
-            }
-            robot.driveTrain.setMoveDist(-dist + 28);
-            robot.driveTrain.rotateDeg(-gyro.getYaw());
+            sleep(2000);
+
+            telemetry.addData("graph", graph);
+            telemetry.addData("relic", reading);
+            telemetry.update();
+
+            robot.driveTrain.setMoveDist(-dist - 28);
+
             robot.driveTrain.rotateDeg(-90);
             robot.driveTrain.setMoveDist(3);
+
+            visionUtil.stopLooking();
 
             switch (pos){
                 case 1:{

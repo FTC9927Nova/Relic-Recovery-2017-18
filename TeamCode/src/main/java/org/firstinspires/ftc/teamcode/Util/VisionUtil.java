@@ -32,15 +32,17 @@ public class VisionUtil{
 
     VuforiaLocalizer vuforia;
 
-    public RelicRecoveryVuMark readGraph(HardwareMap hardwareMap) {
+    boolean keepLooking;
 
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+    public RelicRecoveryVuMark readGraph(LinearOpMode opMode) {
+
+        int cameraMonitorViewId = opMode.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", opMode.hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
 
         parameters.vuforiaLicenseKey = "ARG9zPL/////AAAAGYRPMkfry0jjjbhWzSGUNbdSf/k8xZVEMsbpZl3g8XPJraKlzSwk7/tbjPjW71b0+nd0XUjLJ+IxKnEAlZI8vItQHZCHZ0y9PAInF40xCzJIcRLI0Kjl4zOJgVufAFP5C7C8vQsHx1KBwdki3MoUGW/HJncwthKOewDKJmNE0prBUM9Gdhf+sVS43wfLJ5Y6oOF7913DyvxFwgvQ7Fu3DqomZIQmeM/B2VU0Bff8x/7Klmom4YloL7pCtfeE0wb2+OpoC9Xtxc9vIuu6eF3kTP7PDJ+sWZ8KqNl7KEgMkKYgCM4oqPTwtcKrJw+a2l7bIeGY1s/bBlAE1VPUbk95h/4Ow00EFzjYcFgl2HmOY0UI";
 
-        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
         VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
@@ -51,10 +53,13 @@ public class VisionUtil{
 
         long startTime = System.nanoTime();
 
-        while ((System.nanoTime() - startTime) < (5 * Math.pow(10, 9))) {
+        while (keepLooking == true) {
 
 
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+            opMode.telemetry.addData("graph", vuMark);
+            opMode.telemetry.update();
+
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
 
                 return vuMark;
@@ -66,34 +71,10 @@ public class VisionUtil{
         return RelicRecoveryVuMark.UNKNOWN;
 
     }
-    public int getPicNumber(HardwareMap hardwareMap){
 
+    public void stopLooking(){
 
-        int graph = 4;
+        keepLooking = false;
 
-        RelicRecoveryVuMark reading = readGraph(hardwareMap);
-
-        if(reading == RelicRecoveryVuMark.CENTER){
-
-            graph = 2;
-            return graph;
-        }
-        else if(reading == RelicRecoveryVuMark.LEFT){
-
-            graph = 1;
-            return graph;
-        }
-        else if(reading == RelicRecoveryVuMark.RIGHT){
-
-            graph = 3;
-            return graph;
-        }
-        else if(reading == RelicRecoveryVuMark.UNKNOWN){
-            graph = 0;
-            return graph;
-        }
-        return 4;
-        }
-
-
+    }
 }
