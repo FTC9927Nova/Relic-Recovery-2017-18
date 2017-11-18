@@ -68,7 +68,7 @@ public class VisionUtil{
 
         }
 
-        return RelicRecoveryVuMark.UNKNOWN;
+        return RelicRecoveryVuMark.RIGHT;
 
     }
 
