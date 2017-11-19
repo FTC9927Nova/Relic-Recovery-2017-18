@@ -21,7 +21,6 @@ public class PutGlyphInBox extends LinearOpMode {
     boolean isFound = false;
 
     int dist = 0;
-    int graph = 0;
 
 
     @Override
@@ -31,63 +30,41 @@ public class PutGlyphInBox extends LinearOpMode {
         gyro.initGyro(hardwareMap);
         robot.init(hardwareMap, this, gyro);
 
-        VisionUtil visionUtil = new VisionUtil();
 
-        RelicRecoveryVuMark reading = visionUtil.readGraph(this);
 
         waitForStart();
         if (opModeIsActive()){
 
-//            robot.driveTrain.setMoveDist(16);
+            robot.driveTrain.setMoveDist(16);
 
-            sleep(3000);
+            VisionUtil visionUtil = new VisionUtil();
 
-
-//            dist += 16;
-            if(reading == RelicRecoveryVuMark.CENTER){
-
-                    graph = 2;
-
-                }
-                else if(reading == RelicRecoveryVuMark.LEFT){
-
-                    graph = 1;
-
-                }
-                else if(reading == RelicRecoveryVuMark.RIGHT){
-
-                    graph = 3;
-
-                }
-                else if(reading == RelicRecoveryVuMark.UNKNOWN){
-                    graph = 0;
-                }
+            RelicRecoveryVuMark reading = visionUtil.readGraph(hardwareMap);
 
             sleep(2000);
 
-            telemetry.addData("graph", graph);
-            telemetry.addData("relic", reading);
+            telemetry.addData("vumark 1", reading);
             telemetry.update();
+
 
             robot.driveTrain.setMoveDist(-dist - 28);
 
             robot.driveTrain.rotateDeg(-90);
             robot.driveTrain.setMoveDist(3);
 
-            visionUtil.stopLooking();
 
-            switch (graph){
-                case 1:{
+            switch (reading){
+                case CENTER:{
                     placeBlock();
                     break;
                 }
-                case 2:{
+                case LEFT:{
 
                     robot.driveTrain.setMoveDist(7);
                     placeBlock();
                     break;
                 }
-                case 3:{
+                case RIGHT:{
                     robot.driveTrain.setMoveDist(14);
                     placeBlock();
                     break;

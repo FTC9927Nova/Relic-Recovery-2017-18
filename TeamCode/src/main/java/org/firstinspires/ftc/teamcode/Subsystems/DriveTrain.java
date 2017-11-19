@@ -224,14 +224,10 @@ public class DriveTrain implements SubsystemTemplate
             while(this.opMode.opModeIsActive() &&
                     (Math.abs((getLeftCurrentPosition()-leftTarget))>constant.getDRIVE_TOLERANCE() && Math.abs((getRightCurrentPosition()-rightTarget))>constant.getDRIVE_TOLERANCE()))
             {
-                this.opMode.telemetry.addData("",display());
 
                 setLeftPower(driveCL.pLoop(getLeftCurrentPosition()));
                 setRightPower(driveCL.pLoop(getLeftCurrentPosition()));
-//
-//                setLeftPower(0.3);
-//                setRightPower(0.3);
-                getLogs();
+
             }
 
             setLeftPower(0);
@@ -270,9 +266,6 @@ public class DriveTrain implements SubsystemTemplate
             this.opMode.telemetry.addData("",display());
             setLeftPower(turnCL.turnPloop(-gyro.getYaw()));
             setRightPower(-turnCL.turnPloop(-gyro.getYaw()));
-            opMode.telemetry.addData("Deg", -gyro.getYaw());
-            opMode.telemetry.update();
-            Log.i("Error", String.valueOf(turnCL.getError()));
         }
         setLeftPower(0);
         setRightPower(0);

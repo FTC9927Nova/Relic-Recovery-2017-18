@@ -32,11 +32,12 @@ public class VisionUtil{
 
     VuforiaLocalizer vuforia;
 
-    boolean keepLooking;
+    boolean keepLooking = true;
 
-    public RelicRecoveryVuMark readGraph(LinearOpMode opMode) {
 
-        int cameraMonitorViewId = opMode.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", opMode.hardwareMap.appContext.getPackageName());
+    public RelicRecoveryVuMark readGraph(HardwareMap hardwareMap) {
+
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
 
@@ -51,25 +52,21 @@ public class VisionUtil{
 
         relicTrackables.activate();
 
-        long startTime = System.nanoTime();
 
         while (keepLooking) {
 
 
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
-            opMode.telemetry.addData("graph", vuMark);
-            opMode.telemetry.update();
 
-            if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
-
+            if (vuMark != RelicRecoveryVuMark.UNKNOWN)
+            {
                 return vuMark;
 
             }
 
         }
 
-        return RelicRecoveryVuMark.RIGHT;
-
+        return RelicRecoveryVuMark.UNKNOWN;
     }
 
     public void stopLooking(){

@@ -20,7 +20,7 @@ public class ConceptVisionUtil extends LinearOpMode{
 
         int graph = 4;
 
-        RelicRecoveryVuMark reading = vuMarkTheLark.readGraph(this);
+        RelicRecoveryVuMark reading = vuMarkTheLark.readGraph(hardwareMap);
 
         waitForStart();
 
