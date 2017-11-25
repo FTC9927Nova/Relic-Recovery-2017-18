@@ -29,7 +29,7 @@ public class PutGlyphInBox extends LinearOpMode {
         waitForStart();
         if (opModeIsActive()){
 
-            robot.driveTrain.setMoveDist(16);
+            robot.driveTrain.setMoveDist(17);
 
             VisionUtil visionUtil = new VisionUtil();
 
@@ -37,29 +37,25 @@ public class PutGlyphInBox extends LinearOpMode {
 
             sleep(2000);
 
+            robot.driveTrain.setMoveDist(14);
+
             telemetry.addData("vumark 1", reading);
             telemetry.update();
 
 
-            robot.driveTrain.setMoveDist(-28);
-
-            robot.driveTrain.rotateDeg(-90);
-            robot.driveTrain.setMoveDist(3);
-
-
             switch (reading){
-                case CENTER:{
+                case LEFT:{
                     placeBlock();
                     break;
                 }
-                case LEFT:{
+                case CENTER:{
 
-                    robot.driveTrain.setMoveDist(7);
+                    robot.driveTrain.setMoveDist(10);
                     placeBlock();
                     break;
                 }
                 case RIGHT:{
-                    robot.driveTrain.setMoveDist(14);
+                    robot.driveTrain.setMoveDist(20);
                     placeBlock();
                     break;
                 }
@@ -77,7 +73,7 @@ public class PutGlyphInBox extends LinearOpMode {
 
     public void placeBlock(){
 
-        robot.driveTrain.rotateDeg(-90);
+        robot.driveTrain.rotateDeg(90);
         robot.driveTrain.setMoveDist(2);
         //TODO: OUTTAKE CODE HERE
         robot.driveTrain.setMoveDist(-2);

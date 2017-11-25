@@ -272,6 +272,9 @@ public class DriveTrain implements SubsystemTemplate
             this.opMode.telemetry.addData("",display());
             setLeftPower(turnCL.turnPloop(-gyro.getYaw()));
             setRightPower(-turnCL.turnPloop(-gyro.getYaw()));
+//            setLeftPower(Range.clip(turnCL.pLoop(-gyro.getYaw()),-0.3,0.3));
+//            setRightPower(-Range.clip(turnCL.pLoop(-gyro.getYaw()),-0.3,0.3));
+
         }
         setLeftPower(0);
         setRightPower(0);
