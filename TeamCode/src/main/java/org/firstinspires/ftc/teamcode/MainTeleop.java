@@ -142,6 +142,27 @@ public class MainTeleop extends OpMode
 
         }
 
+        if(gamepad2.right_stick_y > .1 ){
+
+            robot.wheels.setLeftWheelPwr(1);
+
+        }
+        else if(gamepad2.right_stick_y < -.1){
+
+            robot.wheels.setLeftWheelPwr(-1);
+
+        }
+        else if(gamepad2.right_stick_x > .1 ){
+
+            robot.wheels.setRightWheels(1);
+
+        }
+        else if(gamepad2.right_stick_x < -.1){
+
+            robot.wheels.setRightWheels(-1);
+
+        }
+
 
 
         //Zlides
