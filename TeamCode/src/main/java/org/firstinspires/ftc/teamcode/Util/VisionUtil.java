@@ -27,7 +27,6 @@ public class VisionUtil{
 
     public static final String TAG = "Vuforia VuMark Sample";
 
-//    OpenGLMatrix lastLocation = null;
 
 
     VuforiaLocalizer vuforia;

@@ -42,13 +42,20 @@ public class MainTeleop extends OpMode
         //getting Current Angle of the Four Bar
         robot.bar4.getCurrentAngle();
 
-        //Driver Code
-        float yval = -gamepad1.left_stick_y;
-        float xval = gamepad1.right_stick_x;
+//        //Driver Code
+//        float yval = -gamepad1.left_stick_y;
+//        float xval = gamepad1.right_stick_x;
+//
+//
+//        float lpwr = (float) Math.pow(((yval + xval)), 3);
+//        float rpwr = (float) Math.pow((yval - xval), 3);
 
+        float lval = -gamepad1.left_stick_y;
+        float rval = -gamepad1.right_stick_y;
 
-        float lpwr = (float) Math.pow(((yval + xval)), 3);
-        float rpwr = (float) Math.pow((yval - xval), 3);
+        float lpwr = (float) Math.pow((lval), 3);
+        float rpwr = (float) Math.pow(rval, 3);
+
 
 
 

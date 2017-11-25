@@ -17,12 +17,6 @@ public class PutGlyphInBox extends LinearOpMode {
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
 
-
-    boolean isFound = false;
-
-    int dist = 0;
-
-
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -47,7 +41,7 @@ public class PutGlyphInBox extends LinearOpMode {
             telemetry.update();
 
 
-            robot.driveTrain.setMoveDist(-dist - 28);
+            robot.driveTrain.setMoveDist(-28);
 
             robot.driveTrain.rotateDeg(-90);
             robot.driveTrain.setMoveDist(3);
