@@ -74,7 +74,7 @@ public class PutGlyphInBox extends LinearOpMode {
     public void placeBlock(){
 
         robot.driveTrain.rotateDeg(90);
-        robot.driveTrain.setMoveDist(3);
+        robot.driveTrain.setMoveDist(5);
         robot.wheels.outtakeLeft();
         robot.wheels.outtakeRight();
         sleep(500);
