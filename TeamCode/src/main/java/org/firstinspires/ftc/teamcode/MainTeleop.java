@@ -9,11 +9,13 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.Subsystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 import org.firstinspires.ftc.teamcode.Util.Gyro;
 import org.firstinspires.ftc.teamcode.Util.PIDLoop;
 import org.firstinspires.ftc.teamcode.Util.Sound;
+import org.firstinspires.ftc.teamcode.Util.VisionUtil;
 
 /**
  * Created by therat0981 on 10/1/17.
@@ -49,6 +51,12 @@ public class MainTeleop extends OpMode
 //
 //        float lpwr = (float) Math.pow(((yval + xval)), 3);
 //        float rpwr = (float) Math.pow((yval - xval), 3);
+        VisionUtil visionUtil = new VisionUtil();
+
+        RelicRecoveryVuMark reading = visionUtil.readGraph(hardwareMap);
+
+
+
 
         float lval = -gamepad1.left_stick_y;
         float rval = -gamepad1.right_stick_y;
@@ -161,7 +169,7 @@ public class MainTeleop extends OpMode
 
         }
 
-        telemetry.addData("bump: ", robot.bumper.getState());
+        telemetry.addData("Graph: ", reading);
         telemetry.update();
     }
 
