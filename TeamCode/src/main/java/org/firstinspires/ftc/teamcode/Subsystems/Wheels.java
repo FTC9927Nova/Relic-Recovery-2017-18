@@ -16,8 +16,9 @@ public class Wheels implements SubsystemTemplate{
 
         leftWheels = hardwareMap.dcMotor.get("leftIntake");
         rightWheels = hardwareMap.dcMotor.get("rightIntake");
-//        leftWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//        rightWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+
+
 
 //        setMode(Mode.STOP_RESET);
 //        leftWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -28,6 +29,8 @@ public class Wheels implements SubsystemTemplate{
         leftWheels.setDirection(DcMotorSimple.Direction.REVERSE);
         rightWheels.setDirection(DcMotorSimple.Direction.FORWARD);
 
+        leftWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        rightWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 
     public enum Mode

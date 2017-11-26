@@ -20,6 +20,7 @@ import org.firstinspires.ftc.teamcode.Util.VisionUtil;
 /**
  * Created by therat0981 on 10/1/17.
  */
+@Disabled
 @TeleOp(name = "TeleOpNew")
 
 public class MainTeleop extends OpMode
