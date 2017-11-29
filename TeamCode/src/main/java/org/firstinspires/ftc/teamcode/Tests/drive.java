@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Tests;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  * Created by Sumanth on 11/11/17.
  */
 @TeleOp(name = "asdfadf")
+@Disabled
 public class drive extends LinearOpMode
 {
     Robot robot = new Robot();

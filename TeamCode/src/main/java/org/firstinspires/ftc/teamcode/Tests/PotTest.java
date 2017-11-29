@@ -12,7 +12,6 @@ import org.firstinspires.ftc.teamcode.Util.Potentiometer;
 
 
 @TeleOp(name = "Potentiometer Test")
-@Disabled
 public class PotTest extends LinearOpMode
 {
     Potentiometer potentiometer;

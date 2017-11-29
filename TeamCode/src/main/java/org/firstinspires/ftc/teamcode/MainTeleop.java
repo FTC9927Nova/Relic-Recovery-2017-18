@@ -9,18 +9,15 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 
-import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.Subsystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 import org.firstinspires.ftc.teamcode.Util.Gyro;
 import org.firstinspires.ftc.teamcode.Util.PIDLoop;
 import org.firstinspires.ftc.teamcode.Util.Sound;
-import org.firstinspires.ftc.teamcode.Util.VisionUtil;
 
 /**
  * Created by therat0981 on 10/1/17.
  */
-@Disabled
 @TeleOp(name = "TeleOpNew")
 
 public class MainTeleop extends OpMode
@@ -45,26 +42,13 @@ public class MainTeleop extends OpMode
         //getting Current Angle of the Four Bar
         robot.bar4.getCurrentAngle();
 
-//        //Driver Code
-//        float yval = -gamepad1.left_stick_y;
-//        float xval = gamepad1.right_stick_x;
-//
-//
-//        float lpwr = (float) Math.pow(((yval + xval)), 3);
-//        float rpwr = (float) Math.pow((yval - xval), 3);
-        VisionUtil visionUtil = new VisionUtil();
-
-        RelicRecoveryVuMark reading = visionUtil.readGraph(hardwareMap);
+        //Driver Code
+        float yval = -gamepad1.left_stick_y;
+        float xval = gamepad1.right_stick_x;
 
 
-
-
-        float lval = -gamepad1.left_stick_y;
-        float rval = -gamepad1.right_stick_y;
-
-        float lpwr = (float) Math.pow((lval), 3);
-        float rpwr = (float) Math.pow(rval, 3);
-
+        float lpwr = (float) Math.pow(((yval + xval)), 3);
+        float rpwr = (float) Math.pow((yval - xval), 3);
 
 
 
@@ -143,27 +127,6 @@ public class MainTeleop extends OpMode
 
         }
 
-        if(gamepad2.right_stick_y > .1 ){
-
-            robot.wheels.setLeftWheelPwr(1);
-
-        }
-        else if(gamepad2.right_stick_y < -.1){
-
-            robot.wheels.setLeftWheelPwr(-1);
-
-        }
-        else if(gamepad2.right_stick_x > .1 ){
-
-            robot.wheels.setRightWheels(1);
-
-        }
-        else if(gamepad2.right_stick_x < -.1){
-
-            robot.wheels.setRightWheels(-1);
-
-        }
-
 
 
         //Zlides
@@ -191,7 +154,7 @@ public class MainTeleop extends OpMode
 
         }
 
-        telemetry.addData("Graph: ", reading);
+        telemetry.addData("bump: ", robot.bumper.getState());
         telemetry.update();
     }
 
