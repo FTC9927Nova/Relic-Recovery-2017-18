@@ -1,19 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
 
-import android.util.Log;
-
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
 
 import org.firstinspires.ftc.teamcode.Subsystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 import org.firstinspires.ftc.teamcode.Util.Gyro;
-import org.firstinspires.ftc.teamcode.Util.PIDLoop;
-import org.firstinspires.ftc.teamcode.Util.Sound;
 
 /**
  * Created by therat0981 on 10/1/17.
@@ -92,7 +85,7 @@ public class MainTeleop extends OpMode
 
 
         // intake wheel
-        if (robot.bumper.getState() && gamepad2.left_bumper){
+        if (robot.bumper.isPressed() && gamepad2.left_bumper){
             robot.wheels.setLeftWheelPwr(1);
 
         }
@@ -110,7 +103,7 @@ public class MainTeleop extends OpMode
 
         }
 
-        if (robot.bumper.getState() && gamepad2.right_bumper){
+        if (robot.bumper.isPressed() && gamepad2.right_bumper){
             robot.wheels.setRightWheels(1);
 
         }
@@ -154,7 +147,7 @@ public class MainTeleop extends OpMode
 
         }
 
-        telemetry.addData("bump: ", robot.bumper.getState());
+        telemetry.addData("bump: ", robot.bumper.isPressed());
         telemetry.update();
     }
 
