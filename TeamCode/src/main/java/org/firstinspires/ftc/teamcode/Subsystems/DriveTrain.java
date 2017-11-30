@@ -244,9 +244,32 @@ public class DriveTrain implements SubsystemTemplate
         }
     }
 
-    public void setMoveDistEnc(int leftTarget, int rightTarget){
+    public void setMoveDistEnc(int leftTarget){
 
 
+        setDrive(Drive.STOP_RESET);
+
+        this.leftTarget = leftTarget;
+
+        setDrive(Drive.ENCODERS);
+
+        setLeftTarget(this.leftTarget);
+        setRightTarget(this.leftTarget);
+
+        driveCL.setTarget(this.leftTarget);
+
+        while(this.opMode.opModeIsActive() &&
+                (Math.abs((getLeftCurrentPosition()-leftTarget))>constant.getDRIVE_TOLERANCE() && Math.abs((getRightCurrentPosition()-rightTarget))>constant.getDRIVE_TOLERANCE()))
+        {
+
+            setLeftPower(driveCL.pLoop(getLeftCurrentPosition()));
+            setRightPower(driveCL.pLoop(getLeftCurrentPosition()));
+
+        }
+
+        setLeftPower(0);
+        setRightPower(0);
+        setDrive(Drive.SPEED);
 
     }
 

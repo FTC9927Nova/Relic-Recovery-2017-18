@@ -47,21 +47,30 @@ public class PutGlyphInBox2 extends LinearOpMode {
             switch (reading){
                 case RIGHT:{
                     robot.driveTrain.setMoveDist(-66-25);
+                    robot.driveTrain.rotateDeg(87.5);
+
                     placeBlock();
                     break;
                 }
                 case CENTER:{
 
                     robot.driveTrain.setMoveDist(-66-10);
+                    robot.driveTrain.rotateDeg(87.5);
+
                     placeBlock();
                     break;
                 }
                 case LEFT:{
                     robot.driveTrain.setMoveDist(-64);
+                    robot.driveTrain.rotateDeg(87.5);
+
                     placeBlock();
                     break;
                 }
                 default:{
+
+                    robot.driveTrain.rotateDeg(87.5);
+
 
                     placeBlock();
                     break;
@@ -73,7 +82,6 @@ public class PutGlyphInBox2 extends LinearOpMode {
             robot.driveTrain.rotateDeg(175);
             timer.startTime();
             int startLeftEnc = robot.driveTrain.getLeftCurrentPosition();
-            int startRightEnc = robot.driveTrain.getRightCurrentPosition();
             while(!robot.bumper.isPressed() && opModeIsActive()){
 
                 if (timer.milliseconds() <= 2000) {
@@ -96,14 +104,19 @@ public class PutGlyphInBox2 extends LinearOpMode {
             }
 
             int leftTarget = robot.driveTrain.getLeftCurrentPosition() - startLeftEnc;
-            int rightTarget = robot.driveTrain.getRightCurrentPosition() - startRightEnc;
-
-            robot.driveTrain.rotateDeg(-175);
 
             robot.driveTrain.setLeftPower(0);
             robot.driveTrain.setRightPower(0);
             robot.wheels.setLeftWheelPwr(0);
             robot.wheels.setRightWheels(0);
+
+            robot.driveTrain.rotateDeg(-175);
+
+            robot.bar4.setPower(.25);
+            sleep(500);
+
+            robot.driveTrain.setMoveDistEnc(leftTarget);
+            placeBlock();
 
         }
 
@@ -111,7 +124,6 @@ public class PutGlyphInBox2 extends LinearOpMode {
 
     public void placeBlock(){
 
-        robot.driveTrain.rotateDeg(87.5);
         robot.driveTrain.setMoveDist(3);
         robot.wheels.outtakeLeft();
         robot.wheels.outtakeRight();
