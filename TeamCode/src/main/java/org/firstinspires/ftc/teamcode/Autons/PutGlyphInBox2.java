@@ -37,25 +37,24 @@ public class PutGlyphInBox2 extends LinearOpMode {
 
             sleep(2000);
 
-            robot.driveTrain.setMoveDist(-66);
-
             telemetry.addData("vumark 1", reading);
             telemetry.update();
 
 
             switch (reading){
                 case RIGHT:{
-                    robot.driveTrain.setMoveDist(-20);
+                    robot.driveTrain.setMoveDist(-66-25);
                     placeBlock();
                     break;
                 }
                 case CENTER:{
 
-                    robot.driveTrain.setMoveDist(-10);
+                    robot.driveTrain.setMoveDist(-66-10);
                     placeBlock();
                     break;
                 }
                 case LEFT:{
+                    robot.driveTrain.setMoveDist(-64);
                     placeBlock();
                     break;
                 }
