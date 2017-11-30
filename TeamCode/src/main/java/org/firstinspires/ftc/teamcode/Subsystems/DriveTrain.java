@@ -243,6 +243,14 @@ public class DriveTrain implements SubsystemTemplate
 
         }
     }
+
+    public void setMoveDistEnc(int leftTarget, int rightTarget){
+
+
+
+    }
+
+
     public double getRightPwr(){
         return (r1.getPower() + r2.getPower())/2;
 }

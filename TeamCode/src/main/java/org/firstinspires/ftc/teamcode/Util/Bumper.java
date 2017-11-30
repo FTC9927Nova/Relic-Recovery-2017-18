@@ -20,9 +20,9 @@ public class Bumper {
 
     }
 
-    public boolean getState(){
+    public boolean isPressed(){
 
-        return dt.getState();
+        return !dt.getState();
 
     }
 
