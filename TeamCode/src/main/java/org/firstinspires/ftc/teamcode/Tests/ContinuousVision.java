@@ -19,15 +19,15 @@ public class ContinuousVision extends LinearOpMode {
 
     CheckVision checkVision = new CheckVision();
 
-//    Robot robot = new Robot();
-//    Gyro gyro = new Gyro();
+    Robot robot = new Robot();
+    Gyro gyro = new Gyro();
 
     @Override
     public void runOpMode() throws InterruptedException {
 
 
-//        gyro.initGyro(hardwareMap);
-//        robot.init(hardwareMap, this, gyro);
+        gyro.initGyro(hardwareMap);
+        robot.init(hardwareMap, this, gyro);
 
         checkVision.setHardwareMap(this.hardwareMap);
         waitForStart();

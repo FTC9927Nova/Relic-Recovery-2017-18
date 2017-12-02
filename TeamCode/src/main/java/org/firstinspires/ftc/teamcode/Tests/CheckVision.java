@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.Util.VisionUtil;
  */
 
 public class CheckVision extends Thread {
-//    Robot robot = new Robot();
+    Robot robot = new Robot();
     VisionUtil visionUtil;
     HardwareMap hardwareMap;
     LinearOpMode linearOpMode;
