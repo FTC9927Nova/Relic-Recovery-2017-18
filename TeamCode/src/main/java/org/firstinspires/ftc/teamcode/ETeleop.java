@@ -1,34 +1,26 @@
 package org.firstinspires.ftc.teamcode;
 
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Subsystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 import org.firstinspires.ftc.teamcode.Util.Gyro;
 
 /**
- * Created by therat0981 on 10/1/17.
+ * Created by Ethan Pereira on 12/6/2017.
  */
-@TeleOp(name = "Max")
-
-public class MainTeleop extends OpMode
-{
+@TeleOp(name = "Ethan")
+public class ETeleop extends OpMode{
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
 
     @Override
-    public void init()
-    {
-        gyro.initGyro(hardwareMap);
+    public void init() {
         robot.init(hardwareMap, gyro);
-        robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
-        robot.driveTrain.setDrive(DriveTrain.Drive.SPEED);
     }
 
-    public void loop()
-    {
+    @Override
+    public void loop() {
         //keeping arm up
         robot.jewelArm.armMid();
 
@@ -36,21 +28,28 @@ public class MainTeleop extends OpMode
         robot.bar4.getCurrentAngle();
 
         //Driver Code
-        float yval = -gamepad1.left_stick_y;
-        float xval = gamepad1.right_stick_x;
+        float leftVal = gamepad1.left_stick_y;
+        float righVal = gamepad1.right_stick_y;
 
 
-        float lpwr = (float) Math.pow(((yval + xval)), 3);
-        float rpwr = (float) Math.pow((yval - xval), 3);
+        float lpwr =  leftVal;
+        float rpwr =  righVal;
 
 
 
 //        turtle mode
-        if (gamepad1.right_trigger!=0 || gamepad1.left_trigger!=0)
+        if (gamepad1.right_trigger!=0)
         {
             lpwr = lpwr/3.0f;
             rpwr = rpwr/3.0f;
         }
+        else if (gamepad1.left_trigger!=0){
+            lpwr = lpwr/5.0f;
+            rpwr = rpwr/5.0f;
+        }
+
+
+
 
 //      Setting the power for dt
         robot.driveTrain.setLeftPower(lpwr);
@@ -158,5 +157,5 @@ public class MainTeleop extends OpMode
 
     }
 
-
 }
+

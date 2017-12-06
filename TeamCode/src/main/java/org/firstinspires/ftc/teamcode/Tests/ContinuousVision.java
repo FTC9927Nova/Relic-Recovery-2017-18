@@ -18,7 +18,7 @@ import static java.lang.Thread.sleep;
 public class ContinuousVision extends LinearOpMode {
 
     CheckVision checkVision = new CheckVision();
-
+    HitJewl hitJewl = new HitJewl();
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
 
@@ -30,11 +30,12 @@ public class ContinuousVision extends LinearOpMode {
         robot.init(hardwareMap, this, gyro);
 
         checkVision.setHardwareMap(hardwareMap);
+        checkVision.startThread();
         waitForStart();
         if (opModeIsActive()){
-        checkVision.startThread();
-        //Replace Sleep with jewl Check code
-        sleep(5000);
+        hitJewl.startThread();
+
+        robot.jewelArm.armMid();
 
         }
 
