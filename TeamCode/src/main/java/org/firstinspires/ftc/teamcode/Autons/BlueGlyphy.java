@@ -27,12 +27,34 @@ public class BlueGlyphy extends LinearOpMode {
         gyro.initGyro(hardwareMap);
         robot.init(hardwareMap, this, gyro);
 
-
+        int dist = 0;
 
         waitForStart();
         if (opModeIsActive()){
 
-            robot.driveTrain.setMoveDist(17);
+            robot.jewelArm.armDown();
+
+            sleep(1000);
+
+//
+
+            if(String.valueOf(robot.jewelArm.getColor()) == "RED"){
+
+                robot.driveTrain.setMoveDist(4);
+                dist-=4;
+
+            }
+
+
+            else if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
+
+                robot.driveTrain.setMoveDist(-4);
+
+                dist+=4;
+
+            }
+
+            robot.driveTrain.setMoveDist(17 + dist);
 
             VisionUtil visionUtil = new VisionUtil();
 
