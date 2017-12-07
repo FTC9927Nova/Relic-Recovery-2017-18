@@ -32,6 +32,8 @@ public class RelicMech implements SubsystemTemplate
         extender.setPosition(1);
     }
 
+    public void halfExtender() { extender.setPosition(.5); }
+
     public void pullExtenderUp(){
         extender.setPosition(0);
     }
@@ -44,29 +46,8 @@ public class RelicMech implements SubsystemTemplate
         claw.setPosition(1);
     }
 
-    public void goAllOut(){
-        relic.setPower(1);
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        relic.setPower(0);
-
-    }
-
-    public void goAllIn(){
-        relic.setPower(-1);
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        relic.setPower(0);
-
-    }
     @Override
     public String display() {
-        return null;
+        return "Servo: " + extender.getPosition();
     }
 }

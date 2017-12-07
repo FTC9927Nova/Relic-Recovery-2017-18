@@ -26,8 +26,8 @@ public class Wheels implements SubsystemTemplate{
 
 
 
-        leftWheels.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightWheels.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftWheels.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightWheels.setDirection(DcMotorSimple.Direction.REVERSE);
 
         leftWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         rightWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);

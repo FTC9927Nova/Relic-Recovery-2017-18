@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Tests;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Subsystems.RelicMech;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 import org.firstinspires.ftc.teamcode.Util.Gyro;
 
@@ -12,20 +13,27 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
 @TeleOp(name = "asdf")
 public class ColorTest extends OpMode
 {
-    Robot robot = new Robot();
-    Gyro gyro = new Gyro();
 
+    RelicMech relic;
 
     @Override
     public void init()
     {
-        robot.init(this.hardwareMap,gyro);
+
+        relic = new RelicMech(this.hardwareMap);
+
     }
 
     @Override
     public void loop()
     {
-        telemetry.addData("color: ", robot.jewelArm.display());
-        telemetry.update();
+        if(gamepad2.a)
+            relic.clawOpen();
+        else if(gamepad2.b)
+            relic.clawClose();
+        if(gamepad2.y)
+            relic.pullExtenderUp();
+        else if(gamepad2.x)
+            relic.putExtenderDown();
     }
 }

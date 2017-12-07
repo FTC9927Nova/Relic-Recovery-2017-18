@@ -13,8 +13,8 @@ import org.firstinspires.ftc.teamcode.Util.VisionUtil;
 /**
  * Created by Ethan Pereira on 11/16/2017.
  */
-@Autonomous(name = "GlyphInBox2")
-public class PutGlyphInBox2 extends LinearOpMode {
+@Autonomous(name = "BlueGlyphy")
+public class BlueGlyphy extends LinearOpMode {
 
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
@@ -46,7 +46,7 @@ public class PutGlyphInBox2 extends LinearOpMode {
 
             switch (reading){
                 case RIGHT:{
-                    robot.driveTrain.setMoveDist(-66-25);
+                    robot.driveTrain.setMoveDist(-66-24);
                     robot.driveTrain.rotateDeg(87.5);
 
                     placeBlock();
@@ -112,11 +112,16 @@ public class PutGlyphInBox2 extends LinearOpMode {
 
             robot.driveTrain.rotateDeg(-175);
 
-            robot.bar4.setPower(.25);
-            sleep(500);
+            robot.bar4.setPower(.625);
+            sleep(750);
+            robot.bar4.setPower(0);
 
             robot.driveTrain.setMoveDistEnc(leftTarget);
             placeBlock();
+            robot.bar4.setPower(.625);
+            sleep(500);
+            robot.bar4.setPower(0);
+            robot.driveTrain.setMoveDist(-15);
 
         }
 
@@ -124,7 +129,7 @@ public class PutGlyphInBox2 extends LinearOpMode {
 
     public void placeBlock(){
 
-        robot.driveTrain.setMoveDist(3);
+        robot.driveTrain.setMoveDist(4);
         robot.wheels.outtakeLeft();
         robot.wheels.outtakeRight();
         sleep(500);

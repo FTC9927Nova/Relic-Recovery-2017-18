@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Autons;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
@@ -11,11 +12,12 @@ import org.firstinspires.ftc.teamcode.Util.VisionUtil;
 /**
  * Created by Ethan Pereira on 11/16/2017.
  */
-@Autonomous(name = "GlyphInBox")
-public class PutGlyphInBox extends LinearOpMode {
+@Autonomous(name = "RedGlyphy")
+public class RedGlyphy extends LinearOpMode {
 
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
+    ElapsedTime timer = new ElapsedTime();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -67,14 +69,57 @@ public class PutGlyphInBox extends LinearOpMode {
                 }
             }
 
+            robot.driveTrain.rotateDeg(175);
+            timer.startTime();
+            int startLeftEnc = robot.driveTrain.getLeftCurrentPosition();
+            while(!robot.bumper.isPressed() && opModeIsActive()){
+
+                if (timer.milliseconds() <= 2000) {
+
+                    robot.wheels.intakeRight();
+                    robot.wheels.intakeLeft();
+
+                }
+                else{
+
+                    robot.wheels.intakeLeft();
+                    robot.wheels.setRightWheels(0);
+
+                }
+                robot.driveTrain.setLeftPower(1);
+                robot.driveTrain.setRightPower(1);
+
+
+
+            }
+
+            int leftTarget = robot.driveTrain.getLeftCurrentPosition() - startLeftEnc;
+
+            robot.driveTrain.setLeftPower(0);
+            robot.driveTrain.setRightPower(0);
+            robot.wheels.setLeftWheelPwr(0);
+            robot.wheels.setRightWheels(0);
+
+            robot.driveTrain.rotateDeg(-175);
+
+            robot.bar4.setPower(.625);
+            sleep(750);
+            robot.bar4.setPower(0);
+
+            robot.driveTrain.setMoveDistEnc(leftTarget);
+            placeBlock();
+            robot.bar4.setPower(.625);
+            sleep(500);
+            robot.bar4.setPower(0);
+            robot.driveTrain.setMoveDist(-15);
+
         }
 
     }
 
     public void placeBlock(){
 
-        robot.driveTrain.rotateDeg(90);
-        robot.driveTrain.setMoveDist(3);
+        robot.driveTrain.setMoveDist(4);
         robot.wheels.outtakeLeft();
         robot.wheels.outtakeRight();
         sleep(500);

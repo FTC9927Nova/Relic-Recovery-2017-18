@@ -29,12 +29,11 @@ public class ContinuousVision extends LinearOpMode {
         gyro.initGyro(hardwareMap);
         robot.init(hardwareMap, this, gyro);
 
-        checkVision.setHardwareMap(this.hardwareMap);
+        checkVision.setHardwareMap(hardwareMap);
+
         waitForStart();
         if (opModeIsActive()){
         checkVision.startThread();
-        //Replace Sleep with jewl Check code
-        sleep(5000);
 
         }
 
