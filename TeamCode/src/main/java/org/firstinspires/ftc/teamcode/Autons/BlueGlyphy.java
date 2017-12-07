@@ -32,6 +32,10 @@ public class BlueGlyphy extends LinearOpMode {
         waitForStart();
         if (opModeIsActive()){
 
+            robot.relic.setPower(0.1);
+            sleep(1000);
+            robot.relic.setPower(0);
+
             robot.jewelArm.armDown();
 
             sleep(1000);
@@ -134,14 +138,12 @@ public class BlueGlyphy extends LinearOpMode {
 
             robot.driveTrain.rotateDeg(-175);
 
-            robot.bar4.setPower(.625);
-            sleep(750);
+            robot.bar4.setPower(1);
+            sleep(1000);
             robot.bar4.setPower(0);
 
             robot.driveTrain.setMoveDistEnc(leftTarget);
             placeBlock();
-            robot.bar4.setPower(.625);
-            sleep(500);
             robot.bar4.setPower(0);
             robot.driveTrain.setMoveDist(-15);
 

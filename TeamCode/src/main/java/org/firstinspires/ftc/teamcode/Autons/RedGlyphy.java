@@ -8,6 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 import org.firstinspires.ftc.teamcode.Util.Gyro;
 import org.firstinspires.ftc.teamcode.Util.VisionUtil;
+import org.firstinspires.ftc.teamcode.Util.*;
 
 /**
  * Created by Ethan Pereira on 11/16/2017.
@@ -18,6 +19,7 @@ public class RedGlyphy extends LinearOpMode {
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
     ElapsedTime timer = new ElapsedTime();
+    RobotConstants constant = new RobotConstants();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -96,7 +98,7 @@ public class RedGlyphy extends LinearOpMode {
             robot.driveTrain.rotateDeg(175);
             timer.startTime();
             int startLeftEnc = robot.driveTrain.getLeftCurrentPosition();
-            while(!robot.bumper.isPressed() && opModeIsActive()){
+            while(!robot.bumper.isPressed() && opModeIsActive() && (robot.driveTrain.getLeftCurrentPosition() - startLeftEnc) < (constant.getTICKS_PER_INCH() * 90)){
 
                 if (timer.milliseconds() <= 2000) {
 
@@ -126,14 +128,12 @@ public class RedGlyphy extends LinearOpMode {
 
             robot.driveTrain.rotateDeg(-175);
 
-            robot.bar4.setPower(.625);
-            sleep(750);
+            robot.bar4.setPower(1);
+            sleep(1000);
             robot.bar4.setPower(0);
 
             robot.driveTrain.setMoveDistEnc(leftTarget);
             placeBlock();
-            robot.bar4.setPower(.625);
-            sleep(500);
             robot.bar4.setPower(0);
             robot.driveTrain.setMoveDist(-15);
 
