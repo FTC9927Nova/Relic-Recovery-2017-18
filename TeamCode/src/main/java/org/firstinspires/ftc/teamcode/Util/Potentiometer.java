@@ -40,8 +40,16 @@ public class Potentiometer {
         angle = percentTurnedDecimal * 270;
     }
 
+//    public double getPercentTurnedDecimal(){
+//        voltageCalc = potentiometer.getVoltage();
+//        voltageCalc = (int)(voltageCalc * 10) + 0.5;
+//        voltage = voltageCalc/10;
+//        percentTurnedDecimal = (voltage/maxVoltage);
+//        return percentTurnedDecimal;
+//    }
     public double getAngle()
     {
+        getInput();
         return angle;
     }
 
