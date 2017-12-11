@@ -41,6 +41,8 @@ public class RobotConstants
 //    15.875
     private final int ELEVATOR_TICKS_PER_INCH = ELEVATOR_TICKS_PER_ONE_MOVEMENT / ELEVATOR_INCHES_PER_ONE_MOVEMENT;
 
+    private final double angleAt90 = 0;
+
     public int getTICKS_PER_INCH()
     {
         return (int)(ENCODER_TICKS_PER_REVOLUTION / WHEEL_CIRCUMFERENCE);
@@ -68,7 +70,11 @@ public class RobotConstants
     public int getWHEELS_TOLERANCE(){ return WHEELS_TOLERANCE;}
 
     public int getWHEELS_TICKS_PER_ROTATION(){ return WHEELS_TICKS_PER_ROTATION;}
-    }
 
+
+    public double getAngleAt90(){
+        return angleAt90;
+    }
+}
 
 

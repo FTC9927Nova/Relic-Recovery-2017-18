@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Util.Potentiometer;
+import org.firstinspires.ftc.teamcode.Util.RobotConstants;
 
 import static java.lang.Thread.sleep;
 
@@ -19,8 +20,8 @@ public class RelicMech implements SubsystemTemplate
 {
     private DcMotor relic;
     private Servo claw, extender;
-    Potentiometer potentiometer;
-    private final double angleAt90 = 0;
+    RobotConstants constant = new RobotConstants();
+
 
     public RelicMech(HardwareMap hardwareMap)
     {
@@ -28,7 +29,6 @@ public class RelicMech implements SubsystemTemplate
         relic.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         claw = hardwareMap.servo.get("claw");
         extender = hardwareMap.servo.get("extender");
-        potentiometer = new Potentiometer(hardwareMap);
 
     }
 
@@ -76,8 +76,8 @@ public class RelicMech implements SubsystemTemplate
 
     }
 
-    public void withBar4(){
-        double potAngle = -(potentiometer.getAngle()-angleAt90);
+    public void withBar4(double currentAngle){
+        double potAngle = -(currentAngle-constant.getAngleAt90());
         potAngle = potAngle/10;
         potAngle = (1-potAngle)-0.05;
         potAngle = com.qualcomm.robotcore.util.Range.clip(potAngle, 0, 1);

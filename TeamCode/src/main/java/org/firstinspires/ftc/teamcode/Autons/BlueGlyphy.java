@@ -126,7 +126,6 @@ public class BlueGlyphy extends LinearOpMode {
                     robot.wheels.intakeRight();
                     robot.wheels.intakeLeft();
 
-
                 }
                 else{
 

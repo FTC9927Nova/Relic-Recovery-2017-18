@@ -65,6 +65,8 @@ public class MainTeleop extends OpMode
             robot.relic.pullExtenderUp();
         else if (gamepad2.x)
             robot.relic.putExtenderDown();
+        else
+            robot.relic.withBar4(robot.bar4.getCurrentAngle());
 
 
         // Arm Control
