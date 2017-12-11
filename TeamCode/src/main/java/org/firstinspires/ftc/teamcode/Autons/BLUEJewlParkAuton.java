@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.Util.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+@Disabled
 
 /**
  * Created by Sumanth on 10/21/17.

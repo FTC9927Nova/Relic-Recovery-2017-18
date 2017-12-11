@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  */
 
 @Autonomous (name = "VisionUtilTest", group = "")
+@Disabled
 public class ConceptVisionUtil extends LinearOpMode{
 
     @Override

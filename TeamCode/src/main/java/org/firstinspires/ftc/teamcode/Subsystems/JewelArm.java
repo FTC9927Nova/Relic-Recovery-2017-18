@@ -4,6 +4,7 @@ import android.graphics.Color;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
@@ -33,18 +34,18 @@ public class JewelArm implements SubsystemTemplate
     public JewelArm(HardwareMap hardwareMap)
     {
         jewlArm = hardwareMap.servo.get("jewl");
-        jewlCheck = hardwareMap.colorSensor.get("color");
+//        jewlCheck = (ColorSensor)hardwareMap.i2cDevice.get("color");
 
         jewlArm.setDirection(Servo.Direction.FORWARD);
         jewlArm.scaleRange(0,1);
 
-        jewlCheck.enableLed(true);
+//        jewlCheck.enableLed(true);
     }
 
     public void armDown()
     {
 //        isArmDown = true;
-        jewlArm.setPosition(0.785);
+        jewlArm.setPosition(0.95);
     }
 
 
@@ -65,6 +66,7 @@ public class JewelArm implements SubsystemTemplate
     {
         getHSV();
         return Math.cos(Math.toRadians(hsvValues[0]));
+
     }
 
     public ColorDetected getColor()
@@ -94,7 +96,7 @@ public class JewelArm implements SubsystemTemplate
         if (jewlCheck.blue() > jewlCheck.red()){
             return "BLUE";
         } else if (jewlCheck.blue() < jewlCheck.red()){
-            return "RED";
+//            return "RED";
         }
         return "NOTHING";
     }
@@ -107,5 +109,6 @@ public class JewelArm implements SubsystemTemplate
                 +"   \n get Color: " + getColor()
                 +"   \n cos(hsv[0])" + scaleHSV()
                 +"   \n hsv-    Hue: " + hsvValues[0] + "    Saturation: " + hsvValues[1] + "     Value: " + hsvValues[2];
+
     }
 }

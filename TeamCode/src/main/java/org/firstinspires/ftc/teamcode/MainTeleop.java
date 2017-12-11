@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Autons.BlueGlyphy;
 import org.firstinspires.ftc.teamcode.Subsystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 import org.firstinspires.ftc.teamcode.Util.Gyro;
@@ -21,10 +22,11 @@ public class MainTeleop extends OpMode
     @Override
     public void init()
     {
-        gyro.initGyro(hardwareMap);
-        robot.init(hardwareMap, gyro);
-        robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
-        robot.driveTrain.setDrive(DriveTrain.Drive.SPEED);
+            gyro.initGyro(hardwareMap);
+            robot.init(hardwareMap, gyro);
+            robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
+            robot.driveTrain.setDrive(DriveTrain.Drive.SPEED);
+
     }
 
     public void loop() {
@@ -60,15 +62,10 @@ public class MainTeleop extends OpMode
         else if (gamepad2.b)
             robot.relic.clawClose();
         if (gamepad2.y)
-            robot.relic.halfExtender();
+            robot.relic.pullExtenderUp();
         else if (gamepad2.x)
             robot.relic.putExtenderDown();
-        else if (Math.abs(gamepad2.right_stick_x) > 0.1)
-            robot.relic.pullExtenderUp();
-        else
-        {
 
-        }
 
         // Arm Control
         if (Math.abs(gamepad2.left_stick_y) > 0.05) {
