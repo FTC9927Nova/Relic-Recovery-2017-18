@@ -18,13 +18,14 @@ public class PotTest extends LinearOpMode
 {
     Bumper bump;
 
+
+
     @Override
     public void runOpMode() throws InterruptedException {
         bump = new Bumper(hardwareMap);
         waitForStart();
         while (opModeIsActive())
         {
-
             telemetry.addData("Pot", bump.isPressed());
             telemetry.update();
         }

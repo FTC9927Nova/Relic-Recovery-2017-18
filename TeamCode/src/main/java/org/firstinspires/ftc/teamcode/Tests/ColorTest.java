@@ -12,7 +12,6 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
 /**
  * Created by Sumanth on 11/11/17.
  */
-@Disabled
 
 @TeleOp(name = "ColorTest")
 public class ColorTest extends OpMode
@@ -22,7 +21,7 @@ public class ColorTest extends OpMode
     public void init()
     {
 
-        j = new JewelArm(this.hardwareMap);
+        j = new JewelArm(hardwareMap);
 
     }
 

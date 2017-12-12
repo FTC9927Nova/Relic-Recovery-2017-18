@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
 /**
  * Created by therat0981 on 10/1/17.
  */
-@TeleOp(name = "Max")
+@TeleOp(name = "TeleOpNew")
 
 public class MainTeleop extends OpMode
 {
@@ -32,7 +32,6 @@ public class MainTeleop extends OpMode
     public void loop() {
         //keeping arm up
         robot.jewelArm.armMid();
-
         //getting Current Angle of the Four Bar
         robot.bar4.getCurrentAngle();
 
@@ -65,8 +64,6 @@ public class MainTeleop extends OpMode
             robot.relic.pullExtenderUp();
         else if (gamepad2.x)
             robot.relic.putExtenderDown();
-        else
-            robot.relic.withBar4(robot.bar4.getCurrentAngle());
 
 
         // Arm Control
@@ -132,6 +129,7 @@ public class MainTeleop extends OpMode
 
             telemetry.addData("bump: ", robot.bumper.isPressed());
             telemetry.addData("Servo Pos: ", robot.relic.display());
+            telemetry.addData("angle",robot.potentiometer.getAngle());
             telemetry.update();
         }
 

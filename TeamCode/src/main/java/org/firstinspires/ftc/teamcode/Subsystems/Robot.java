@@ -16,6 +16,7 @@ public class Robot
     public DriveTrain driveTrain;
     public JewelArm jewelArm;
     public FourBar bar4;
+    public JewelArm jewelArm2;
     public Wheels wheels;
     public RelicMech relic;
     public Bumper bumper;
@@ -38,6 +39,7 @@ public class Robot
         bumper = new Bumper(hardwareMap);
         potentiometer = new Potentiometer(hardwareMap);
         bar4.getPotentiometer(potentiometer);
+        jewelArm2 = new JewelArm(hardwareMap);
 
 
 
@@ -54,6 +56,8 @@ public class Robot
         bumper = new Bumper(hardwareMap);
         potentiometer = new Potentiometer(hardwareMap);
         bar4.getPotentiometer(potentiometer);
+        jewelArm2 = new JewelArm(hardwareMap);
+
 
 
 
