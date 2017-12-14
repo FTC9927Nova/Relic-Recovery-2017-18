@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -23,6 +24,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 
 
+
 public class VisionUtil{
 
     public static final String TAG = "Vuforia VuMark Sample";
@@ -31,7 +33,7 @@ public class VisionUtil{
 
     VuforiaLocalizer vuforia;
 
-    boolean keepLooking = true;
+    ElapsedTime timer = new ElapsedTime();
 
 
     public RelicRecoveryVuMark readGraph(HardwareMap hardwareMap) {
@@ -51,8 +53,9 @@ public class VisionUtil{
 
         relicTrackables.activate();
 
+        timer.startTime();
 
-        while (keepLooking) {
+        while (true) {
 
 
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
@@ -64,13 +67,6 @@ public class VisionUtil{
             }
 
         }
-
-        return RelicRecoveryVuMark.UNKNOWN;
     }
 
-    public void stopLooking(){
-
-        keepLooking = false;
-
-    }
 }

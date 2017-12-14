@@ -48,7 +48,7 @@ public class RelicMech implements SubsystemTemplate
 
     //TODO: FIND BETTER CLAW VALUES
     public void clawOpen(){
-        claw.setPosition(0);
+        claw.setPosition(0.1);
     }
     public void clawClose(){
         claw.setPosition(1);

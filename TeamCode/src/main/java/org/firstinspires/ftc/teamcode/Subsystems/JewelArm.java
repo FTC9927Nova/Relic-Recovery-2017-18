@@ -46,28 +46,47 @@ public class JewelArm implements SubsystemTemplate
 
         jewlCheck.enableLed(false);
         check2.enableLed(false);
+
     }
 
     public void armDown()
     {
 //        isArmDown = true;
         jewlArm.setPosition(0.95);
+    }
+    public void arm2Down(){
+
         arm2.setPosition(0.78);
+
+
     }
 
 
     public void armMid()
     {
         jewlArm.setPosition(0.3);
-        arm2.setPosition(0.12);
 
     }
+
+    public void arm2Mid(){
+
+        arm2.setPosition(0.12);
+
+
+    }
+
     public void armUp()
     {
         jewlArm.setPosition(0.17);
-        arm2.setPosition(0);
 
 //        isArmDown = false;
+
+    }
+
+    public void arm2Up(){
+
+        arm2.setPosition(0);
+
 
     }
 
@@ -80,11 +99,27 @@ public class JewelArm implements SubsystemTemplate
 
     }
 
+    private double scaleHSV2(){
+
+        getHSV2();
+        return Math.cos(Math.toRadians(hsvValues[0]));
+    }
+
     public ColorDetected getColor()
     {
         if(scaleHSV()<0)
             return ColorDetected.BLUE;
         else if(scaleHSV()>0)
+            return  ColorDetected.RED;
+        else
+            return ColorDetected.None;
+    }
+
+    public ColorDetected getColor2(){
+
+        if(scaleHSV2()<0)
+            return ColorDetected.BLUE;
+        else if(scaleHSV2()>0)
             return  ColorDetected.RED;
         else
             return ColorDetected.None;
@@ -99,6 +134,15 @@ public class JewelArm implements SubsystemTemplate
                 (int) (jewlCheck.green() * SCALE_FACTOR),
                 (int) (jewlCheck.blue() * SCALE_FACTOR),
                 hsvValues);
+    }
+
+    private void getHSV2(){
+
+        Color.RGBToHSV((int) (check2.red() * SCALE_FACTOR),
+                (int) (check2.green() * SCALE_FACTOR),
+                (int) (check2.blue() * SCALE_FACTOR),
+                hsvValues);
+
     }
 
 
