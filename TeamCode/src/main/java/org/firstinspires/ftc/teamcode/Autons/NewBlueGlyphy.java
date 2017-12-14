@@ -5,18 +5,16 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-import org.firstinspires.ftc.teamcode.MainTeleop;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 import org.firstinspires.ftc.teamcode.Util.Gyro;
 import org.firstinspires.ftc.teamcode.Util.VisionUtil;
 import org.firstinspires.ftc.teamcode.Util.*;
 
-
 /**
  * Created by Ethan Pereira on 11/16/2017.
  */
-@Autonomous(name = "BlueGlyphy")
-public class BlueGlyphy extends LinearOpMode {
+@Autonomous(name = "NewBlueGlyphy")
+public class NewBlueGlyphy extends LinearOpMode {
 
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
@@ -33,33 +31,38 @@ public class BlueGlyphy extends LinearOpMode {
 
         double heading;
 
+        int dist = 0;
+
+
+
         waitForStart();
         if (opModeIsActive()){
 
-//            robot.jewelArm.armDown();
+            robot.jewelArm.arm2Down();
 
             sleep(1000);
 
 //
 
-//            if(String.valueOf(robot.jewelArm.getColor()) == "RED"){
-//
-//                robot.driveTrain.setMoveDist(4);
-//                dist-=4;
-//
-//            }
-//
-//
-//            else if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
-//
-//                robot.driveTrain.setMoveDist(-4);
-//
-//                dist+=4;
-//
-//            }
-            robot.jewelArm.armMid();
+            if(String.valueOf(robot.jewelArm.getColor2()) == "RED"){
 
-            robot.driveTrain.setMoveDist(17);
+                robot.driveTrain.setMoveDist(4);
+                dist-=4;
+
+            }
+
+
+            else if(String.valueOf(robot.jewelArm.getColor2()) == "BLUE"){
+
+                robot.driveTrain.setMoveDist(-4);
+
+                dist+=4;
+
+            }
+
+            robot.jewelArm.arm2Mid();
+
+            robot.driveTrain.setMoveDist(20 + dist);
 
             VisionUtil visionUtil = new VisionUtil();
 
@@ -67,56 +70,49 @@ public class BlueGlyphy extends LinearOpMode {
 
             sleep(2000);
 
+            robot.driveTrain.setMoveDist(22);
+
             telemetry.addData("vumark 1", reading);
             telemetry.update();
-
-            robot.driveTrain.setMoveDist(-68);
 
 
             switch (reading){
                 case RIGHT:{
-                    robot.driveTrain.setMoveDist(-24);
-                    robot.driveTrain.rotateDeg(87.5);
+                    robot.driveTrain.setMoveDist(22);
+
+                    robot.driveTrain.rotateDeg(-87.5);
 
                     placeBlock();
-
-                    robot.driveTrain.rotateDeg(190);
-
                     break;
                 }
                 case CENTER:{
 
-                    robot.driveTrain.setMoveDist(-10);
-                    robot.driveTrain.rotateDeg(87.5);
+                    robot.driveTrain.setMoveDist(12);
+                    robot.driveTrain.rotateDeg(-87.5);
 
                     placeBlock();
-
-                    robot.driveTrain.rotateDeg(180);
-
-
                     break;
                 }
                 case LEFT:{
-                    robot.driveTrain.rotateDeg(87.5);
+                    robot.driveTrain.rotateDeg(-87.5);
 
                     placeBlock();
-                    robot.driveTrain.rotateDeg(170);
-
                     break;
                 }
                 default:{
 
-                    robot.driveTrain.rotateDeg(87.5);
-                    placeBlock();
 
-                    robot.driveTrain.rotateDeg(170);
+                    robot.driveTrain.rotateDeg(87.5);
+
+
+                    placeBlock();
 
                     break;
 
                 }
             }
 
-
+            robot.driveTrain.rotateDeg(-200);
             timer.startTime();
             int startLeftEnc = robot.driveTrain.getLeftCurrentPosition();
             while(robot.bumper.isPressed() && opModeIsActive() && Math.abs(robot.driveTrain.getLeftCurrentPosition() - startLeftEnc) < (constant.getTICKS_PER_INCH() * 62.5)){
@@ -149,29 +145,7 @@ public class BlueGlyphy extends LinearOpMode {
 
             int leftTarget = robot.driveTrain.getLeftCurrentPosition() - startLeftEnc;
 
-
-            switch (reading){
-                case RIGHT:{
-                    robot.driveTrain.rotateDeg(-185);
-
-                    break;
-                }
-                case CENTER:{
-                    robot.driveTrain.rotateDeg(-180);
-                    break;
-                }
-                case LEFT:{
-                    robot.driveTrain.rotateDeg(-175);
-                    break;
-                }
-                default:{
-                    robot.driveTrain.rotateDeg(-175);
-
-                    break;
-
-                }
-            }
-
+            robot.driveTrain.rotateDeg(-170);
 
             robot.driveTrain.setLeftPower(0);
             robot.driveTrain.setRightPower(0);
@@ -192,7 +166,6 @@ public class BlueGlyphy extends LinearOpMode {
 
         }
 
-
     }
 
     public void placeBlock(){
@@ -200,7 +173,7 @@ public class BlueGlyphy extends LinearOpMode {
         robot.driveTrain.setMoveDist(4);
         robot.wheels.setRightWheels(-1);
         robot.wheels.setLeftWheelPwr(-1);
-        sleep(750);
+        sleep(500);
         robot.wheels.stopLeft();
         robot.wheels.stopRight();
         robot.driveTrain.setMoveDist(-8);

@@ -1,0 +1,31 @@
+package org.firstinspires.ftc.teamcode.Tests;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.teamcode.Util.VisionUtil;
+
+/**
+ * Created by Sumanth on 12/13/17.
+ */
+
+@TeleOp(name = "vision", group = "")
+public class Vision extends LinearOpMode {
+
+    VisionUtil vision = new VisionUtil();
+
+    RelicRecoveryVuMark reading;
+
+    @Override
+    public void runOpMode() throws InterruptedException {
+
+        reading = vision.readGraph(hardwareMap);
+
+        telemetry.addData("graph" , reading);
+        telemetry.update();
+
+
+    }
+}
