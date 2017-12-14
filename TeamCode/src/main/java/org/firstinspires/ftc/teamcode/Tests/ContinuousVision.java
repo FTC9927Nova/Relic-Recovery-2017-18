@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -15,6 +16,7 @@ import static java.lang.Thread.sleep;
  * Created by Ethan Pereira on 11/30/2017.
  */
 @Autonomous(name = "cVision")
+@Disabled
 public class ContinuousVision extends LinearOpMode {
 
     CheckVision checkVision = new CheckVision();
@@ -30,11 +32,10 @@ public class ContinuousVision extends LinearOpMode {
         robot.init(hardwareMap, this, gyro);
 
         checkVision.setHardwareMap(hardwareMap);
+
         waitForStart();
         if (opModeIsActive()){
         checkVision.startThread();
-        //Replace Sleep with jewl Check code
-        sleep(5000);
 
         }
 

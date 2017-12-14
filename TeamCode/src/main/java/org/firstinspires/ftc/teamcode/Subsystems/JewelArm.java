@@ -4,6 +4,7 @@ import android.graphics.Color;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
@@ -12,8 +13,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class JewelArm implements SubsystemTemplate
 {
-    private Servo jewlArm;
-    private ColorSensor jewlCheck;
+    private Servo jewlArm, arm2;
+    private ColorSensor jewlCheck, check2;
 
 
     private boolean isArmDown = false;
@@ -34,27 +35,38 @@ public class JewelArm implements SubsystemTemplate
     {
         jewlArm = hardwareMap.servo.get("jewl");
         jewlCheck = hardwareMap.colorSensor.get("color");
+        arm2 = hardwareMap.servo.get("jewl2");
+        check2 = hardwareMap.colorSensor.get("color2");
 
         jewlArm.setDirection(Servo.Direction.FORWARD);
         jewlArm.scaleRange(0,1);
 
-        jewlCheck.enableLed(true);
+        arm2.setDirection(Servo.Direction.REVERSE);
+        arm2.scaleRange(0,1);
+
+        jewlCheck.enableLed(false);
+        check2.enableLed(false);
     }
 
     public void armDown()
     {
 //        isArmDown = true;
-        jewlArm.setPosition(0.785);
+        jewlArm.setPosition(0.95);
+        arm2.setPosition(0.78);
     }
 
 
     public void armMid()
     {
         jewlArm.setPosition(0.3);
+        arm2.setPosition(0.12);
+
     }
     public void armUp()
     {
         jewlArm.setPosition(0.17);
+        arm2.setPosition(0);
+
 //        isArmDown = false;
 
     }
@@ -65,6 +77,7 @@ public class JewelArm implements SubsystemTemplate
     {
         getHSV();
         return Math.cos(Math.toRadians(hsvValues[0]));
+
     }
 
     public ColorDetected getColor()
@@ -94,7 +107,7 @@ public class JewelArm implements SubsystemTemplate
         if (jewlCheck.blue() > jewlCheck.red()){
             return "BLUE";
         } else if (jewlCheck.blue() < jewlCheck.red()){
-            return "RED";
+//            return "RED";
         }
         return "NOTHING";
     }
@@ -107,5 +120,6 @@ public class JewelArm implements SubsystemTemplate
                 +"   \n get Color: " + getColor()
                 +"   \n cos(hsv[0])" + scaleHSV()
                 +"   \n hsv-    Hue: " + hsvValues[0] + "    Saturation: " + hsvValues[1] + "     Value: " + hsvValues[2];
+
     }
 }

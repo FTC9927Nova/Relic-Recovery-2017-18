@@ -74,10 +74,11 @@ public class FourBar implements SubsystemTemplate {
     }
 
 
-    public void getCurrentAngle()
+    public double getCurrentAngle()
     {
         pot.getInput();
         currentAngle = pot.getAngle();
+        return currentAngle;
     }
 
 

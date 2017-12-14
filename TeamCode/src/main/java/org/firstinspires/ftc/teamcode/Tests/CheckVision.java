@@ -12,7 +12,6 @@ import org.firstinspires.ftc.teamcode.Util.VisionUtil;
  */
 
 public class CheckVision extends Thread {
-    Robot robot = new Robot();
     VisionUtil visionUtil;
     HardwareMap hardwareMap;
     LinearOpMode linearOpMode;
@@ -32,12 +31,6 @@ public class CheckVision extends Thread {
         while (reading.equals(RelicRecoveryVuMark.UNKNOWN)){
 
             reading = visionUtil.readGraph(hardwareMap);
-//            robot.driveTrain.setMoveDist(2);
-            try {
-                sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             linearOpMode.telemetry.addData("read", reading);
             linearOpMode.telemetry.update();
 

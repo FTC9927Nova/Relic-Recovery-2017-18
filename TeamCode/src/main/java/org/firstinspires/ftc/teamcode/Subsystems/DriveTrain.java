@@ -244,22 +244,23 @@ public class DriveTrain implements SubsystemTemplate
         }
     }
 
-    public void setMoveDistEnc(int leftTarget){
+    public void setMoveDistEnc(int target){
 
 
         setDrive(Drive.STOP_RESET);
 
-        this.leftTarget = leftTarget;
+        leftTarget = target;
+
 
         setDrive(Drive.ENCODERS);
 
-        setLeftTarget(this.leftTarget);
-        setRightTarget(this.leftTarget);
+        setLeftTarget(leftTarget);
+        setRightTarget(leftTarget);
 
-        driveCL.setTarget(this.leftTarget);
+        driveCL.setTarget(leftTarget);
 
         while(this.opMode.opModeIsActive() &&
-                (Math.abs((getLeftCurrentPosition()-leftTarget))>constant.getDRIVE_TOLERANCE() && Math.abs((getRightCurrentPosition()-rightTarget))>constant.getDRIVE_TOLERANCE()))
+                (Math.abs((getLeftCurrentPosition()-target))>constant.getDRIVE_TOLERANCE() && Math.abs((getRightCurrentPosition()-rightTarget))>constant.getDRIVE_TOLERANCE()))
         {
 
             setLeftPower(driveCL.pLoop(getLeftCurrentPosition()));
@@ -348,7 +349,6 @@ public class DriveTrain implements SubsystemTemplate
         Log.i("L1", String.valueOf(l1.getPower()));
         Log.i("L2", String.valueOf(l2.getCurrentPosition()));
         Log.i("R1", String.valueOf(r1.getPower()));
-
         Log.i("Error", String.valueOf(driveCL.getError()));
         Log.i("R2", String.valueOf(r2.getCurrentPosition()));
 
