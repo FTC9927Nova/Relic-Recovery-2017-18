@@ -38,7 +38,7 @@ public class DriveTrain implements SubsystemTemplate
     //TODO: ENTER Kp, Ki, Kd
     private PIDLoop driveCL = new PIDLoop(0.01,0,0);
     //TurnCl: kp:0.0075, ki: 0.0005, kd: 0
-    private PIDLoop turnCL = new PIDLoop(0.0075, 0.0005, 0);
+    private PIDLoop turnCL = new PIDLoop(0.0075, 0.0025, 0);
 
 
     public enum Side

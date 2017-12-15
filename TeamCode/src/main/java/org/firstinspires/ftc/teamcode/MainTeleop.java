@@ -31,6 +31,7 @@ public class MainTeleop extends OpMode
     public void loop() {
         //keeping arm up
         robot.jewelArm.armMid();
+        robot.jewelArm.arm2Mid();
         //getting Current Angle of the Four Bar
         robot.bar4.getCurrentAngle();
 

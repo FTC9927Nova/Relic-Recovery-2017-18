@@ -159,7 +159,7 @@ public class JewelArm implements SubsystemTemplate
     public String display() {
 
         return "Jewel Arm"
-                +"   \n arm state: " + isArmDown
+                +"   \n right: " + jewlArm.getPosition() + " left " + arm2.getPosition()
                 +"   \n color-  BLUE: " + jewlCheck.blue() + "   Red: " + jewlCheck.red()
                 +"   \n get Color: " + getColor()
                 +"   \n cos(hsv[0])" + scaleHSV()
