@@ -7,14 +7,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 import org.firstinspires.ftc.teamcode.Util.Gyro;
+import org.firstinspires.ftc.teamcode.Util.RobotConstants;
 import org.firstinspires.ftc.teamcode.Util.VisionUtil;
-import org.firstinspires.ftc.teamcode.Util.*;
 
 /**
  * Created by Ethan Pereira on 11/16/2017.
  */
-@Autonomous(name = "RedGlyphy")
-public class RedGlyphy extends LinearOpMode {
+@Autonomous(name = "RedGlyphyNoJewl")
+public class RedGlyphyNoJewl extends LinearOpMode {
 
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
@@ -37,28 +37,28 @@ public class RedGlyphy extends LinearOpMode {
         waitForStart();
         if (opModeIsActive()){
 
-            robot.jewelArm.armDown();
-
-            sleep(1000);
-
+//            robot.jewelArm.armDown();
 //
-
-            if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
-
-                robot.driveTrain.setMoveDist(4);
-                dist-=4;
-
-            }
-
-
-            else if(String.valueOf(robot.jewelArm.getColor()) == "RED"){
-
-                robot.driveTrain.setMoveDist(-4);
-
-                dist+=4;
-
-            }
-
+//            sleep(1000);
+//
+////
+//
+//            if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
+//
+//                robot.driveTrain.setMoveDist(4);
+//                dist-=4;
+//
+//            }
+//
+//
+//            else if(String.valueOf(robot.jewelArm.getColor()) == "RED"){
+//
+//                robot.driveTrain.setMoveDist(-4);
+//
+//                dist+=4;
+//
+//            }
+//
             robot.jewelArm.armMid();
 
             robot.driveTrain.setMoveDist(20 + dist);
@@ -67,7 +67,7 @@ public class RedGlyphy extends LinearOpMode {
 
             RelicRecoveryVuMark reading = visionUtil.readGraph(hardwareMap);
 
-            robot.driveTrain.setMoveDist(22);
+            robot.driveTrain.setMoveDist(24);
 
             telemetry.addData("vumark 1", reading);
             telemetry.update();
@@ -107,7 +107,7 @@ public class RedGlyphy extends LinearOpMode {
                 }
             }
 
-            robot.driveTrain.rotateDeg(180);
+            robot.driveTrain.rotateDeg(200);
             timer.startTime();
             int startLeftEnc = robot.driveTrain.getLeftCurrentPosition();
             while(robot.bumper.isPressed() && opModeIsActive() && Math.abs(robot.driveTrain.getLeftCurrentPosition() - startLeftEnc) < (constant.getTICKS_PER_INCH() * 62.5)){
@@ -141,7 +141,7 @@ public class RedGlyphy extends LinearOpMode {
             int leftTarget = robot.driveTrain.getLeftCurrentPosition() - startLeftEnc;
 
 
-            robot.driveTrain.rotateDeg(180);
+            robot.driveTrain.rotateDeg(170);
 
             robot.driveTrain.setLeftPower(0);
             robot.driveTrain.setRightPower(0);
@@ -154,6 +154,55 @@ public class RedGlyphy extends LinearOpMode {
 
             robot.driveTrain.setMoveDistEnc(leftTarget- (5 * constant.getTICKS_PER_INCH()));
             placeBlock();
+
+//            robot.driveTrain.rotateDeg(200);
+//            timer.startTime();
+//            int startLeftEnc2 = robot.driveTrain.getLeftCurrentPosition();
+//            while(robot.bumper.isPressed() && opModeIsActive() && Math.abs(robot.driveTrain.getLeftCurrentPosition() - startLeftEnc2) < (constant.getTICKS_PER_INCH() * 62.5)){
+//
+//                if (timer.milliseconds() <= 3000) {
+//
+//                    robot.wheels.intakeRight();
+//                    robot.wheels.intakeLeft();
+//
+//                }
+//                else{
+//
+//                    robot.wheels.intakeLeft();
+//                    robot.wheels.setRightWheels(0);
+//
+//                }
+//                robot.driveTrain.setLeftPower(1);
+//                robot.driveTrain.setRightPower(1);
+//
+//
+//
+//            }
+//
+//            robot.driveTrain.setLeftPower(0);
+//            robot.driveTrain.setRightPower(0);
+//            robot.wheels.setLeftWheelPwr(0);
+//            robot.wheels.setRightWheels(0);
+//
+//            sleep(1000);
+//
+//            int leftTarget2 = robot.driveTrain.getLeftCurrentPosition() - startLeftEnc2;
+//
+//
+//            robot.driveTrain.rotateDeg(170);
+//
+//            robot.driveTrain.setLeftPower(0);
+//            robot.driveTrain.setRightPower(0);
+//            robot.wheels.setLeftWheelPwr(0);
+//            robot.wheels.setRightWheels(0);
+//
+//            robot.bar4.setPower(1);
+//            sleep(1200);
+//            robot.bar4.setPower(0);
+//
+//            robot.driveTrain.setMoveDistEnc(leftTarget2 - (5 * constant.getTICKS_PER_INCH()));
+//            placeBlock();
+
             robot.bar4.setPower(0);
             robot.driveTrain.setMoveDist(-10);
             robot.driveTrain.rotateDeg(180);

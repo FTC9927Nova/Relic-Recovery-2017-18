@@ -62,15 +62,13 @@ public class NewBlueGlyphy extends LinearOpMode {
 
             robot.jewelArm.arm2Mid();
 
-            robot.driveTrain.setMoveDist(20 + dist);
+            robot.driveTrain.setMoveDist(-15 + dist);
 
             VisionUtil visionUtil = new VisionUtil();
 
             RelicRecoveryVuMark reading = visionUtil.readGraph(hardwareMap);
 
-            sleep(2000);
-
-            robot.driveTrain.setMoveDist(22);
+            robot.driveTrain.setMoveDist(65);
 
             telemetry.addData("vumark 1", reading);
             telemetry.update();
@@ -78,7 +76,7 @@ public class NewBlueGlyphy extends LinearOpMode {
 
             switch (reading){
                 case RIGHT:{
-                    robot.driveTrain.setMoveDist(22);
+                    robot.driveTrain.setMoveDist(24);
 
                     robot.driveTrain.rotateDeg(-87.5);
 
@@ -87,7 +85,7 @@ public class NewBlueGlyphy extends LinearOpMode {
                 }
                 case CENTER:{
 
-                    robot.driveTrain.setMoveDist(12);
+                    robot.driveTrain.setMoveDist(13);
                     robot.driveTrain.rotateDeg(-87.5);
 
                     placeBlock();
@@ -112,7 +110,11 @@ public class NewBlueGlyphy extends LinearOpMode {
                 }
             }
 
-            robot.driveTrain.rotateDeg(-200);
+            heading = gyro.getYaw();
+
+            sleep(100);
+
+            robot.driveTrain.rotateDeg(180);
             timer.startTime();
             int startLeftEnc = robot.driveTrain.getLeftCurrentPosition();
             while(robot.bumper.isPressed() && opModeIsActive() && Math.abs(robot.driveTrain.getLeftCurrentPosition() - startLeftEnc) < (constant.getTICKS_PER_INCH() * 62.5)){
@@ -145,7 +147,7 @@ public class NewBlueGlyphy extends LinearOpMode {
 
             int leftTarget = robot.driveTrain.getLeftCurrentPosition() - startLeftEnc;
 
-            robot.driveTrain.rotateDeg(-170);
+            robot.driveTrain.rotateDeg(180);
 
             robot.driveTrain.setLeftPower(0);
             robot.driveTrain.setRightPower(0);
@@ -157,6 +159,11 @@ public class NewBlueGlyphy extends LinearOpMode {
             robot.bar4.setPower(0);
 
             robot.driveTrain.setMoveDistEnc(leftTarget- (5 * constant.getTICKS_PER_INCH()));
+
+            heading -= gyro.getYaw();
+
+            robot.driveTrain.rotateDeg(Math.abs(heading));
+
             placeBlock();
             robot.bar4.setPower(0);
             robot.driveTrain.setMoveDist(-10);
