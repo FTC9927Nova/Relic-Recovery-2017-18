@@ -21,19 +21,30 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-
-
+import org.firstinspires.ftc.teamcode.Tests.Vision;
 
 
 public class VisionUtil{
 
     public static final String TAG = "Vuforia VuMark Sample";
 
+    LinearOpMode linearOpMode;
+
+
+
+    public VisionUtil(LinearOpMode linearOpMode)
+    {
+        this.linearOpMode = linearOpMode;
+    }
+
+
 
 
     VuforiaLocalizer vuforia;
 
     ElapsedTime timer = new ElapsedTime();
+
+    VuforiaTrackable relicTemplate;
 
 
     public RelicRecoveryVuMark readGraph(HardwareMap hardwareMap) {
@@ -48,7 +59,7 @@ public class VisionUtil{
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
         VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
-        VuforiaTrackable relicTemplate = relicTrackables.get(0);
+        relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
 
         relicTrackables.activate();
@@ -56,7 +67,6 @@ public class VisionUtil{
         timer.startTime();
 
         while (true) {
-
 
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
 
@@ -66,6 +76,25 @@ public class VisionUtil{
 
             }
 
+            if(linearOpMode.isStarted())
+                return vuMark;
+
+        }
+    }
+
+    public RelicRecoveryVuMark readGraph2(HardwareMap hardwareMap) {
+
+
+
+        while (true) {
+
+            RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+
+            if (vuMark != RelicRecoveryVuMark.UNKNOWN)
+            {
+                return vuMark;
+
+            }
         }
     }
 

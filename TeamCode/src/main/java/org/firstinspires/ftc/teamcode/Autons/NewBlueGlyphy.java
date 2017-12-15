@@ -64,7 +64,7 @@ public class NewBlueGlyphy extends LinearOpMode {
 
             robot.driveTrain.setMoveDist(-15 + dist);
 
-            VisionUtil visionUtil = new VisionUtil();
+            VisionUtil visionUtil = new VisionUtil(this);
 
             RelicRecoveryVuMark reading = visionUtil.readGraph(hardwareMap);
 

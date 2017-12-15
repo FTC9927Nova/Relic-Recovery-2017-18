@@ -63,7 +63,7 @@ public class RedGlyphy extends LinearOpMode {
 
             robot.driveTrain.setMoveDist(20 + dist);
 
-            VisionUtil visionUtil = new VisionUtil();
+            VisionUtil visionUtil = new VisionUtil(this);
 
             RelicRecoveryVuMark reading = visionUtil.readGraph(hardwareMap);
 
@@ -174,4 +174,5 @@ public class RedGlyphy extends LinearOpMode {
         robot.wheels.stopRight();
         robot.driveTrain.setMoveDist(-8);
     }
+
 }

@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.Util.*;
  * Created by Ethan Pereira on 11/5/2017.
  */
 
+
 public class FourBar implements SubsystemTemplate {
 
     private DcMotor fourBar;
@@ -22,12 +23,9 @@ public class FourBar implements SubsystemTemplate {
     private double currentAngle = 0;
 
     private Sensor LimitSwitch_Zero;
-    //TODO:CHECK IF 2 LIMIT SWITCHES ARE NEEDED
-    // Maybe:
-    //private Sensor LimitSwitch_Max;
+
     private RobotConstants constants = new RobotConstants();
 
-    //MAKE SURE NOT TO MESS WITH KD TERM!!!!!!!!!!!!!
     private PIDLoop pidLoop = new PIDLoop((1.0/143), (1.0/200), 0);
     private Potentiometer pot;
 

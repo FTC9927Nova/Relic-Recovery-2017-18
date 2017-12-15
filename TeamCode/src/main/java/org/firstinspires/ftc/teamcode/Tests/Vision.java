@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.Util.VisionUtil;
 @TeleOp(name = "vision", group = "")
 public class Vision extends LinearOpMode {
 
-    VisionUtil vision = new VisionUtil();
+    VisionUtil vision = new VisionUtil(this);
 
     RelicRecoveryVuMark reading;
 
@@ -22,9 +22,12 @@ public class Vision extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         reading = vision.readGraph(hardwareMap);
+        waitForStart();
+        while(opModeIsActive()) {
 
-        telemetry.addData("graph" , reading);
-        telemetry.update();
+            telemetry.addData("graph", reading);
+            telemetry.update();
+        }
 
 
     }

@@ -31,7 +31,7 @@ public class PutGlyphInBox extends LinearOpMode {
 
             robot.driveTrain.setMoveDist(17);
 
-            VisionUtil visionUtil = new VisionUtil();
+            VisionUtil visionUtil = new VisionUtil(this);
 
             RelicRecoveryVuMark reading = visionUtil.readGraph(hardwareMap);
 
