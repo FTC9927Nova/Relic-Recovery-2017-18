@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.Util.VisionUtil;
  */
 
 @Autonomous(name = "BlueGlyphyFar")
-public class NewBlueGlyphyFar extends LinearOpMode
+public class BlueGlyphyFar extends LinearOpMode
 {
     Robot robot = new Robot();
     Gyro gyro = new Gyro();

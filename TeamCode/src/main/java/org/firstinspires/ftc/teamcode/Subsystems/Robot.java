@@ -38,10 +38,6 @@ public class Robot
         bumper = new Bumper(hardwareMap);
         potentiometer = new Potentiometer(hardwareMap);
         bar4.getPotentiometer(potentiometer);
-
-
-
-//        vumarkDetect = new VumarkDetect(hardwareMap);
     }
 
     public void init(HardwareMap hardwareMap, LinearOpMode linearOpMode, Gyro gyrofromOpMode)
@@ -54,11 +50,6 @@ public class Robot
         bumper = new Bumper(hardwareMap);
         potentiometer = new Potentiometer(hardwareMap);
         bar4.getPotentiometer(potentiometer);
-
-
-
-
-//        vumarkDetect = new VumarkDetect(hardwareMap);
     }
 
 

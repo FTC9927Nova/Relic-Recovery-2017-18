@@ -17,8 +17,6 @@ public class JewelArm implements SubsystemTemplate
     private ColorSensor jewlCheck, check2;
 
 
-    private boolean isArmDown = false;
-
     float[] hsvValues = {0F,0f, 0f};
     private final double SCALE_FACTOR = 255;
 
@@ -34,9 +32,12 @@ public class JewelArm implements SubsystemTemplate
     public JewelArm(HardwareMap hardwareMap)
     {
         jewlArm = hardwareMap.servo.get("jewl");
-        jewlCheck = hardwareMap.colorSensor.get("color");
         arm2 = hardwareMap.servo.get("jewl2");
-        check2 = hardwareMap.colorSensor.get("color2");
+
+
+            check2 = hardwareMap.colorSensor.get("color2");
+            jewlCheck = hardwareMap.colorSensor.get("color");
+
 
         jewlArm.setDirection(Servo.Direction.FORWARD);
         jewlArm.scaleRange(0,1);
@@ -70,7 +71,7 @@ public class JewelArm implements SubsystemTemplate
 
     public void arm2Mid(){
 
-        arm2.setPosition(0.12);
+        arm2.setPosition(0.15);
 
 
     }

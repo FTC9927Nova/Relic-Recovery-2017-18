@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.Util.VisionUtil;
 import org.firstinspires.ftc.teamcode.Util.*;
 
 /**
- * Created by Ethan Pereira on 11/16/2017.
+ * Created by Sumanth Kondapalli on 11/16/2017.
  */
 @Autonomous(name = "RedGlyphy")
 public class RedGlyphy extends LinearOpMode {
@@ -20,16 +20,22 @@ public class RedGlyphy extends LinearOpMode {
     Gyro gyro = new Gyro();
     ElapsedTime timer = new ElapsedTime();
     RobotConstants constant = new RobotConstants();
+    VisionUtil vision = new VisionUtil(this);
+
+    RelicRecoveryVuMark reading;
 
 
     @Override
     public void runOpMode() throws InterruptedException {
 
 
+
         gyro.initGyro(hardwareMap);
         robot.init(hardwareMap, this, gyro);
+        reading = vision.readGraph(hardwareMap);
 
         double heading;
+
         int dist = 0;
 
 
@@ -63,9 +69,7 @@ public class RedGlyphy extends LinearOpMode {
 
             robot.driveTrain.setMoveDist(20 + dist);
 
-            VisionUtil visionUtil = new VisionUtil(this);
-
-            RelicRecoveryVuMark reading = visionUtil.readGraph(hardwareMap);
+            RelicRecoveryVuMark reading = vision.readGraph2(hardwareMap);
 
             robot.driveTrain.setMoveDist(22);
 
@@ -107,6 +111,8 @@ public class RedGlyphy extends LinearOpMode {
                 }
             }
 
+            heading = gyro.getYaw();
+
             robot.driveTrain.rotateDeg(180);
             timer.startTime();
             int startLeftEnc = robot.driveTrain.getLeftCurrentPosition();
@@ -141,6 +147,9 @@ public class RedGlyphy extends LinearOpMode {
             int leftTarget = robot.driveTrain.getLeftCurrentPosition() - startLeftEnc;
 
 
+
+
+
             robot.driveTrain.rotateDeg(180);
 
             robot.driveTrain.setLeftPower(0);
@@ -153,6 +162,12 @@ public class RedGlyphy extends LinearOpMode {
             robot.bar4.setPower(0);
 
             robot.driveTrain.setMoveDistEnc(leftTarget- (5 * constant.getTICKS_PER_INCH()));
+
+            heading -= gyro.getYaw();
+
+            robot.driveTrain.rotateDeg(Math.abs(heading));
+
+
             placeBlock();
             robot.bar4.setPower(0);
             robot.driveTrain.setMoveDist(-10);

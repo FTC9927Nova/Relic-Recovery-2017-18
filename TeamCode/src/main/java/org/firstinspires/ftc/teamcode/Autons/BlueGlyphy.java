@@ -11,15 +11,20 @@ import org.firstinspires.ftc.teamcode.Util.VisionUtil;
 import org.firstinspires.ftc.teamcode.Util.*;
 
 /**
- * Created by Ethan Pereira on 11/16/2017.
+ * Created by Sumanth Kondapalli on 11/16/2017.
  */
-@Autonomous(name = "NewBlueGlyphy")
-public class NewBlueGlyphy extends LinearOpMode {
+@Autonomous(name = "BlueGlyphy")
+public class BlueGlyphy extends LinearOpMode {
 
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
     ElapsedTime timer = new ElapsedTime();
     RobotConstants constant = new RobotConstants();
+
+
+    VisionUtil vision = new VisionUtil(this);
+
+    RelicRecoveryVuMark reading;
 
 
     @Override
@@ -28,6 +33,7 @@ public class NewBlueGlyphy extends LinearOpMode {
 
         gyro.initGyro(hardwareMap);
         robot.init(hardwareMap, this, gyro);
+        reading = vision.readGraph(hardwareMap);
 
         double heading;
 
@@ -64,11 +70,9 @@ public class NewBlueGlyphy extends LinearOpMode {
 
             robot.driveTrain.setMoveDist(-15 + dist);
 
-            VisionUtil visionUtil = new VisionUtil(this);
+            RelicRecoveryVuMark reading = vision.readGraph2(hardwareMap);
 
-            RelicRecoveryVuMark reading = visionUtil.readGraph(hardwareMap);
-
-            robot.driveTrain.setMoveDist(65);
+            robot.driveTrain.setMoveDist(66.5);
 
             telemetry.addData("vumark 1", reading);
             telemetry.update();
@@ -100,7 +104,7 @@ public class NewBlueGlyphy extends LinearOpMode {
                 default:{
 
 
-                    robot.driveTrain.rotateDeg(87.5);
+                    robot.driveTrain.rotateDeg(-87.5);
 
 
                     placeBlock();

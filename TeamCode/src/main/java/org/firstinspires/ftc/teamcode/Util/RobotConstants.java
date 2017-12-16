@@ -43,6 +43,16 @@ public class RobotConstants
 
     private final double angleAt90 = 0;
 
+    private final int relicTicksPerRevolution = 0;
+    private final int relicDiameter = 0;
+    private final int relicTicksPerInch = relicTicksPerRevolution/relicDiameter;
+
+    public int getRELIC_TICKS_PER_INCH(){
+
+        return relicTicksPerInch;
+
+    }
+
     public int getTICKS_PER_INCH()
     {
         return (int)(ENCODER_TICKS_PER_REVOLUTION / WHEEL_CIRCUMFERENCE);

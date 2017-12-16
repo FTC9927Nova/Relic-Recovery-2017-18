@@ -11,12 +11,14 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
 /**
  * Created by therat0981 on 10/1/17.
  */
-@TeleOp(name = "TeleOpNew")
+@TeleOp(name = "MainTeleOp")
 
 public class MainTeleop extends OpMode
 {
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
+
+    boolean relic = false;
 
     @Override
     public void init()
@@ -67,17 +69,28 @@ public class MainTeleop extends OpMode
 
 
         // Arm Control
-        if (Math.abs(gamepad2.left_stick_y) > 0.05) {
+        if (Math.abs(gamepad2.left_stick_y) > 0.05 && !relic) {
 
             robot.bar4.shouldStayTrue();
             robot.bar4.setPower(-gamepad2.left_stick_y);
-            robot.bar4.setIsOnFalse();
 
+        }
+        else if(Math.abs(gamepad2.left_stick_y) > 0.05 && relic){
 
-        } else {
+            robot.bar4.shouldStayTrue();
+            robot.bar4.setPower((gamepad2.left_stick_y));
+
+        }
+        else {
 
             robot.bar4.setTargetAngle();
             robot.bar4.setMoveAngle(robot.bar4.getTargetAngle());
+
+        }
+
+        if(Math.abs(gamepad2.right_stick_y) > 0.75 && gamepad2.right_bumper){
+
+            relic = !relic;
 
         }
 

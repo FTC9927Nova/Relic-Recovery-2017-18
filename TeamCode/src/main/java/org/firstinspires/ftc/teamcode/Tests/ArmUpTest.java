@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Tests;
 import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
@@ -11,8 +12,8 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
 /**
  * Created by therat0981 on 11/30/17.
  */
-
-@Autonomous(name = "ArmUp")
+@Disabled
+@Autonomous(name = "        jewlCheck = hardwareMap.colorSensor.get(\"color\");\n")
 public class ArmUpTest extends LinearOpMode
 {
     Robot robot = new Robot();

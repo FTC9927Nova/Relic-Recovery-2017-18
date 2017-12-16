@@ -18,7 +18,6 @@ public class FourBar implements SubsystemTemplate {
 
     private DcMotor fourBar;
     private double targetAngle;;
-    public boolean isOn = false;
     private boolean shouldStay = true;
     private double currentAngle = 0;
 
@@ -67,10 +66,6 @@ public class FourBar implements SubsystemTemplate {
 
     }
 
-    public void setIsOnFalse(){
-        isOn = false;
-    }
-
 
     public double getCurrentAngle()
     {
@@ -103,7 +98,6 @@ public class FourBar implements SubsystemTemplate {
                 "\nTarget Angle: " + targetAngle
                 +"\nCurrent Angle: " + currentAngle
                 +"\nPower " + fourBar.getPower()
-                +"\nShould Stay? " + shouldStay
-                +"\n isOn " + isOn;
+                +"\nShould Stay? " + shouldStay;
     }
 }
