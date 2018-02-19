@@ -26,7 +26,6 @@ public class RotateDegTest extends LinearOpMode
         if(opModeIsActive())
         {
             robot.driveTrain.rotateDeg(90);
-            robot.driveTrain.rotateDeg(-90);
         }
     }
 }

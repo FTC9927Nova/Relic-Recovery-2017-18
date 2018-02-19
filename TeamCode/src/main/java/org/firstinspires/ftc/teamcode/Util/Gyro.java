@@ -112,7 +112,7 @@ public class Gyro
     }
     public double getYaw() {
         updateAngeles();
-        return angles.firstAngle;
+        return -++angles.firstAngle;
     }
 
 }

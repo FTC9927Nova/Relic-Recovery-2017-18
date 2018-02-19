@@ -4,6 +4,7 @@ import android.hardware.Sensor;
 import android.util.Range;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Util.*;
@@ -20,6 +21,8 @@ public class FourBar implements SubsystemTemplate {
     private double targetAngle;;
     private boolean shouldStay = true;
     private double currentAngle = 0;
+    private DigitalChannel bar4limit;
+
 
     private Sensor LimitSwitch_Zero;
 
@@ -32,7 +35,7 @@ public class FourBar implements SubsystemTemplate {
         fourBar = hardwareMap.dcMotor.get("bar4");
         fourBar.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         fourBar.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
+        bar4limit = hardwareMap.digitalChannel.get("limit");
     }
 
     public void getPotentiometer(Potentiometer pot)
@@ -83,12 +86,15 @@ public class FourBar implements SubsystemTemplate {
         fourBar.setPower(pidLoop.pLoop(pot.getAngle()));
     }
 
+    public boolean isHit()
+    {
+        return bar4limit.getState();
+    }
+
 
 
     public void setPower(double power){
-
         fourBar.setPower(power);
-
     }
 
 

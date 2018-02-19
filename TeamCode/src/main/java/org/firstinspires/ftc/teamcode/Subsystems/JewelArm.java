@@ -53,7 +53,7 @@ public class JewelArm implements SubsystemTemplate
     public void armDown()
     {
 //        isArmDown = true;
-        jewlArm.setPosition(0.95);
+        jewlArm.setPosition(0.8);
     }
     public void arm2Down(){
 
@@ -65,7 +65,8 @@ public class JewelArm implements SubsystemTemplate
 
     public void armMid()
     {
-        jewlArm.setPosition(0.3);
+        jewlArm.setPosition(1);
+
 
     }
 

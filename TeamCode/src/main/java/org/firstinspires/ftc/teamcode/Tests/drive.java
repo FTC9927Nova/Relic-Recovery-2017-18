@@ -12,7 +12,6 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  * Created by Sumanth on 11/11/17.
  */
 @TeleOp(name = "asdfadf")
-@Disabled
 public class drive extends LinearOpMode
 {
     Robot robot = new Robot();
@@ -23,11 +22,10 @@ public class drive extends LinearOpMode
         gyro.initGyro(hardwareMap);
         robot.init(hardwareMap, this, gyro);
         waitForStart();
-        if(opModeIsActive())
+        while(opModeIsActive())
         {
-            robot.driveTrain.setRightPower(1);
-            robot.driveTrain.setLeftPower(1);
-            sleep(1000);
+            telemetry.addData(robot.driveTrain.display(),"");
+            telemetry.update();
         }
     }
 }

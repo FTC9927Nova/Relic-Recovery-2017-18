@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Util.Bumper;
 import org.firstinspires.ftc.teamcode.Util.Gyro;
@@ -22,12 +23,13 @@ public class Robot
     public Potentiometer potentiometer;
     Gyro gyro = new Gyro();
 
+
     public Robot()
     {
 
     }
 
-    public void init(HardwareMap hardwareMap, Gyro gyrofromOpMode)
+    public void init(HardwareMap hardwareMap, Gyro gyrofromOpMode) throws ArithmeticException
     {
         driveTrain = new DriveTrain(hardwareMap);
         driveTrain.setGyro(gyrofromOpMode);
@@ -40,7 +42,7 @@ public class Robot
         bar4.getPotentiometer(potentiometer);
     }
 
-    public void init(HardwareMap hardwareMap, LinearOpMode linearOpMode, Gyro gyrofromOpMode)
+    public void init(HardwareMap hardwareMap, LinearOpMode linearOpMode, Gyro gyrofromOpMode) throws ArithmeticException
     {
         driveTrain = new DriveTrain(hardwareMap,linearOpMode);
         driveTrain.setGyro(gyrofromOpMode);

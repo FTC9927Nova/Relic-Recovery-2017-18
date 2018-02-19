@@ -26,8 +26,8 @@ public class Wheels implements SubsystemTemplate{
 
 
 
-        leftWheels.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightWheels.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftWheels.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightWheels.setDirection(DcMotorSimple.Direction.FORWARD);
 
         leftWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         rightWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
@@ -67,23 +67,23 @@ public class Wheels implements SubsystemTemplate{
 
     public void intakeLeft(){
 
-        leftWheels.setPower(1);
+        leftWheels.setPower(-1);
 
     }
     public void intakeRight() {
 
-        rightWheels.setPower(1);
+        rightWheels.setPower(-1);
     }
 
     public void outtakeLeft(){
 
-        leftWheels.setPower(-1);
+        leftWheels.setPower(1);
 
     }
 
     public void outtakeRight(){
 
-        rightWheels.setPower(-1);
+        rightWheels.setPower(1);
     }
 
 
@@ -112,7 +112,8 @@ public class Wheels implements SubsystemTemplate{
     @Override
     public String display() {
 
-        return null;
+        return "left pwr " + leftWheels.getPower()
+                +"\nright pwr " + rightWheels.getPower();
 
     }
 }

@@ -24,7 +24,7 @@ public class RobotConstants
     private final double FOUR_BAR_TOLERANCE = 0;
 
     //TODO: WITH TESTING
-    private final int ENCODER_TICKS_PER_REVOLUTION = 831;
+    public final int ENCODER_TICKS_PER_REVOLUTION = 1130;
 
     //TODO: GET FOURBAR MEASURMENTS
     private final int FOURBAR_TICKS_PER_ONE_MOVEMENT = 0;
@@ -43,15 +43,15 @@ public class RobotConstants
 
     private final double angleAt90 = 0;
 
-    private final int relicTicksPerRevolution = 0;
-    private final int relicDiameter = 0;
-    private final int relicTicksPerInch = relicTicksPerRevolution/relicDiameter;
-
-    public int getRELIC_TICKS_PER_INCH(){
-
-        return relicTicksPerInch;
-
-    }
+//    private final int relicTicksPerRevolution = 0;
+//    private final int relicDiameter = 0;
+//    private final int relicTicksPerInch = relicTicksPerRevolution/relicDiameter;
+//
+//    public int getRELIC_TICKS_PER_INCH(){
+//
+//        return relicTicksPerInch;
+//
+//    }
 
     public int getTICKS_PER_INCH()
     {

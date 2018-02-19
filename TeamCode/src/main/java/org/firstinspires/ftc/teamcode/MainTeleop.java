@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import com.qualcomm.analytics.Analytics;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Subsystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
+
 import org.firstinspires.ftc.teamcode.Util.Gyro;
 
 /**
@@ -15,6 +17,7 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
 
 public class MainTeleop extends OpMode
 {
+
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
 
@@ -30,20 +33,25 @@ public class MainTeleop extends OpMode
 
     }
 
+
     public void loop() {
         //keeping arm up
-        robot.jewelArm.armMid();
-        robot.jewelArm.arm2Mid();
+//        robot.jewelArm.armMid();
+//        robot.jewelArm.arm2Mid();
         //getting Current Angle of the Four Bar
         robot.bar4.getCurrentAngle();
 
         //Driver Code
-        float yval = -gamepad1.left_stick_y;
+
+        float yval = gamepad1.left_stick_y;
         float xval = gamepad1.right_stick_x;
 
 
-        float lpwr = (float) Math.pow(((yval + xval)), 3);
-        float rpwr = (float) Math.pow((yval - xval), 3);
+        float lpwr = (float) Math.pow(((yval - xval)), 3);
+        float rpwr = (float) Math.pow((yval + xval), 3);
+//
+//        float lpwr = gamepad1.left_stick_y;
+//        float rpwr = gamepad1.right_stick_y;
 
 
 //        turtle mode
@@ -74,51 +82,39 @@ public class MainTeleop extends OpMode
             robot.bar4.shouldStayTrue();
             robot.bar4.setPower(-gamepad2.left_stick_y);
 
-        }
-        else if(Math.abs(gamepad2.left_stick_y) > 0.05 && relic){
+        } else if (Math.abs(gamepad2.left_stick_y) > 0.05 && relic) {
 
             robot.bar4.shouldStayTrue();
             robot.bar4.setPower((gamepad2.left_stick_y));
 
-        }
-        else {
+        } else {
 
             robot.bar4.setTargetAngle();
             robot.bar4.setMoveAngle(robot.bar4.getTargetAngle());
 
         }
 
-        if(Math.abs(gamepad2.right_stick_y) > 0.75 && gamepad2.right_bumper){
+        if (Math.abs(gamepad2.right_stick_y) > 0.75 && gamepad2.right_bumper) {
 
             relic = !relic;
 
         }
 
-            // intake wheel
-            if (robot.bumper.isPressed() && gamepad2.left_bumper) {
-                robot.wheels.setLeftWheelPwr(0.7);
+        // intake wheel
 
-            }  else {
-
-                robot.wheels.setLeftWheelPwr(0);
-                robot.wheels.setRightWheels(0);
-
-            }
-
-            if (robot.bumper.isPressed() && gamepad2.right_bumper) {
-                robot.wheels.setRightWheels(0.7);
-
-            } else if (gamepad2.right_trigger != 0) {
-
-                robot.wheels.setRightWheels(-1);
-                robot.wheels.setLeftWheelPwr(-1);
-
-
-            } else {
-                robot.wheels.setRightWheels(0);
-                robot.wheels.setLeftWheelPwr(0);
-
-            }
+        if (gamepad2.right_bumper || gamepad2.left_bumper) {
+            robot.wheels.setRightWheels(1);
+            robot.wheels.setLeftWheelPwr(1);
+        } else if(gamepad2.left_trigger!=0 || gamepad2.right_trigger!= 0)
+        {
+            robot.wheels.setLeftWheelPwr(-gamepad2.left_trigger);
+            robot.wheels.setRightWheels(-gamepad2.right_trigger);
+        }
+        else
+        {
+            robot.wheels.setLeftWheelPwr(0);
+            robot.wheels.setRightWheels(0);
+        }
 
 
             //Zlides
@@ -140,9 +136,7 @@ public class MainTeleop extends OpMode
 
             }
 
-            telemetry.addData("bump: ", robot.bumper.isPressed());
-            telemetry.addData("Servo Pos: ", robot.relic.display());
-            telemetry.addData("angle",robot.potentiometer.getAngle());
+            telemetry.addData("bump: ", robot.wheels.display());
             telemetry.update();
         }
 
