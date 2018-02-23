@@ -36,8 +36,8 @@ public class MainTeleop extends OpMode
 
     public void loop() {
         //keeping arm up
-//        robot.jewelArm.armMid();
-//        robot.jewelArm.arm2Mid();
+        robot.jewelArm.armMid();
+        robot.jewelArm.arm2Mid();
         //getting Current Angle of the Four Bar
         robot.bar4.getCurrentAngle();
 
@@ -90,7 +90,7 @@ public class MainTeleop extends OpMode
         } else {
 
             robot.bar4.setTargetAngle();
-            robot.bar4.setMoveAngle(robot.bar4.getTargetAngle());
+            robot.bar4.setMoveAngle2(robot.bar4.getTargetAngle());
 
         }
 
@@ -136,7 +136,10 @@ public class MainTeleop extends OpMode
 
             }
 
+            telemetry.addData("anlge",robot.bar4.getCurrentAngle());
             telemetry.addData("bump: ", robot.wheels.display());
+            telemetry.addData("limit",robot.bar4.isLowerHit());
+
             telemetry.update();
         }
 

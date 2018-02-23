@@ -4,7 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 import org.firstinspires.ftc.teamcode.Util.Bumper;
+import org.firstinspires.ftc.teamcode.Util.Gyro;
 import org.firstinspires.ftc.teamcode.Util.Potentiometer;
 
 /**
@@ -13,21 +15,22 @@ import org.firstinspires.ftc.teamcode.Util.Potentiometer;
 
 
 @TeleOp(name = "Potentiometer Test")
-@Disabled
 public class PotTest extends LinearOpMode
 {
-    Bumper bump;
+    Robot robot = new Robot();
+    Gyro gyro = new Gyro();
 
 
 
     @Override
     public void runOpMode() throws InterruptedException {
-        bump = new Bumper(hardwareMap);
+        gyro.initGyro(this.hardwareMap);
+        robot.init(hardwareMap,this,gyro);
         waitForStart();
-        while (opModeIsActive())
+        if (opModeIsActive())
         {
-            telemetry.addData("Pot", bump.isPressed());
-            telemetry.update();
+          robot.bar4.setMoveAngle(185);
+
         }
     }
 }

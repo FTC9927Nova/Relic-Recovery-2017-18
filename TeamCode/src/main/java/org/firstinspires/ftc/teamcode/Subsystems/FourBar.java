@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 import android.hardware.Sensor;
 import android.util.Range;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -18,13 +19,14 @@ import org.firstinspires.ftc.teamcode.Util.*;
 public class FourBar implements SubsystemTemplate {
 
     private DcMotor fourBar;
+    private LinearOpMode linearOpMode;
     private double targetAngle;;
     private boolean shouldStay = true;
     private double currentAngle = 0;
     private DigitalChannel bar4limit;
 
 
-    private Sensor LimitSwitch_Zero;
+    private DigitalChannel limitSwitch_Zero;
 
     private RobotConstants constants = new RobotConstants();
 
@@ -35,7 +37,18 @@ public class FourBar implements SubsystemTemplate {
         fourBar = hardwareMap.dcMotor.get("bar4");
         fourBar.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         fourBar.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        bar4limit = hardwareMap.digitalChannel.get("limit");
+        bar4limit = hardwareMap.digitalChannel.get("limitUp");
+        limitSwitch_Zero = hardwareMap.digitalChannel.get("limitDown");
+    }
+
+    public FourBar(HardwareMap hardwareMap, LinearOpMode linearOpMode){
+        fourBar = hardwareMap.dcMotor.get("bar4");
+        fourBar.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fourBar.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bar4limit = hardwareMap.digitalChannel.get("limitUp");
+        limitSwitch_Zero = hardwareMap.digitalChannel.get("limitDown");
+        this.linearOpMode = linearOpMode;
+
     }
 
     public void getPotentiometer(Potentiometer pot)
@@ -83,12 +96,27 @@ public class FourBar implements SubsystemTemplate {
     public void setMoveAngle(double targetAngle)
     {
         pidLoop.setTarget(targetAngle);
+        while(this.linearOpMode.opModeIsActive()&&Math.abs(pot.getAngle()-targetAngle)>2) {
+            fourBar.setPower(pidLoop.pLoop(pot.getAngle()));
+        }
+        fourBar.setPower(0);
+    }
+
+    public void setMoveAngle2(double targetAngle)
+    {
+        pidLoop.setTarget(targetAngle);
         fourBar.setPower(pidLoop.pLoop(pot.getAngle()));
     }
+
 
     public boolean isHit()
     {
         return bar4limit.getState();
+    }
+
+    public boolean isLowerHit()
+    {
+        return  limitSwitch_Zero.getState();
     }
 
 

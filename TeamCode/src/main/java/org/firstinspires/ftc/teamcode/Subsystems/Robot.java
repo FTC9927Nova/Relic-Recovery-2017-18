@@ -29,7 +29,7 @@ public class Robot
 
     }
 
-    public void init(HardwareMap hardwareMap, Gyro gyrofromOpMode) throws ArithmeticException
+    public void init(HardwareMap hardwareMap, Gyro gyrofromOpMode)
     {
         driveTrain = new DriveTrain(hardwareMap);
         driveTrain.setGyro(gyrofromOpMode);
@@ -42,12 +42,12 @@ public class Robot
         bar4.getPotentiometer(potentiometer);
     }
 
-    public void init(HardwareMap hardwareMap, LinearOpMode linearOpMode, Gyro gyrofromOpMode) throws ArithmeticException
+    public void init(HardwareMap hardwareMap, LinearOpMode linearOpMode, Gyro gyrofromOpMode)
     {
         driveTrain = new DriveTrain(hardwareMap,linearOpMode);
         driveTrain.setGyro(gyrofromOpMode);
         jewelArm = new JewelArm(hardwareMap);
-        bar4 = new FourBar(hardwareMap);
+        bar4 = new FourBar(hardwareMap,linearOpMode);
         wheels = new Wheels(hardwareMap);
         bumper = new Bumper(hardwareMap);
         potentiometer = new Potentiometer(hardwareMap);

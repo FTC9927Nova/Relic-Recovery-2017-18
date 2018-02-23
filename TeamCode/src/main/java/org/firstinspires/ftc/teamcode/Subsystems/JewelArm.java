@@ -53,7 +53,7 @@ public class JewelArm implements SubsystemTemplate
     public void armDown()
     {
 //        isArmDown = true;
-        jewlArm.setPosition(0.8);
+        jewlArm.setPosition(0);
     }
     public void arm2Down(){
 
@@ -65,14 +65,14 @@ public class JewelArm implements SubsystemTemplate
 
     public void armMid()
     {
-        jewlArm.setPosition(1);
+        jewlArm.setPosition(0.8);
 
 
     }
 
     public void arm2Mid(){
 
-        arm2.setPosition(0.15);
+        arm2.setPosition(0.8);
 
 
     }
@@ -163,8 +163,8 @@ public class JewelArm implements SubsystemTemplate
         return "Jewel Arm"
                 +"   \n right: " + jewlArm.getPosition() + " left " + arm2.getPosition()
                 +"   \n color-  BLUE: " + jewlCheck.blue() + "   Red: " + jewlCheck.red()
-                +"   \n get Color: " + getColor()
-                +"   \n cos(hsv[0])" + scaleHSV()
+                +"   \n get Color: " + getColor2()
+                +"   \n cos(hsv[0])" + scaleHSV2()
                 +"   \n hsv-    Hue: " + hsvValues[0] + "    Saturation: " + hsvValues[1] + "     Value: " + hsvValues[2];
 
     }
