@@ -16,8 +16,15 @@ public class MultiThreadBar4Lift extends Thread{
 //            while(robot.bar4.isHit())
 //                robot.bar4.setPower(0.7);
 //            robot.bar4.setPower(0);
-            robot.bar4.setMoveAngle(103.5);
-
+//            robot.bar4.setMoveAngle(103.5);
+        while (!robot.bar4.isHit()){
+            robot.bar4.setPower(0.3);
+        }
+        robot.bar4.setPower(0);
+        while (!robot.bar4.isLowerHit()){
+            robot.bar4.setPower(-0.2);
+        }
+        robot.bar4.setPower(0);
         }catch (Exception e){
             Log.i("Exception", String.valueOf(e));
         }
