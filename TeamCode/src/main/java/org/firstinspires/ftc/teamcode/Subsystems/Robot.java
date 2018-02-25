@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.Util.Bumper;
 import org.firstinspires.ftc.teamcode.Util.Gyro;
 import org.firstinspires.ftc.teamcode.Util.Potentiometer;
+import org.firstinspires.ftc.teamcode.Util.Range;
 
 /**
  * Created by therat0981 on 10/1/17.
@@ -21,7 +22,8 @@ public class Robot
     public RelicMech relic;
     public Bumper bumper;
     public Potentiometer potentiometer;
-    Gyro gyro = new Gyro();
+    public Gyro gyro = new Gyro();
+    public Range range;
 
 
     public Robot()
@@ -37,7 +39,7 @@ public class Robot
         bar4 = new FourBar(hardwareMap);
         wheels = new Wheels(hardwareMap);
         relic = new RelicMech(hardwareMap);
-        bumper = new Bumper(hardwareMap);
+        range = new Range(hardwareMap);
         potentiometer = new Potentiometer(hardwareMap);
         bar4.getPotentiometer(potentiometer);
     }
@@ -49,7 +51,7 @@ public class Robot
         jewelArm = new JewelArm(hardwareMap);
         bar4 = new FourBar(hardwareMap,linearOpMode);
         wheels = new Wheels(hardwareMap);
-        bumper = new Bumper(hardwareMap);
+        range = new Range(hardwareMap);
         potentiometer = new Potentiometer(hardwareMap);
         bar4.getPotentiometer(potentiometer);
     }

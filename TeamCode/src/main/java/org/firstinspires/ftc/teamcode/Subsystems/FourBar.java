@@ -30,7 +30,7 @@ public class FourBar implements SubsystemTemplate {
 
     private RobotConstants constants = new RobotConstants();
 
-    private PIDLoop pidLoop = new PIDLoop((1.0/143), (1.0/200), 0);
+    private PIDLoop pidLoop = new PIDLoop((1.0/60), (1.0/200), 0);
     private Potentiometer pot;
 
     public FourBar(HardwareMap hardwareMap){

@@ -340,7 +340,7 @@ public class DriveTrain implements SubsystemTemplate
             }
             if (side==Side.RIGHT_SIDE) {
                 setLeftPower(0);
-                setRightPower(-0.2);
+                setRightPower(0.2);
             }
             this.opMode.telemetry.addData("Side",String.valueOf(side));
         }

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 import android.util.Range;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -20,7 +21,8 @@ import static java.lang.Thread.sleep;
 public class RelicMech implements SubsystemTemplate
 {
     private DcMotor relic;
-    private Servo claw, extender;
+    private Servo claw;
+    private CRServo extender;
     RobotConstants constant = new RobotConstants();
     private PIDLoop relicCL = new PIDLoop(0.01,0,0);
 
@@ -31,7 +33,7 @@ public class RelicMech implements SubsystemTemplate
         relic = hardwareMap.dcMotor.get("relic");
         relic.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         claw = hardwareMap.servo.get("claw");
-        extender = hardwareMap.servo.get("extender");
+        extender = hardwareMap.crservo.get("extender");
 
     }
 
@@ -42,11 +44,11 @@ public class RelicMech implements SubsystemTemplate
     }
     //TODO: FIND BETTER EXTENDER VALUES
     public void putExtenderDown(){
-        extender.setPosition(0.8);
+        extender.setPower(-0.1);
     }
 
     public void pullExtenderUp(){
-        extender.setPosition(0);
+        extender.setPower(0);
     }
 
     //TODO: FIND BETTER CLAW VALUES
@@ -57,16 +59,6 @@ public class RelicMech implements SubsystemTemplate
         claw.setPosition(1);
     }
 
-//    public void setMoveDist(double dist){
-//
-//        relic.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//        relic.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//
-//        relic.setTargetPosition((int) (dist * constant.getRELIC_TICKS_PER_INCH()));
-//
-//        relic.setPower(relicCL.pLoop(relic.getCurrentPosition()));
-//
-//    }
 
     @Override
     public String display() {

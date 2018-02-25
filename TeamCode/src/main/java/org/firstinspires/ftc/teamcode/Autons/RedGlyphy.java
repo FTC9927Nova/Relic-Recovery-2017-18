@@ -25,17 +25,13 @@ public class RedGlyphy extends LinearOpMode {
     ElapsedTime timer = new ElapsedTime();
     RobotConstants constant = new RobotConstants();
     VisionUtil vision = new VisionUtil(this);
-    MultiThreadBar4Lift threadBar4Lift = new MultiThreadBar4Lift();
+    boolean hasBlock = false;
     RelicRecoveryVuMark reading;
 
     double firstAnlge;
 
-
-
     @Override
     public void runOpMode() throws InterruptedException {
-
-
 
         gyro.initGyro(hardwareMap);
         robot.init(hardwareMap, this, gyro);
@@ -45,17 +41,14 @@ public class RedGlyphy extends LinearOpMode {
 
         int dist = 0;
 
-
-
         waitForStart();
         if (opModeIsActive()){
             firstAnlge = gyro.getYaw();
-            threadBar4Lift.run();
             robot.jewelArm.armDown();
 
 
 
-        sleep(1000);
+        sleep(500);
 
             if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
                 telemetry.addData(String.valueOf(robot.jewelArm.getColor()),"00");
@@ -84,6 +77,9 @@ public class RedGlyphy extends LinearOpMode {
             robot.driveTrain.setMoveDist(8 + dist);
 
             RelicRecoveryVuMark reading = vision.readGraph2(hardwareMap);
+            while( robot.bar4.isHit())
+                robot.bar4.setPower(1);
+            robot.bar4.setPower(0);
 
 
             robot.driveTrain.setMoveDist(18);
@@ -97,7 +93,8 @@ public class RedGlyphy extends LinearOpMode {
                     robot.driveTrain.setMoveDist(1.7);
                     robot.driveTrain.singleSideRotateDeg(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-360);
                     robot.driveTrain.rotateDeg(88);
-//                    robot.bar4.setMoveAngle(145);
+                    robot.driveTrain.setMoveDist(-5);
+                    robot.bar4.setMoveAngle(145);
 
                     placeBlock();
                     break;
@@ -108,8 +105,9 @@ public class RedGlyphy extends LinearOpMode {
                     robot.driveTrain.singleSideRotateDeg(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-360);
 
                     robot.driveTrain.rotateDeg(89);
+                    robot.driveTrain.setMoveDist(-5);
 
-//                    robot.bar4.setMoveAngle(145);
+                    robot.bar4.setMoveAngle(145);
                     placeBlock();
 
                     break;
@@ -117,11 +115,13 @@ public class RedGlyphy extends LinearOpMode {
                 case LEFT:{
 
 
-                    robot.driveTrain.setMoveDist(19);
+                    robot.driveTrain.setMoveDist(20);
                     robot.driveTrain.singleSideRotateDeg(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-360);
 
                     robot.driveTrain.rotateDeg(89);
-//                    robot.bar4.setMoveAngle(145);
+                    robot.driveTrain.setMoveDist(-5);
+
+                    robot.bar4.setMoveAngle(145);
                     placeBlock();
 
                     break;
@@ -136,6 +136,12 @@ public class RedGlyphy extends LinearOpMode {
                 }
             }
 
+            while(robot.bar4.isLowerHit())
+                robot.bar4.setPower(-1);
+            robot.bar4.setPower(0);
+            robot.bar4.setMoveAngle(126);
+            robot.driveTrain.setMoveDist(-2);
+
 
             heading = gyro.getYaw();
             telemetry.addData("heading",heading);
@@ -149,11 +155,11 @@ public class RedGlyphy extends LinearOpMode {
 
             timer.startTime();
             int startLeftEnc = robot.driveTrain.getLeftCurrentPosition();
-            while(robot.bumper.isPressed() && opModeIsActive() && Math.abs(robot.driveTrain.getLeftCurrentPosition() - startLeftEnc) < (constant.getTICKS_PER_INCH() * 62.5)){
+            while(!robot.range.isGlyph() && opModeIsActive() && Math.abs(robot.driveTrain.getLeftCurrentPosition() - startLeftEnc) < (constant.getTICKS_PER_INCH() * 62.5)){
 
                 if (timer.milliseconds() <= 1000) {
 
-                    robot.wheels.setLeftWheelPwr(0);
+                    robot.wheels.intakeLeft();
                     robot.wheels.intakeRight();
 
                 }
@@ -165,11 +171,8 @@ public class RedGlyphy extends LinearOpMode {
                 robot.driveTrain.setLeftPower(0.2);
                 robot.driveTrain.setRightPower(0.2);
 
-
-
+                Log.i("dist",robot.range.getDist()+"");
             }
-
-            Log.i("AngleAfterBlock: ",String.valueOf(gyro.getYaw()));
 
             robot.driveTrain.setLeftPower(0);
             robot.driveTrain.setRightPower(0);
@@ -180,21 +183,11 @@ public class RedGlyphy extends LinearOpMode {
             int leftTarget = robot.driveTrain.getLeftCurrentPosition() - startLeftEnc;
 
             robot.driveTrain.setMoveDist(-10.5);
-            heading -= gyro.getYaw();
-            telemetry.addData("yaw",gyro.getYaw());
-            Log.i("getYaw",String.valueOf(gyro.getYaw()));
-            telemetry.addData("heading",heading);
-            Log.i("heading2",String.valueOf(heading));
+           // heading -= gyro.getYaw();
 
-            telemetry.update();
-            robot.driveTrain.rotateDeg(-heading);
-
-            Log.i("angleAfterTurn",String.valueOf(gyro.getYaw()));
-
-            robot.driveTrain.setMoveDistEnc((leftTarget- (10 * constant.getTICKS_PER_INCH())));
-
-
-
+            robot.bar4.setMoveAngle(167);
+            robot.driveTrain.setMoveDistEnc(-(leftTarget- (10 * constant.getTICKS_PER_INCH())));
+            robot.driveTrain.rotateDeg(heading);
 
             robot.driveTrain.setLeftPower(0);
             robot.driveTrain.setRightPower(0);
@@ -205,27 +198,26 @@ public class RedGlyphy extends LinearOpMode {
             robot.bar4.setMoveAngle(167);
 
 
-
             placeBlock();
-            robot.bar4.setPower(0);
-            robot.driveTrain.setMoveDist(-10);
-            robot.driveTrain.rotateDeg(heading);
-            robot.driveTrain.setMoveDist(-20);
-            robot.driveTrain.setMoveDist(10);
+            while(robot.bar4.isLowerHit())
+                robot.bar4.setPower(-1);
+            robot.driveTrain.setMoveDist(7);
+            robot.driveTrain.setMoveDist(-2);
 
         }
 
     }
 
     public void placeBlock(){
-        robot.driveTrain.setMoveDist(-2);
-        robot.wheels.setRightWheels(1);
-        robot.wheels.setLeftWheelPwr(1);
-        sleep(700);
+        sleep(200);
+        while(robot.range.getDist()<10 && opModeIsActive()) {
+            robot.wheels.setRightWheels(1);
+            robot.wheels.setLeftWheelPwr(1);
+        }
         robot.wheels.stopLeft();
         robot.wheels.stopRight();
-        robot.driveTrain.setMoveDist(-8);
 
     }
+
 
 }
