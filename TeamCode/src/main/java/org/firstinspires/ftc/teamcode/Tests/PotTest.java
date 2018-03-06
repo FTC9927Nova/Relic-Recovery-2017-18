@@ -25,9 +25,10 @@ public class PotTest extends LinearOpMode
         gyro.initGyro(this.hardwareMap);
         robot.init(hardwareMap,this,gyro);
         waitForStart();
-        if (opModeIsActive())
+        while (opModeIsActive())
         {
-          robot.bar4.setMoveAngle(185);
+          telemetry.addData(" angle: ", robot.bar4.getCurrentAngle());
+          telemetry.update();
 
         }
     }

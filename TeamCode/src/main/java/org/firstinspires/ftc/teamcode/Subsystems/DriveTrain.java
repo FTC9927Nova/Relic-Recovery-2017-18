@@ -36,8 +36,8 @@ public class DriveTrain implements SubsystemTemplate
 
 
     //TODO: ENTER Kp, Ki, Kd
-    private PIDLoop driveCL = new PIDLoop(0.001,0,0);
-    private PIDLoop turnCL = new PIDLoop(0.01,0.0025,0);
+    private PIDLoop driveCL = new PIDLoop(0.03,0,0);
+    private PIDLoop turnCL = new PIDLoop(0.0075,0.0025,0);
 
 
     public enum Side
@@ -210,7 +210,8 @@ public class DriveTrain implements SubsystemTemplate
         return true;
     }
 
-    public void setMoveDist(double dist) {
+    public void setMoveDist(double dist)
+    {
 
         setSpeedController(DriveSpeedController.BRAKE);
         if (this.opMode.opModeIsActive()) {
@@ -232,17 +233,11 @@ public class DriveTrain implements SubsystemTemplate
             while(this.opMode.opModeIsActive() &&
                     (Math.abs((getLeftCurrentPosition()-leftTarget))>constant.getDRIVE_TOLERANCE()))
             {
-                double lpwr = driveCL.pLoop(getLeftCurrentPosition());
-                double rpwr = turnCL.pLoop(gyro.getYaw());
-                if(lpwr>0.7)
-                    lpwr = 0.7;
-                setLeftPower(lpwr);
-                setRightPower(lpwr-rpwr);
-                this.opMode.telemetry.addData(display(),"");
-                Log.i("DT DATA",display());
-                this.opMode.telemetry.update();
+                double pwr = driveCL.pLoop(getLeftCurrentPosition());
+                setLeftPower(pwr);
+                setRightPower(pwr);
             }
-            singleSideRotateDeg(Side.RIGHT_SIDE,gyro.getYaw()-initialAngle);
+//            singleSideRotateDeg(Side.RIGHT_SIDE,(gyro.getYaw()-initialAngle),Math.signum(dist));
 
 
             setLeftPower(0);
@@ -310,13 +305,11 @@ public class DriveTrain implements SubsystemTemplate
         while(this.opMode.opModeIsActive() &&
                 (Math.abs((gyro.getYaw()-turnTarget))>constant.getTurnTolerance()))
         {
-             lpwr = turnCL.turnPloop(gyro.getYaw());
+            lpwr = turnCL.turnPloop(gyro.getYaw());
             this.opMode.telemetry.addData("",display());
             this.opMode.telemetry.addData("",lpwr);
             setLeftPower(lpwr);
             setRightPower(-lpwr);
-//            setLeftPower(0.1);
-//            setRightPower(-0.1);
             this.opMode.telemetry.update();
 
         }
@@ -342,15 +335,15 @@ public class DriveTrain implements SubsystemTemplate
         while (this.opMode.opModeIsActive() &&
                 (Math.abs((-gyro.getYaw() - turnTarget)) > constant.getTurnTolerance())) {
 
-            if (side==Side.LEFT_SIDE) {
+            if (side == Side.LEFT_SIDE) {
                 setLeftPower(-0.2);
                 setRightPower(0);
             }
-            if (side==Side.RIGHT_SIDE) {
+            if (side == Side.RIGHT_SIDE) {
                 setLeftPower(0);
                 setRightPower(0.2);
             }
-            this.opMode.telemetry.addData("Side",String.valueOf(side));
+            this.opMode.telemetry.addData("Side", String.valueOf(side));
         }
         setLeftPower(0);
         setRightPower(0);

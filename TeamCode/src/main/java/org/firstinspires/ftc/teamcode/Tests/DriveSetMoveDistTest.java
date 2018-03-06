@@ -29,6 +29,7 @@ public class DriveSetMoveDistTest extends LinearOpMode
         if(opModeIsActive())
         {
             robot.driveTrain.setMoveDist(24);
+            robot.driveTrain.setMoveDist(-24);
             telemetry.addData("dt",robot.driveTrain.display());
             telemetry.update();
         }

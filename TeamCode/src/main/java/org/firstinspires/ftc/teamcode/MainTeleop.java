@@ -59,6 +59,10 @@ public class MainTeleop extends OpMode
             lpwr = lpwr / 3.0f;
             rpwr = rpwr / 3.0f;
         }
+        if(Math.abs(lpwr)<0.1)
+            lpwr = 0;
+        if(Math.abs(rpwr)<0.1)
+            rpwr = 0;
 
 //      Setting the power for dt
         robot.driveTrain.setLeftPower(lpwr);
