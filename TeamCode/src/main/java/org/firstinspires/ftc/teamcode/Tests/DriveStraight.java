@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Tests;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.Util.RobotConstants;
  * Created by Ethan Pereira on 2/16/2018.
  */
 
+@Disabled
 @TeleOp(name = "ds")
 public class DriveStraight extends OpMode
 {

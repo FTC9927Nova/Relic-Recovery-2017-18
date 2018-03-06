@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Tests;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -10,6 +11,8 @@ import org.firstinspires.ftc.teamcode.Util.VisionUtil;
 /**
  * Created by Sumanth on 12/13/17.
  */
+
+@Disabled
 
 @TeleOp(name = "vision", group = "")
 public class Vision extends LinearOpMode {

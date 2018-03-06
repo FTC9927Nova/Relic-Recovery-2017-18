@@ -68,11 +68,6 @@ public class Gyro
     // State used for updating telemetry
     Orientation angles;
 
-
-
-
-
-
     public void initGyro(HardwareMap hardwareMap)
     {
 

@@ -43,6 +43,12 @@ public class RelicMech implements SubsystemTemplate
         relic.setPower(pwr);
     }
     //TODO: FIND BETTER EXTENDER VALUES
+
+    public void setExtender(double pos)
+    {
+        extender.setPower(pos);
+    }
+
     public void putExtenderDown(){
         extender.setPower(-0.1);
     }

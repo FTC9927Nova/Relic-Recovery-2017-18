@@ -1,27 +1,34 @@
 package org.firstinspires.ftc.teamcode.Tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
+
+import org.firstinspires.ftc.teamcode.Subsystems.RelicMech;
 
 /**
- * Created by Ethan Pereira on 12/11/2017.
+ * Created by Sumanth on 12/16/17.
  */
 @Disabled
 
-@TeleOp(name = "EncPos")
-public class EncPos extends OpMode{
-    DcMotor r1;
+@TeleOp (name = "TEleop", group = "sd")
+public class relicTest extends OpMode {
+
+    RelicMech relic;
 
     @Override
     public void init() {
-        r1 = hardwareMap.dcMotor.get("r1");
+
+        relic = new RelicMech(hardwareMap);
+
     }
 
     @Override
     public void loop() {
-        telemetry.addData("Motor Pos", r1.getCurrentPosition());
+
+        telemetry.addData("",relic.display());
         telemetry.update();
+
     }
 }

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Tests;
 import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -13,7 +14,7 @@ import org.firstinspires.ftc.teamcode.Util.RobotConstants;
 /**
  * Created by Ethan Pereira on 2/24/2018.
  */
-
+@Disabled
 @Autonomous(name = "2ndGlyphyTest")
 public class SecondGlyphy extends LinearOpMode
 {

@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  * Created by Sumanth on 11/9/17.
  */
 
+
 @Autonomous(name = "SetMoveDist")
 public class DriveSetMoveDistTest extends LinearOpMode
 {
@@ -29,6 +30,7 @@ public class DriveSetMoveDistTest extends LinearOpMode
         {
             robot.driveTrain.setMoveDist(24);
             telemetry.addData("dt",robot.driveTrain.display());
+            telemetry.update();
         }
 
     }

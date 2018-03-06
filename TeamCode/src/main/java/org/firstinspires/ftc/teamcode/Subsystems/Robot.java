@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Util.Bumper;
+
 import org.firstinspires.ftc.teamcode.Util.Gyro;
 import org.firstinspires.ftc.teamcode.Util.Potentiometer;
 import org.firstinspires.ftc.teamcode.Util.Range;
@@ -20,7 +20,6 @@ public class Robot
     public FourBar bar4;
     public Wheels wheels;
     public RelicMech relic;
-    public Bumper bumper;
     public Potentiometer potentiometer;
     public Gyro gyro = new Gyro();
     public Range range;

@@ -4,10 +4,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * Created by therat0981 on 9/16/17.
+ * This utility is used for every control loop that we need.
  */
 
-public class PIDLoop
-{
+public class PIDLoop {
 
     private double kp = 0;
     private double ki = 0;
@@ -20,7 +20,6 @@ public class PIDLoop
     private double sumError;
     private double deltaError;
     private double timeC;
-
 
     public PIDLoop(double kp, double ki, double kd)
     {
@@ -44,16 +43,15 @@ public class PIDLoop
         return this.ki;
     }
 
-    public void setTarget(double larkget)
+    public void setTarget(double target)
     {
-        target = larkget;
+        this.target = target;
     }
 
     public double getError()
     {
         return error;
     }
-
 
     public double pLoop(double input)
     {
@@ -63,7 +61,6 @@ public class PIDLoop
 
     public double turnPloop(double input)
     {
-
         error = target - input;
 
         if(error > 180)
@@ -73,7 +70,6 @@ public class PIDLoop
             error += 360;
 
         return kp*error;
-
     }
 
     public double pidLoop(double input, double dt)
@@ -81,8 +77,10 @@ public class PIDLoop
         pastError = error;
         error = target - input;
         sumError += pastError;
+
         if((sumError)>1)
             sumError = 1 / sumError;
+
         return kp * error + (((error)-pastError)/dt)*kd + ki*sumError;
     }
 
@@ -90,11 +88,5 @@ public class PIDLoop
     {
         return String.valueOf(error);
     }
-
-
-
-
-
-
 
 }

@@ -23,6 +23,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefau
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import org.firstinspires.ftc.teamcode.Tests.Vision;
 
+/**
+ * Created by therat0981 on 10/5/17.
+ * This class is used to make utilizing vision easy. We simply have to call a method to detect pictograph.
+ */
+
 
 public class VisionUtil{
 
@@ -30,22 +35,16 @@ public class VisionUtil{
 
     LinearOpMode linearOpMode;
 
-
-
     public VisionUtil(LinearOpMode linearOpMode)
     {
         this.linearOpMode = linearOpMode;
     }
-
-
-
 
     VuforiaLocalizer vuforia;
 
     ElapsedTime timer = new ElapsedTime();
 
     VuforiaTrackable relicTemplate;
-
 
     public RelicRecoveryVuMark readGraph(HardwareMap hardwareMap) {
 
@@ -73,7 +72,6 @@ public class VisionUtil{
             if (vuMark != RelicRecoveryVuMark.UNKNOWN)
             {
                 return vuMark;
-
             }
 
             if(linearOpMode.isStarted())
@@ -84,8 +82,6 @@ public class VisionUtil{
 
     public RelicRecoveryVuMark readGraph2(HardwareMap hardwareMap) {
 
-
-
         while (true) {
 
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
@@ -93,9 +89,10 @@ public class VisionUtil{
             if (vuMark != RelicRecoveryVuMark.UNKNOWN)
             {
                 return vuMark;
-
             }
+
         }
+
     }
 
 }

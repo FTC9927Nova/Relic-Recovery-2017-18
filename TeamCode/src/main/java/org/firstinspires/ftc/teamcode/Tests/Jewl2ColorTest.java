@@ -19,31 +19,9 @@ public class Jewl2ColorTest  extends LinearOpMode{
         waitForStart();
 
         while (opModeIsActive()){
-            telemetry.addData("Pos", String.valueOf(robot.jewelArm.getPos2()));
+            robot.jewelArm.arm2SetPos(-gamepad1.left_stick_y);
+            telemetry.addData("",robot.jewelArm.display());
             telemetry.update();
-
-            //            robot.jewelArm.arm2Down();
-//            sleep(1000);
-//
-//            if(String.valueOf(robot.jewelArm.getColor2()) == "BLUE"){
-//                telemetry.addData(String.valueOf(robot.jewelArm.getColor2()),"00");
-//                telemetry.update();
-//
-//                robot.driveTrain.setMoveDist(4);
-//
-//            }
-//
-//
-//            else if(String.valueOf(robot.jewelArm.getColor2()) == "RED"){
-//
-//                telemetry.addData(String.valueOf(robot.jewelArm.getColor2()),"00");
-//                telemetry.update();
-//
-//                robot.driveTrain.setMoveDist(-4);
-//
-//
-//            }
-//            robot.jewelArm.arm2Mid();
         }
     }
 }

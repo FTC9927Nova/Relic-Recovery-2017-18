@@ -8,27 +8,27 @@ import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 import org.firstinspires.ftc.teamcode.Util.Gyro;
 
 /**
- * Created by Sumanth on 11/3/17.
+ * Created by Sumanth on 2/23/18.
  */
+@Disabled
+@TeleOp(name = "ultraTest")
 
-
-@TeleOp(name = "Potentiometer Test")
-public class PotTest extends LinearOpMode
+public class UltraTest extends LinearOpMode
 {
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
 
-
-
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() throws InterruptedException
+    {
         gyro.initGyro(this.hardwareMap);
-        robot.init(hardwareMap,this,gyro);
+        robot.init(this.hardwareMap,this,gyro);
         waitForStart();
-        if (opModeIsActive())
+        while(opModeIsActive())
         {
-          robot.bar4.setMoveAngle(185);
-
+            telemetry.addData("hasGlyph",robot.range.isGlyph());
+            telemetry.addData("dist",robot.range.getDist());
+            telemetry.update();
         }
     }
 }

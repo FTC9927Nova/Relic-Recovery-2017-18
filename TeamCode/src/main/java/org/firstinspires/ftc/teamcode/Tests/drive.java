@@ -11,6 +11,8 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
 /**
  * Created by Sumanth on 11/11/17.
  */
+
+@Disabled
 @TeleOp(name = "asdfadf")
 public class drive extends LinearOpMode
 {

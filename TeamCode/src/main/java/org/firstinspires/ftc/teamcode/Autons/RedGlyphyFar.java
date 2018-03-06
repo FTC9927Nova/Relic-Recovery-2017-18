@@ -105,8 +105,8 @@ public class RedGlyphyFar extends LinearOpMode
                     robot.driveTrain.setMoveDist(8);
 
                     robot.driveTrain.rotateDeg(90);
-                    robot.driveTrain.setMoveDist(-6);
-                    robot.bar4.setPower(-0.8);
+                    robot.driveTrain.setMoveDist(5);
+                    robot.bar4.setPower(3);
                     sleep(1500);
                     placeBlock();
                     break;
@@ -115,7 +115,7 @@ public class RedGlyphyFar extends LinearOpMode
 
                     robot.driveTrain.setMoveDist(13);
                     robot.driveTrain.rotateDeg(90);
-                    robot.driveTrain.setMoveDist(-6);
+                    robot.driveTrain.setMoveDist(5);
                     robot.bar4.setPower(-0.8);
                     sleep(1500);
                     placeBlock();
@@ -124,7 +124,7 @@ public class RedGlyphyFar extends LinearOpMode
                 case LEFT:{
                     robot.driveTrain.setMoveDist(25);
                     robot.driveTrain.rotateDeg(90);
-                    robot.driveTrain.setMoveDist(-6);
+                    robot.driveTrain.setMoveDist(5);
                     robot.bar4.setPower(-0.8);
                     sleep(1500);
                     placeBlock();

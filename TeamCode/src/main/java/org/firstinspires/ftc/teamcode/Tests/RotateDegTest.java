@@ -11,6 +11,8 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  * Created by therat0981 on 10/19/17.
  */
 
+@Disabled
+
 @TeleOp(name = "Rotate Deg JewlTest")
 public class RotateDegTest extends LinearOpMode
 {

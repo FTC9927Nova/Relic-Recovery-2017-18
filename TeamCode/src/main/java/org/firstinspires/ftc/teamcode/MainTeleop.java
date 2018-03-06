@@ -37,7 +37,7 @@ public class MainTeleop extends OpMode
     public void loop() {
         //keeping arm up
         robot.jewelArm.armMid();
-        robot.jewelArm.arm2Mid();
+        robot.jewelArm.arm2Up();
         //getting Current Angle of the Four Bar
         robot.bar4.getCurrentAngle();
 
@@ -116,6 +116,12 @@ public class MainTeleop extends OpMode
             robot.wheels.setRightWheels(0);
         }
 
+        if(gamepad2.dpad_left)
+            robot.relic.setExtender(1);
+        else if(gamepad2.dpad_right)
+            robot.relic.setExtender(-1);
+        else
+            robot.relic.setExtender(0);
 
             //Zlides
             if (gamepad2.dpad_up) {

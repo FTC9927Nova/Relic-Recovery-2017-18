@@ -9,9 +9,11 @@ import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 
 /**
  * Created by Ethan Pereira on 11/2/2017.
+ * This utility is used to give us information about the Four Bar angle.
  */
 
 public class Potentiometer {
+
     AnalogInput potentiometer;
 
     double voltage;
@@ -20,9 +22,6 @@ public class Potentiometer {
     double percentTurnedDecimal;
     double angle;
     double maxVoltage;
-
-    //Initializes the fourbar
-
 
     public Potentiometer(HardwareMap hardwareMap) {
         potentiometer = hardwareMap.analogInput.get("pot");
@@ -33,27 +32,22 @@ public class Potentiometer {
         voltageCalc = potentiometer.getVoltage();
         voltageCalc = (int)(voltageCalc * 10) + 0.5;
         voltageCalc =  voltageCalc;
+
         voltage = voltageCalc/10;
+
         maxVoltage = potentiometer.getMaxVoltage();
+
         percentTurned = (int) (voltage/maxVoltage) * 100;
         percentTurnedDecimal = (voltage/maxVoltage);
+
         angle = percentTurnedDecimal * 270;
     }
 
-//    public double getPercentTurnedDecimal(){
-//        voltageCalc = potentiometer.getVoltage();
-//        voltageCalc = (int)(voltageCalc * 10) + 0.5;
-//        voltage = voltageCalc/10;
-//        percentTurnedDecimal = (voltage/maxVoltage);
-//        return percentTurnedDecimal;
-//    }
     public double getAngle()
     {
         getInput();
         return angle;
     }
-
-
 
     public String display()
     {
@@ -62,7 +56,5 @@ public class Potentiometer {
                 +"\nPercent Turned: " + percentTurned
                 +"\nAngle: " + angle;
     }
-
-
 
 }

@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 /**
  * Created by therat0981 on 10/5/17.
@@ -57,7 +58,7 @@ public class JewelArm implements SubsystemTemplate
     }
     public void arm2Down(){
 
-        arm2.setPosition(0.78);
+        arm2.setPosition(0.29);
 
 
     }
@@ -91,9 +92,16 @@ public class JewelArm implements SubsystemTemplate
 
     public void arm2Up(){
 
-        arm2.setPosition(0);
+        arm2.setPosition(0.925);
 
 
+    }
+
+    public void arm2SetPos(double val)
+    {
+        if(val<0)
+            val = 0;
+        arm2.setPosition(val);
     }
 
     //if hue is closer to 180 it is blue cos(pi) is -1
@@ -167,8 +175,10 @@ public class JewelArm implements SubsystemTemplate
         return "Jewel Arm"
                 +"   \n right: " + jewlArm.getPosition() + " left " + arm2.getPosition()
                 +"   \n color-  BLUE: " + jewlCheck.blue() + "   Red: " + jewlCheck.red()
-                +"   \n get Color: " + getColor2()
-                +"   \n cos(hsv[0])" + scaleHSV2()
+                +"   \n get Color: " + getColor()
+                +"   \n cos(hsv[0])" + scaleHSV()
+                +"   \n get Color2: " + getColor2()
+                +"   \n cos(hsv[0])2" + scaleHSV2()
                 +"   \n hsv-    Hue: " + hsvValues[0] + "    Saturation: " + hsvValues[1] + "     Value: " + hsvValues[2];
 
     }
