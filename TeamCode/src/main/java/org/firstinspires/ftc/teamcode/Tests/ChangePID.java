@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorControllerEx;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
@@ -49,18 +50,22 @@ public class ChangePID extends LinearOpMode {
         PIDCoefficients pidOrig = motorControllerEx.getPIDCoefficients(motorIndex, DcMotor.RunMode.RUN_USING_ENCODER);
 
         // change coefficients.
+
         PIDCoefficients pidNew = new PIDCoefficients(NEW_P, NEW_I, NEW_D);
         motorControllerEx.setPIDCoefficients(motorIndex, DcMotor.RunMode.RUN_USING_ENCODER, pidNew);
 
         // re-read coefficients and verify change.
         PIDCoefficients pidModified = motorControllerEx.getPIDCoefficients(motorIndex, DcMotor.RunMode.RUN_USING_ENCODER);
 
+        ElapsedTime elapsedTime = new ElapsedTime();
+        elapsedTime.reset();
+        elapsedTime.startTimeNanoseconds();
         // display info to user.
         while(opModeIsActive()) {
 //            ((DcMotorEx) motorLeft).setVelocity(180, AngleUnit.DEGREES);
             ((DcMotorEx) motorLeft).setVelocity(720,AngleUnit.DEGREES);
             telemetry.addData(((DcMotorEx) motorLeft).getVelocity(AngleUnit.DEGREES) + "", "currentPos " + motorLeft.getCurrentPosition());
-            Log.i("DegPerSec:", ((DcMotorEx) motorLeft).getVelocity(AngleUnit.DEGREES)+"");
+            Log.i("DegPerSec:", ((DcMotorEx) motorLeft).getVelocity(AngleUnit.DEGREES)+"" + elapsedTime.milliseconds());
             telemetry.addData("" + motorLeft.getPower(), "");
             telemetry.update();
         }
