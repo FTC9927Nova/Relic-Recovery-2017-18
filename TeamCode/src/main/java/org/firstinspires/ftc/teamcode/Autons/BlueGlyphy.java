@@ -46,35 +46,25 @@ public class BlueGlyphy extends LinearOpMode {
 
             if(String.valueOf(robot.jewelArm.getColor2()) == "RED"){
                 robot.driveTrain.setMoveDist(4);
-                dist-=4;
+//                dist-=4;
 
             }
 
 
             else if(String.valueOf(robot.jewelArm.getColor2()) == "BLUE"){
                 robot.driveTrain.setMoveDist(-4);
-                dist+=4;
+//                dist+=4;
             }
 //
             robot.jewelArm.armMid();
             robot.jewelArm.arm2Up();
 
-
-            robot.driveTrain.setMoveDist(-8 + dist);
-
             RelicRecoveryVuMark reading = vision.readGraph2(hardwareMap);
 
-            robot.driveTrain.setMoveDist(32);
+            robot.driveTrain.setMoveDist(28);
 
-            while(opModeIsActive()&&robot.bar4.isHit())
-                robot.bar4.setPower(1);
-            robot.bar4.setPower(0);
-
-
-
-
-
-
+            robot.bar4.setMoveAngle(265.9);
+            robot.driveTrain.singleSideRotateDeg(DriveTrain.Side.RIGHT_SIDE, gyro.getYaw());
 
             telemetry.addData("vumark 1", reading);
             telemetry.update();

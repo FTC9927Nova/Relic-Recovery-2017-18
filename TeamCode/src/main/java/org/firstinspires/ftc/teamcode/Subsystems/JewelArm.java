@@ -75,6 +75,9 @@ public class JewelArm implements SubsystemTemplate
         return arm2.getPosition();
     }
 
+    public double getPos(){
+        return  jewlArm.getPosition();
+    }
     public void arm2Mid(){
 
         arm2.setPosition(0.8);
