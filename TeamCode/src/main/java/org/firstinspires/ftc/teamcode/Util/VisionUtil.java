@@ -29,14 +29,13 @@ import org.firstinspires.ftc.teamcode.Tests.Vision;
  */
 
 
-public class VisionUtil{
+public class VisionUtil {
 
     public static final String TAG = "Vuforia VuMark Sample";
 
     LinearOpMode linearOpMode;
 
-    public VisionUtil(LinearOpMode linearOpMode)
-    {
+    public VisionUtil(LinearOpMode linearOpMode) {
         this.linearOpMode = linearOpMode;
     }
 
@@ -69,12 +68,11 @@ public class VisionUtil{
 
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
 
-            if (vuMark != RelicRecoveryVuMark.UNKNOWN)
-            {
+            if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                 return vuMark;
             }
 
-            if(linearOpMode.isStarted())
+            if (linearOpMode.isStarted())
                 return vuMark;
 
         }
@@ -86,8 +84,7 @@ public class VisionUtil{
 
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
 
-            if (vuMark != RelicRecoveryVuMark.UNKNOWN)
-            {
+            if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                 return vuMark;
             }
 
@@ -95,4 +92,15 @@ public class VisionUtil{
 
     }
 
+    public boolean isDetected() {
+        RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+        if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
+            return false;
+        } else if (vuMark == RelicRecoveryVuMark.UNKNOWN) {
+            return true;
+        } else {
+            return true;
+        }
+
+    }
 }
