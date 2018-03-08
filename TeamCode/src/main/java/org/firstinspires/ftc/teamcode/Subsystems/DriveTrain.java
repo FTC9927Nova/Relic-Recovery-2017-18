@@ -4,8 +4,11 @@ import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorControllerEx;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -38,6 +41,15 @@ public class DriveTrain implements SubsystemTemplate
     //TODO: ENTER Kp, Ki, Kd
     private PIDLoop driveCL = new PIDLoop(0.03,0,0);
     private PIDLoop turnCL = new PIDLoop(0.0075,0.0025,0);
+    int l1motorIndex;
+    int l2motorIndex;
+    int r1motorIndex;
+    int r2motorIndex;
+
+    DcMotorControllerEx l1motorControllerEx;
+    DcMotorControllerEx l2motorControllerEx;
+    DcMotorControllerEx r1motorControllerEx;
+    DcMotorControllerEx r2motorControllerEx;
 
 
     public enum Side
@@ -78,7 +90,21 @@ public class DriveTrain implements SubsystemTemplate
         r2.setDirection(DcMotorSimple.Direction.FORWARD);
 
         setSpeedController(DriveSpeedController.BRAKE);
+
+        l1motorControllerEx = (DcMotorControllerEx)l1.getController();
+        l2motorControllerEx = (DcMotorControllerEx)l2.getController();
+        r1motorControllerEx = (DcMotorControllerEx)r1.getController();
+        r2motorControllerEx = (DcMotorControllerEx)r2.getController();
+
+        l1motorIndex = ((DcMotorEx)l1).getPortNumber();
+        l2motorIndex = ((DcMotorEx)l2).getPortNumber();
+        r1motorIndex = ((DcMotorEx)r1).getPortNumber();
+        r2motorIndex = ((DcMotorEx)r2).getPortNumber();
+
+
+
     }
+
 
 
     public DriveTrain(HardwareMap hardwareMap, LinearOpMode opMode)
@@ -97,7 +123,18 @@ public class DriveTrain implements SubsystemTemplate
 
         setSpeedController(DriveSpeedController.BRAKE);
 
+        l1motorControllerEx = (DcMotorControllerEx)l1.getController();
+        l2motorControllerEx = (DcMotorControllerEx)l2.getController();
+        r1motorControllerEx = (DcMotorControllerEx)r1.getController();
+        r2motorControllerEx = (DcMotorControllerEx)r2.getController();
+
         this.opMode = opMode;
+
+        l1motorIndex = ((DcMotorEx)l1).getPortNumber();
+        l2motorIndex = ((DcMotorEx)l2).getPortNumber();
+        r1motorIndex = ((DcMotorEx)r1).getPortNumber();
+        r2motorIndex = ((DcMotorEx)r2).getPortNumber();
+
     }
 
     public void setGyro(Gyro gyro)
@@ -156,6 +193,23 @@ public class DriveTrain implements SubsystemTemplate
     }
 
 
+    public void setLeftPowerNew(){
+        PIDCoefficients l1PIDOrig = l1motorControllerEx.getPIDCoefficients(l1motorIndex, DcMotor.RunMode.RUN_USING_ENCODER);
+        PIDCoefficients l2pidOrig = l2motorControllerEx.getPIDCoefficients(l2motorIndex, DcMotor.RunMode.RUN_USING_ENCODER);
+
+        PIDCoefficients l1PIDNew = new PIDCoefficients(constant.getLP(), constant.getLI(), constant.getLD());
+        PIDCoefficients l2PIDNew = new PIDCoefficients(constant.getLP(), constant.getLI(), constant.getLD());
+
+    }
+    public void setRightPowerNew(){
+
+        PIDCoefficients r1PIDOrig = r1motorControllerEx.getPIDCoefficients(r1motorIndex, DcMotor.RunMode.RUN_USING_ENCODER);
+        PIDCoefficients r2pidOrig = r2motorControllerEx.getPIDCoefficients(r2motorIndex, DcMotor.RunMode.RUN_USING_ENCODER);
+
+        PIDCoefficients r1PIDNew = new PIDCoefficients(constant.getR1P(), constant.getR1P(), constant.getR1D());
+        PIDCoefficients r2PIDNew = new PIDCoefficients(constant.getR2P(), constant.getR2P(), constant.getR2D());
+
+    }
     public void setLeftPower(double power)
     {
         power = Range.clip(power, -1,1);

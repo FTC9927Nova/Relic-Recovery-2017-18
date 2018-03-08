@@ -43,6 +43,15 @@ public class RobotConstants
 
     private final double angleAt90 = 0;
 
+    private static final double L_P = 14.5;
+    private static final double L_I = 1;
+    private static final double L_D = 1;
+    private static final double R1_P = 17.5;
+    private static final double R1_I = 1.25;
+    private static final double R1_D = 0.5;
+    private static final double R2_P = 17.5;
+    private static final double R2_I = 0.75;
+    private static final double R2_D = 0.5;
 //    private final int relicTicksPerRevolution = 0;
 //    private final int relicDiameter = 0;
 //    private final int relicTicksPerInch = relicTicksPerRevolution/relicDiameter;
@@ -52,6 +61,16 @@ public class RobotConstants
 //        return relicTicksPerInch;
 //
 //    }
+
+    public double getLP(){return L_P;}
+    public double getLI(){ return L_I;}
+    public double getLD(){ return L_D;}
+    public double getR1P(){ return R1_P;}
+    public double getR1I(){ return R1_I;}
+    public double getR1D(){ return R1_D;}
+    public double getR2P(){ return R2_P;}
+    public double getR2I(){ return R2_I;}
+    public double getR2D(){ return R2_D;}
 
     public int getTICKS_PER_INCH()
     {
