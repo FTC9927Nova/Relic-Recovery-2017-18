@@ -24,7 +24,6 @@ public class RedGlyphy extends LinearOpMode {
     ElapsedTime timer = new ElapsedTime();
     RobotConstants constant = new RobotConstants();
     VisionUtil vision = new VisionUtil(this);
-    boolean hasBlock = false;
     RelicRecoveryVuMark reading;
     VisionUtil visionUtil = new VisionUtil(this);
 

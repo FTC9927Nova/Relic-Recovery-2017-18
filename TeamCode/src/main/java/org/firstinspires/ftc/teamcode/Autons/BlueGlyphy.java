@@ -44,7 +44,7 @@ public class BlueGlyphy extends LinearOpMode {
         waitForStart();
         if (opModeIsActive()){
             firstAnlge = gyro.getYaw();
-            robot.jewelArm.armDown();
+            robot.jewelArm.arm2Down();
 
             if (visionUtil.isDetected()){
                 reading = vision.readGraph2(hardwareMap);
@@ -52,8 +52,8 @@ public class BlueGlyphy extends LinearOpMode {
 
             sleep(500);
 
-            if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
-                telemetry.addData(String.valueOf(robot.jewelArm.getColor()),"00");
+            if(String.valueOf(robot.jewelArm.getColor2()) == "RED"){
+                telemetry.addData(String.valueOf(robot.jewelArm.getColor2()),"00");
                 telemetry.update();
 
                 robot.driveTrain.setMoveDist(4);
@@ -62,9 +62,9 @@ public class BlueGlyphy extends LinearOpMode {
             }
 
 
-            else if(String.valueOf(robot.jewelArm.getColor()) == "RED"){
+            else if(String.valueOf(robot.jewelArm.getColor2()) == "BLUE"){
 
-                telemetry.addData(String.valueOf(robot.jewelArm.getColor()),"00");
+                telemetry.addData(String.valueOf(robot.jewelArm.getColor2()),"00");
                 telemetry.update();
 
                 robot.driveTrain.setMoveDist(-4);
@@ -88,12 +88,13 @@ public class BlueGlyphy extends LinearOpMode {
             switch (reading){
                 case RIGHT:{
 
-                    robot.driveTrain.setMoveDist(23);
+                    robot.driveTrain.setMoveDist(21.2);
                     robot.driveTrain.singleSideRotateDeg(DriveTrain.Side.RIGHT_SIDE, gyro.getYaw());
 
                     robot.driveTrain.rotateDeg(-90);
-                    robot.driveTrain.setMoveDist(3.5);
+
                     robot.bar4.setMoveAngle(145);
+                    robot.driveTrain.setMoveDist(1.25);
                     correctAt90();
                     placeBlock();
 
@@ -101,11 +102,10 @@ public class BlueGlyphy extends LinearOpMode {
                 }
                 case CENTER:{
 
-                    robot.driveTrain.setMoveDist(14);
+                    robot.driveTrain.setMoveDist(12.7);
                     robot.driveTrain.singleSideRotateDeg(DriveTrain.Side.RIGHT_SIDE, gyro.getYaw());
 
                     robot.driveTrain.rotateDeg(-90);
-                    robot.driveTrain.setMoveDist(3.5);
                     robot.bar4.setMoveAngle(145);
 
                     correctAt90();
@@ -114,10 +114,9 @@ public class BlueGlyphy extends LinearOpMode {
                     break;
                 }
                 case LEFT:{
-                    robot.driveTrain.setMoveDist(4);
+                    robot.driveTrain.setMoveDist(6.5);
                     robot.driveTrain.singleSideRotateDeg(DriveTrain.Side.RIGHT_SIDE, gyro.getYaw());
                     robot.driveTrain.rotateDeg(-90);
-                    robot.driveTrain.setMoveDist(3.5);
 
                     robot.bar4.setMoveAngle(145);
                     correctAt90();
@@ -140,7 +139,8 @@ public class BlueGlyphy extends LinearOpMode {
             }
 
 
-            robot.driveTrain.setMoveDist(-3);
+            robot.driveTrain.setMoveDist(-4);
+            correctAt90();
             heading = gyro.getYaw();
             telemetry.addData("heading",heading);
             Log.i("heading1",String.valueOf(heading));
@@ -201,18 +201,23 @@ public class BlueGlyphy extends LinearOpMode {
             correctAt90();
 
             placeBlock();
+
+            robot.driveTrain.setMoveDist(-4);
         }
 
     }
 
     public void placeBlock(){
         sleep(200);
+        while(robot.range.getDist()<10 && opModeIsActive()) {
+            robot.wheels.setRightWheels(1);
+            robot.wheels.setLeftWheelPwr(1);
+        }
+
         robot.wheels.setRightWheels(1);
         robot.wheels.setLeftWheelPwr(1);
-        sleep(1200);
-//        while(robot.range.getDist()<10 && opModeIsActive()) {
-//
-//        }
+        sleep(500);
+
         robot.wheels.stopLeft();
         robot.wheels.stopRight();
 
@@ -220,10 +225,10 @@ public class BlueGlyphy extends LinearOpMode {
 
 
     public void correctAt90(){
-        if (gyro.getYaw() > 90){
+        if (gyro.getYaw() < -90){
             robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()+90);
 
-        } else if (gyro.getYaw() < 90){
+        } else if (gyro.getYaw() > -90){
             robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()+90);
 
         }

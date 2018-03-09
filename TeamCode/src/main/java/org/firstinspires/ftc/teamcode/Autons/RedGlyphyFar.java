@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.teamcode.Subsystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 import org.firstinspires.ftc.teamcode.Util.Gyro;
 import org.firstinspires.ftc.teamcode.Util.RobotConstants;
@@ -27,6 +28,9 @@ public class RedGlyphyFar extends LinearOpMode
     VisionUtil vision = new VisionUtil(this);
 
     RelicRecoveryVuMark reading;
+    VisionUtil visionUtil = new VisionUtil(this);
+
+    double firstAnlge;
 
 
     @Override
@@ -36,97 +40,93 @@ public class RedGlyphyFar extends LinearOpMode
         gyro.initGyro(hardwareMap);
         robot.init(hardwareMap, this, gyro);
         reading = vision.readGraph(hardwareMap);
-        int dist = 0;
 
+        double heading;
 
-
+        int dist = 13;
+        reading = vision.readGraph2(hardwareMap);
+        telemetry.addData("vision", reading);
+        telemetry.update();
         waitForStart();
         if (opModeIsActive()){
-
-
-//            robot.driveTrain.rotateDeg(15);
-            if (!reading.equals(RelicRecoveryVuMark.UNKNOWN)){
-                getPictograph = false;
-            }
+            firstAnlge = gyro.getYaw();
             robot.jewelArm.armDown();
 
-            sleep(1000);
+            if (visionUtil.isDetected()){
+                reading = vision.readGraph2(hardwareMap);
+            }
 
-//
+            sleep(500);
 
-            telemetry.addData("color: ",robot.jewelArm.getColor2());
-            telemetry.update();
-            if(String.valueOf(robot.jewelArm.getColor2()) == "RED"){
+            if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
+                telemetry.addData(String.valueOf(robot.jewelArm.getColor()),"00");
+                telemetry.update();
+
+                robot.driveTrain.setMoveDist(4);
+                dist-=4;
+
+            }
+
+
+            else if(String.valueOf(robot.jewelArm.getColor()) == "RED"){
+
+                telemetry.addData(String.valueOf(robot.jewelArm.getColor()),"00");
+                telemetry.update();
 
                 robot.driveTrain.setMoveDist(-4);
                 dist+=4;
 
             }
-
-
-            else if(String.valueOf(robot.jewelArm.getColor2()) == "BLUE"){
-
-                robot.driveTrain.setMoveDist(4);
-
-                dist-=4;
-
-            }
-
+//
             robot.jewelArm.armMid();
             robot.jewelArm.arm2Mid();
 
 
-            if (getPictograph) {
-                if(reading.equals(RelicRecoveryVuMark.UNKNOWN)) {
-                    robot.driveTrain.setMoveDist(9+dist);
-
-                    reading = vision.readGraph2(hardwareMap);
-
-                    sleep(1000);
-                }
-
-            }
-
-            robot.driveTrain.setMoveDist(13);
-
-            while(robot.bar4.isHit())
-                robot.bar4.setPower(0.7);
-            robot.bar4.setPower(0);
+            robot.driveTrain.setMoveDist(dist);
 
             telemetry.addData("vumark 1", reading);
             telemetry.update();
 
             robot.driveTrain.rotateDeg(-90);
-
+            correctAtLateral();
 
 
             switch (reading){
                 case RIGHT:{
                     robot.driveTrain.setMoveDist(8);
-
+                    correctAtLateral();
                     robot.driveTrain.rotateDeg(90);
+                    robot.driveTrain.singleSideRotateDeg(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-360);
                     robot.driveTrain.setMoveDist(5);
-                    robot.bar4.setPower(3);
-                    sleep(1500);
+                    robot.driveTrain.singleSideRotateDeg(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-360);
+                    robot.bar4.setMoveAngle(145);
                     placeBlock();
                     break;
                 }
                 case CENTER:{
 
                     robot.driveTrain.setMoveDist(13);
+                    correctAtLateral();
                     robot.driveTrain.rotateDeg(90);
-                    robot.driveTrain.setMoveDist(5);
-                    robot.bar4.setPower(-0.8);
-                    sleep(1500);
+                    robot.driveTrain.singleSideRotateDeg(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-360);
+                    robot.driveTrain.setMoveDist(5.5);
+                    robot.driveTrain.singleSideRotateDeg(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-360);
+
+                    robot.bar4.setMoveAngle(145);
                     placeBlock();
                     break;
                 }
                 case LEFT:{
                     robot.driveTrain.setMoveDist(25);
+                    correctAtLateral();
+
                     robot.driveTrain.rotateDeg(90);
-                    robot.driveTrain.setMoveDist(5);
-                    robot.bar4.setPower(-0.8);
-                    sleep(1500);
+                    robot.driveTrain.singleSideRotateDeg(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-360);
+
+                    robot.driveTrain.setMoveDist(5.5);
+                    robot.driveTrain.singleSideRotateDeg(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-360);
+
+                    robot.bar4.setMoveAngle(145);
                     placeBlock();
                     break;
                 }
@@ -200,12 +200,27 @@ public class RedGlyphyFar extends LinearOpMode
 
     public void placeBlock(){
 
-        robot.driveTrain.setMoveDist(-1);
+        sleep(200);
+        while(robot.range.getDist()<10 && opModeIsActive()) {
+            robot.wheels.setRightWheels(1);
+            robot.wheels.setLeftWheelPwr(1);
+        }
+
         robot.wheels.setRightWheels(1);
         robot.wheels.setLeftWheelPwr(1);
         sleep(500);
+
         robot.wheels.stopLeft();
         robot.wheels.stopRight();
-        robot.driveTrain.setMoveDist(-8);
+    }
+
+    public void correctAtLateral(){
+        if (gyro.getYaw() < -90){
+            robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()+90);
+
+        } else if (gyro.getYaw() > -90){
+            robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()+90);
+
+        }
     }
 }
