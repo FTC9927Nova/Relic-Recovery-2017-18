@@ -61,7 +61,6 @@ public class BlueGlyphy extends LinearOpMode {
 
             }
 
-
             else if(String.valueOf(robot.jewelArm.getColor2()) == "BLUE"){
 
                 telemetry.addData(String.valueOf(robot.jewelArm.getColor2()),"00");
@@ -75,15 +74,9 @@ public class BlueGlyphy extends LinearOpMode {
             robot.jewelArm.armMid();
             robot.jewelArm.arm2Mid();
 
-
-
-
-
             robot.driveTrain.setMoveDist(dist);
 //            robot.bar4.setMoveAngle(265.9);
             robot.driveTrain.singleSideRotateDeg(DriveTrain.Side.LEFT_SIDE, gyro.getYaw());
-
-
 
             switch (reading){
                 case RIGHT:{
@@ -149,7 +142,6 @@ public class BlueGlyphy extends LinearOpMode {
             robot.bar4.setMoveAngle(110.4);
 
             robot.driveTrain.rotateDeg(180);
-
 
             timer.startTime();
             int startLeftEnc = robot.driveTrain.getLeftCurrentPosition();

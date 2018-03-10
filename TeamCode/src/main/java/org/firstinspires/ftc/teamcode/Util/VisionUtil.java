@@ -69,7 +69,9 @@ public class VisionUtil {
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
 
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
+
                 return vuMark;
+
             }
 
             if (linearOpMode.isStarted())
