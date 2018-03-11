@@ -12,7 +12,6 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  */
 
 @TeleOp(name = "gyro lark tester ")
-@Disabled
 public class GyroTest extends LinearOpMode
 {
     Robot robot = new Robot();
@@ -25,9 +24,10 @@ public class GyroTest extends LinearOpMode
 
         waitForStart();
 
-        if(opModeIsActive())
+        while (opModeIsActive())
         {
-            robot.driveTrain.rotateDeg(180);
+            telemetry.addData("Angle",gyro.getYaw());
+            telemetry.update();
         }
 
     }
