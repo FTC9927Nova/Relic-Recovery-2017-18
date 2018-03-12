@@ -185,7 +185,6 @@ public class RedGlyphyFarAngle extends LinearOpMode
 
             int leftTarget = (robot.driveTrain.getLeftCurrentPosition() - startLeftEnc)/constant.getTICKS_PER_INCH();
             robot.driveTrain.setMoveDist(-leftTarget-11.5);
-            sleep(200);
             //TODO: CHANGE FOR REEAL AUTO
             robot.driveTrain.rotateDeg(-gyro.getYaw()-1);
 //            robot.driveTrain.setMoveDist(-1);

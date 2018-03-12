@@ -36,7 +36,7 @@ import org.firstinspires.ftc.teamcode.Util.VisionUtil;
  * Created by therat0981 on 12/14/17.
  */
 
-@Autonomous(name = "RedGlyphyFarAngle")
+@Autonomous(name = "BlueGlyphyFarAngle")
 public class BlueGlyphyFarAngle extends LinearOpMode
 {
     Robot robot = new Robot();
@@ -114,7 +114,6 @@ public class BlueGlyphyFarAngle extends LinearOpMode
                     robot.driveTrain.setMoveDist(-5);
                     robot.bar4.setMoveAngle(167);
                     turn13();
-                    robot.bar4.setMoveAngle(167);
                     correctAtLateral();
                     break;
                 }
@@ -127,7 +126,6 @@ public class BlueGlyphyFarAngle extends LinearOpMode
                     robot.driveTrain.setMoveDist(-5);
                     robot.bar4.setMoveAngle(167);
                     turn28();
-                    robot.bar4.setMoveAngle(167);
                     correctAtLateral();
                     break;
                 }
@@ -140,7 +138,6 @@ public class BlueGlyphyFarAngle extends LinearOpMode
                     robot.driveTrain.setMoveDist(-5);
                     robot.bar4.setMoveAngle(167);
                     robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.RIGHT_SIDE, gyro.getYaw()+46.5, -0.2);
-                    robot.bar4.setMoveAngle(167);
                     correctAtLateral();
                     break;
                 }
@@ -158,7 +155,6 @@ public class BlueGlyphyFarAngle extends LinearOpMode
                 robot.bar4.setPower(-1);
             }
             robot.bar4.setPower(0);
-            robot.driveTrain.setMoveDist(18);
             int startLeftEnc = robot.driveTrain.getLeftCurrentPosition();
             double i = 1;
             int c = 0;
@@ -184,12 +180,28 @@ public class BlueGlyphyFarAngle extends LinearOpMode
             sleep(200);
 
             int leftTarget = (robot.driveTrain.getLeftCurrentPosition() - startLeftEnc)/constant.getTICKS_PER_INCH();
-            robot.driveTrain.setMoveDist(-leftTarget-11.5);
-            sleep(200);
+            robot.driveTrain.setMoveDist(-leftTarget);
             //TODO: CHANGE FOR REEAL AUTO
             robot.driveTrain.rotateDeg(-gyro.getYaw()-1);
 //            robot.driveTrain.setMoveDist(-1);
-            robot.bar4.setMoveAngle(167);
+
+            switch (reading){
+                case LEFT:{
+
+                    break;
+                }
+                case CENTER:{
+
+                    break;
+                }
+                case RIGHT:{
+
+                }
+                    robot.bar4.setMoveAngle(167);
+
+                    break;
+                }
+
 //            robot.driveTrain.setMoveDist(1.5);
             placeBlock();
 
@@ -217,40 +229,40 @@ public class BlueGlyphyFarAngle extends LinearOpMode
 
     public void correctAtLateral(){
         if (gyro.getYaw() > 90){
-            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-90);
+            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()-90);
 
         } else if (gyro.getYaw() < 90){
-            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()-90);
+            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-90);
 
         }
     }
 
     public void turn13(){
         if (gyro.getYaw() < 13){
-            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()-13);
+            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-13);
 
         } else if (gyro.getYaw() > 13){
-            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-13);
+            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()-13);
 
         }
     }
 
     public void turn28(){
         if (gyro.getYaw() < 28){
-            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()-28);
+            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-28);
 
         } else if (gyro.getYaw() > 28){
-            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-28);
+            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()-28);
 
         }
     }
 
     public void turn45(){
         if (gyro.getYaw() < 48.5){
-            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()-48.5);
+            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-48.5);
 
         } else if (gyro.getYaw() > 48.5){
-            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-48.5);
+            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()-48.5);
 
         }
     }
