@@ -37,7 +37,7 @@ import org.firstinspires.ftc.teamcode.Util.VisionUtil;
  */
 
 @Autonomous(name = "RedGlyphyFarAngle")
-public class RedGlyphyFarAngle extends LinearOpMode
+public class BlueGlyphyFarAngle extends LinearOpMode
 {
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
@@ -68,7 +68,7 @@ public class RedGlyphyFarAngle extends LinearOpMode
         waitForStart();
         if (opModeIsActive()){
             firstAnlge = gyro.getYaw();
-            robot.jewelArm.armDown();
+            robot.jewelArm.arm2Down();
 
             if (visionUtil.isDetected()){
                 reading = vision.readGraph2(hardwareMap);
@@ -76,8 +76,8 @@ public class RedGlyphyFarAngle extends LinearOpMode
 
             sleep(1000);
 
-            if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
-                telemetry.addData(String.valueOf(robot.jewelArm.getColor()),"00");
+            if(String.valueOf(robot.jewelArm.getColor2()) == "RED"){
+                telemetry.addData(String.valueOf(robot.jewelArm.getColor2()),"00");
                 telemetry.update();
 
                 robot.driveTrain.setMoveDist(4);
@@ -86,9 +86,9 @@ public class RedGlyphyFarAngle extends LinearOpMode
             }
 
 
-            else if(String.valueOf(robot.jewelArm.getColor()) == "RED"){
+            else if(String.valueOf(robot.jewelArm.getColor2()) == "BLUE"){
 
-                telemetry.addData(String.valueOf(robot.jewelArm.getColor()),"00");
+                telemetry.addData(String.valueOf(robot.jewelArm.getColor2()),"00");
                 telemetry.update();
 
                 robot.driveTrain.setMoveDist(-4);
@@ -105,7 +105,7 @@ public class RedGlyphyFarAngle extends LinearOpMode
 
 
             switch (reading){
-                case RIGHT:{
+                case LEFT:{
                     turn13();
                     robot.bar4.setMoveAngle(145);
                     placeBlock();
@@ -131,7 +131,7 @@ public class RedGlyphyFarAngle extends LinearOpMode
                     correctAtLateral();
                     break;
                 }
-                case LEFT:{
+                case RIGHT:{
                     turn45();
                     robot.bar4.setMoveAngle(145);
                     robot.driveTrain.setMoveDist(3.5);
@@ -151,7 +151,7 @@ public class RedGlyphyFarAngle extends LinearOpMode
                 }
             }
             robot.driveTrain.setMoveDist(3);
-            robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.RIGHT_SIDE, gyro.getYaw()+90+44,0.8);
+            robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.LEFT_SIDE, gyro.getYaw()-(90+44),0.8);
 //            robot.driveTrain.rotateDeg(-64.5);
             timer.startTime();
             while(robot.bar4.isLowerHit()){
@@ -216,41 +216,41 @@ public class RedGlyphyFarAngle extends LinearOpMode
     }
 
     public void correctAtLateral(){
-        if (gyro.getYaw() < -90){
-            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()+90);
+        if (gyro.getYaw() > 90){
+            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-90);
 
-        } else if (gyro.getYaw() > -90){
-            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()+90);
+        } else if (gyro.getYaw() < 90){
+            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()-90);
 
         }
     }
 
     public void turn13(){
-        if (gyro.getYaw() > -13){
-            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()+13);
+        if (gyro.getYaw() < 13){
+            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()-13);
 
-        } else if (gyro.getYaw() < -13){
-            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()+13);
+        } else if (gyro.getYaw() > 13){
+            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-13);
 
         }
     }
 
     public void turn28(){
-        if (gyro.getYaw() > -28){
-            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()+28);
+        if (gyro.getYaw() < 28){
+            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()-28);
 
-        } else if (gyro.getYaw() < -28){
-            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()+28);
+        } else if (gyro.getYaw() > 28){
+            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-28);
 
         }
     }
 
     public void turn45(){
-        if (gyro.getYaw() > -48.5){
-            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()+48.5);
+        if (gyro.getYaw() < 48.5){
+            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()-48.5);
 
-        } else if (gyro.getYaw() < -48.5){
-            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()+48.5);
+        } else if (gyro.getYaw() > 48.5){
+            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-48.5);
 
         }
     }

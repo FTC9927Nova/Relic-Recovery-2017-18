@@ -23,7 +23,7 @@ public class Range {
 
     public boolean isGlyph()
     {
-        return getDist()<7;
+        return getDist()<6;
     }
 
 }

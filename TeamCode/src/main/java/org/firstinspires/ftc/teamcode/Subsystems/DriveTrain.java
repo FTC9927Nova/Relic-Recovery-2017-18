@@ -404,7 +404,7 @@ public class DriveTrain implements SubsystemTemplate
         setRightPower(0);
     }
 
-    public void singleSideRotateDegCorrect(Side side, double target) {
+    public void singleSideRotateDegCorrect(Side side, double target, double power) {
         turnTarget = -gyro.getYaw() + target;
 
         if (turnTarget > 180)
@@ -422,12 +422,12 @@ public class DriveTrain implements SubsystemTemplate
                 (Math.abs((-gyro.getYaw() - turnTarget)) > constant.getTurnTolerance())) {
 
             if (side == Side.LEFT_SIDE) {
-                setLeftPower(-0.2);
+                setLeftPower(power);
                 setRightPower(0);
             }
             if (side == Side.RIGHT_SIDE) {
                 setLeftPower(0);
-                setRightPower(-0.2);
+                setRightPower(power);
             }
             this.opMode.telemetry.addData("Side", String.valueOf(side));
         }

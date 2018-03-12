@@ -224,10 +224,10 @@ public class RedGlyphy extends LinearOpMode {
 
     public void correctAt90(){
         if (gyro.getYaw() > 90){
-            robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-90);
+            robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-90, -0.2);
 
         } else if (gyro.getYaw() < 90){
-            robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()-90);
+            robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()-90, -0.2);
 
         }
     }

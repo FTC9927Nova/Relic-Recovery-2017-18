@@ -216,10 +216,10 @@ public class RedGlyphyFar extends LinearOpMode
 
     public void correctAtLateral(){
         if (gyro.getYaw() < -90){
-            robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()+90);
+            robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()+90, -0.2);
 
         } else if (gyro.getYaw() > -90){
-            robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()+90);
+            robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()+90, -0.2);
 
         }
     }

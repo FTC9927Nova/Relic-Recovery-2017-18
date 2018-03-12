@@ -26,7 +26,9 @@ public class GyroTest extends LinearOpMode
 
         while (opModeIsActive())
         {
-            telemetry.addData("Angle",gyro.getYaw());
+            telemetry.addData("Yaw",gyro.getYaw());
+            telemetry.addData("Pitch", gyro.getPitch());
+            telemetry.addData("roll", gyro.getRoll());
             telemetry.update();
         }
 
