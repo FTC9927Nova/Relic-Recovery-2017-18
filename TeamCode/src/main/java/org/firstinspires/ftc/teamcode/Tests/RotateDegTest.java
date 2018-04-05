@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  */
 
 
-@TeleOp(name = "Rotate Deg JewlTest")
+@TeleOp(name = "Rotate Deg Dick Chopper Test")
 public class RotateDegTest extends LinearOpMode
 {
     Robot robot = new Robot();
@@ -27,6 +27,10 @@ public class RotateDegTest extends LinearOpMode
         if(opModeIsActive())
         {
             robot.driveTrain.rotateDeg(90);
+
+            telemetry.addData("heading " , gyro.getYaw());
+            telemetry.update();
+
         }
     }
 }

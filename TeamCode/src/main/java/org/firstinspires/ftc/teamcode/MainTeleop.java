@@ -2,8 +2,10 @@ package org.firstinspires.ftc.teamcode;
 
 
 import com.qualcomm.analytics.Analytics;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Subsystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
@@ -14,7 +16,6 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  * Created by therat0981 on 10/1/17.
  */
 @TeleOp(name = "MainTeleOp")
-
 public class MainTeleop extends OpMode
 {
 
@@ -26,18 +27,19 @@ public class MainTeleop extends OpMode
     @Override
     public void init()
     {
-            gyro.initGyro(hardwareMap);
-            robot.init(hardwareMap, gyro);
-            robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
-            robot.driveTrain.setDrive(DriveTrain.Drive.SPEED);
-
+       // gyro.initGyro(hardwareMap);
+        robot.init(hardwareMap, gyro);
+        robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
+        robot.driveTrain.setDrive(DriveTrain.Drive.SPEED);
     }
 
 
     public void loop() {
         //keeping arm up
-        robot.jewelArm.armMid();
+        robot.jewelArm.armUp();
         robot.jewelArm.arm2Up();
+
+
         //getting Current Angle of the Four Bar
         robot.bar4.getCurrentAngle();
 
@@ -55,12 +57,19 @@ public class MainTeleop extends OpMode
 
 
 //        turtle mode
-        if (gamepad1.right_trigger != 0 || gamepad1.left_trigger != 0) {
-            lpwr = lpwr / 3.0f;
-            rpwr = rpwr / 3.0f;
+        if (gamepad1.right_trigger != 0) {
+            lpwr /= 3.0f;
+            rpwr /= 3.0f;
         }
+
+        else if(gamepad1.left_trigger != 0){
+            lpwr /= 9.0f;
+            rpwr /= 9.0f;
+        }
+
         if(Math.abs(lpwr)<0.1)
             lpwr = 0;
+
         if(Math.abs(rpwr)<0.1)
             rpwr = 0;
 
@@ -68,17 +77,16 @@ public class MainTeleop extends OpMode
         robot.driveTrain.setLeftPower(lpwr);
         robot.driveTrain.setRightPower(rpwr);
 
-
 //      Claw and Extender for Relic
+//        if (gamepad2.x)
+//            robot.relic.clawOpen();
+//        else if (gamepad2.y)
+//            robot.relic.clawClose();
         if (gamepad2.a)
-            robot.relic.clawOpen();
-        else if (gamepad2.b)
-            robot.relic.clawClose();
-        if (gamepad2.y)
             robot.relic.pullExtenderUp();
-        else if (gamepad2.x)
+        else if (gamepad2.b)
             robot.relic.putExtenderDown();
-
+        else
 
         // Arm Control
         if (Math.abs(gamepad2.left_stick_y) > 0.05 && !relic) {
@@ -94,7 +102,7 @@ public class MainTeleop extends OpMode
         } else {
 
             robot.bar4.setTargetAngle();
-            robot.bar4.setMoveAngle2(robot.bar4.getTargetAngle());
+//            robot.bar4.setMoveAngle2(robot.bar4.getTargetAngle());
 
         }
 
@@ -119,13 +127,22 @@ public class MainTeleop extends OpMode
             robot.wheels.setLeftWheelPwr(0);
             robot.wheels.setRightWheels(0);
         }
+        if(gamepad2.right_stick_y > 10){
 
-        if(gamepad2.dpad_left)
-            robot.relic.setExtender(1);
-        else if(gamepad2.dpad_right)
-            robot.relic.setExtender(-1);
-        else
-            robot.relic.setExtender(0);
+            robot.wheels.servoIntake();
+
+        }
+        else if(gamepad2.right_stick_y < 10){
+
+            robot.wheels.servoOuttake();
+
+        }
+        else{
+
+            robot.wheels.setRightServoPwr(0);
+            robot.wheels.setLeftServoPwr(0);
+
+        }
 
             //Zlides
             if (gamepad2.dpad_up) {
@@ -136,21 +153,12 @@ public class MainTeleop extends OpMode
                 robot.relic.setPower(0);
             }
 
-            if (-gamepad2.right_stick_y > 10) {
-
-                robot.jewelArm.armMid();
-
-            } else if (-gamepad2.right_stick_y < -10) {
-
-                robot.jewelArm.armUp();
-
-            }
-
             telemetry.addData("anlge",robot.bar4.getCurrentAngle());
             telemetry.addData("upper limit",robot.bar4.isHit());
             telemetry.addData("lowerLimit",robot.bar4.isLowerHit());
             telemetry.addData("ultra",robot.range.isGlyph());
             telemetry.addData("dist",robot.range.getDist());
+            telemetry.addData("servo", robot.jewelArm.getPos2());
 
             telemetry.update();
         }

@@ -51,7 +51,7 @@ public class RedGlyphy extends LinearOpMode {
                 reading = vision.readGraph2(hardwareMap);
             }
 
-        sleep(500);
+            sleep(1000);
 
             if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
                 telemetry.addData(String.valueOf(robot.jewelArm.getColor()),"00");
@@ -82,17 +82,21 @@ public class RedGlyphy extends LinearOpMode {
 
             robot.driveTrain.setMoveDist(dist);
 //            robot.bar4.setMoveAngle(265.9);
-            robot.driveTrain.singleSideRotateDeg(DriveTrain.Side.RIGHT_SIDE, gyro.getYaw());
+
+            robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.RIGHT_SIDE, gyro.getYaw(), Math.signum(gyro.getYaw()) * 0.2);
 
 
 
             switch (reading){
                 case RIGHT:{
                     robot.driveTrain.setMoveDist(3.8);
+
+                    if(gyro.getYaw() < 0)
                     robot.driveTrain.singleSideRotateDeg(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-360);
+
                     robot.driveTrain.rotateDeg(90);
-                    robot.driveTrain.setMoveDist(-7.5);
-                    robot.bar4.setMoveAngle(145);
+                    robot.driveTrain.setMoveDist(-4.5);
+                    robot.bar4.setMoveAngle(135);
 
                     correctAt90();
 
@@ -108,7 +112,7 @@ public class RedGlyphy extends LinearOpMode {
                     robot.driveTrain.rotateDeg(90);
                     robot.driveTrain.setMoveDist(-7.5);
 
-                    robot.bar4.setMoveAngle(145);
+                    robot.bar4.setMoveAngle(135);
                     correctAt90();
                     placeBlock();
 
@@ -123,7 +127,7 @@ public class RedGlyphy extends LinearOpMode {
                     robot.driveTrain.rotateDeg(90);
                     robot.driveTrain.setMoveDist(-7.5);
 
-                    robot.bar4.setMoveAngle(145);
+                    robot.bar4.setMoveAngle(135);
                     correctAt90();
                     placeBlock();
 
@@ -145,29 +149,31 @@ public class RedGlyphy extends LinearOpMode {
             Log.i("heading1",String.valueOf(heading));
             telemetry.update();
 
-            robot.bar4.setMoveAngle(110.4);
+            while(robot.bar4.isLowerHit()){
+                robot.bar4.setPower(-1);
+            }
+
+            robot.bar4.setPower(0);
 
             robot.driveTrain.rotateDeg(180);
 
             timer.startTime();
             int startLeftEnc = robot.driveTrain.getLeftCurrentPosition();
-            while(!robot.range.isGlyph() && opModeIsActive() && Math.abs(robot.driveTrain.getLeftCurrentPosition() - startLeftEnc) < (constant.getTICKS_PER_INCH() * 62.5)){
-
-                if (timer.milliseconds() <= 1000) {
-
+            double i = 1;
+            int c = 0;
+            while(!robot.range.isGlyph() && opModeIsActive() && Math.abs(robot.driveTrain.getLeftCurrentPosition() - startLeftEnc) < (constant.getTICKS_PER_INCH() * 40) && gyro.getPitch() < 10){
+                c = (int) (i);
+                if (c % 2 == 0) {
                     robot.wheels.intakeLeft();
+                    robot.wheels.setRightWheels(0);
+                } else {
                     robot.wheels.intakeRight();
-
+                    robot.wheels.setLeftWheelPwr(0);
                 }
-                else{
-
-                    robot.wheels.intakeRight();
-                    robot.wheels.setLeftWheelPwr(-0.4);
-                }
-                robot.driveTrain.setLeftPower(0.2);
-                robot.driveTrain.setRightPower(0.2);
-
-                Log.i("dist",robot.range.getDist()+"");
+                i += 0.7;
+                Log.i("dist", robot.range.getDist() + "");
+                robot.driveTrain.setLeftPower(0.5);
+                robot.driveTrain.setRightPower(0.5);
             }
 
             robot.driveTrain.setLeftPower(0);
@@ -179,8 +185,6 @@ public class RedGlyphy extends LinearOpMode {
             int leftTarget = robot.driveTrain.getLeftCurrentPosition() - startLeftEnc;
 
             robot.driveTrain.rotateDeg(180);
-
-
 
             correctAt90();
 
@@ -198,9 +202,8 @@ public class RedGlyphy extends LinearOpMode {
             correctAt90();
 
             placeBlock();
+            robot.driveTrain.setMoveDist(-5.5);
             robot.bar4.setMoveAngle(110.4);
-            robot.driveTrain.setMoveDist(7);
-            robot.driveTrain.setMoveDist(-2);
 
         }
 

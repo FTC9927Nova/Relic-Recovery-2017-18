@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  * Created by Ethan Pereira on 2/24/2018.
  */
 @Autonomous(name = "Jewl2 ColorTest")
+@Disabled
 public class Jewl2ColorTest  extends LinearOpMode{
     @Override
     public void runOpMode() throws InterruptedException {
@@ -19,7 +21,6 @@ public class Jewl2ColorTest  extends LinearOpMode{
         waitForStart();
 
         while (opModeIsActive()){
-            robot.jewelArm.arm2SetPos(-gamepad1.left_stick_y);
             telemetry.addData("",robot.jewelArm.display());
             telemetry.update();
         }

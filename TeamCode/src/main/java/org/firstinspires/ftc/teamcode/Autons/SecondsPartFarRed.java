@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Autons;
 import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -14,6 +15,7 @@ import org.firstinspires.ftc.teamcode.Util.RobotConstants;
 /**
  * Created by Ethan Pereira on 3/11/2018.
  */
+@Disabled
 @Autonomous(name = "SecondReddieFreddie")
 public class SecondsPartFarRed extends LinearOpMode {
     Robot robot = new Robot();

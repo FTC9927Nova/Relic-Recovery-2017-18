@@ -1,6 +1,4 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
-import org.firstinspires.ftc.teamcode.Util.*;
-import org.firstinspires.ftc.teamcode.Subsystems.SubsystemTemplate;
 import com.qualcomm.robotcore.hardware.*;
 
 /**
@@ -10,24 +8,29 @@ import com.qualcomm.robotcore.hardware.*;
 public class Wheels implements SubsystemTemplate{
 
     private DcMotor leftWheels, rightWheels;
-    private DigitalChannel bumper;
+    private CRServo lservoIntkae, rservoIntkae;
+    private Servo latchyCatchy;
+    private AnalogInput distSensor;
+    private double MinGlyphDist = 1.5;
+    private double MaxGlyphDist = 4;
     public Wheels(HardwareMap hardwareMap)
     {
 
         leftWheels = hardwareMap.dcMotor.get("leftIntake");
         rightWheels = hardwareMap.dcMotor.get("rightIntake");
 
+        lservoIntkae = hardwareMap.crservo.get("lsintake");
+        rservoIntkae = hardwareMap.crservo.get("rsintake");
+        distSensor = hardwareMap.analogInput.get("distyListy");
+
+        latchyCatchy = hardwareMap.servo.get("latch");
 
 
-
-//        setMode(Mode.STOP_RESET);
-//        leftWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//        rightWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-
-
-        leftWheels.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightWheels.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftWheels.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightWheels.setDirection(DcMotorSimple.Direction.REVERSE);
+        lservoIntkae.setDirection(DcMotorSimple.Direction.FORWARD);
+        rservoIntkae.setDirection(DcMotorSimple.Direction.REVERSE);
+        latchyCatchy.setDirection(Servo.Direction.FORWARD);
 
         leftWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         rightWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
@@ -65,8 +68,26 @@ public class Wheels implements SubsystemTemplate{
 
     }
 
-    public void intakeLeft(){
+    public void setServopower(double pwr)
+    {
+        lservoIntkae.setPower(pwr);
+        rservoIntkae.setPower(pwr);
+    }
+    public void servoIntake(){
 
+        setLeftServoPwr(-1);
+        setRightServoPwr(-1);
+
+    }
+
+    public void servoOuttake(){
+
+        setLeftServoPwr(1);
+        setRightServoPwr(1);
+
+    }
+
+    public void intakeLeft(){
         leftWheels.setPower(-1);
 
     }
@@ -78,8 +99,8 @@ public class Wheels implements SubsystemTemplate{
     public void outtakeLeft(){
 
         leftWheels.setPower(1);
-
     }
+
 
     public void outtakeRight(){
 
@@ -98,6 +119,77 @@ public class Wheels implements SubsystemTemplate{
 
     }
 
+    public double glyphDist()
+    {
+        return 1.8694*(Math.pow(distSensor.getVoltage(),-1.086));
+    }
+
+    public void leftClawIntake()
+    {
+        intakeLeft();
+        if(glyphDist()> MinGlyphDist)
+        {
+            lservoIntkae.setPower(-0.5);
+        }
+        else
+        {
+            lservoIntkae.setPower(0);
+        }
+    }
+
+    public void rightClawIntake()
+    {
+        intakeRight();
+        if(glyphDist()> MinGlyphDist)
+        {
+            rservoIntkae.setPower(-0.5);
+        }
+        else
+        {
+            rservoIntkae.setPower(0);
+        }
+    }
+
+    public void fullOuttake()
+    {
+        rservoIntkae.setPower(1);
+        lservoIntkae.setPower(1);
+        outtakeLeft();
+        outtakeRight();
+    }
+
+    public void halfOuttake()
+    {
+        if(glyphDist()>MaxGlyphDist) {
+            lservoIntkae.setPower(0);
+            rservoIntkae.setPower(0);
+            setLeftWheelPwr(0);
+            setRightWheels(0);
+        }
+        else
+        {
+            lservoIntkae.setPower(0.5);
+            rservoIntkae.setPower(0.5);
+            intakeLeft();
+            intakeRight();
+        }
+    }
+
+    public void unLatch(){
+
+        latchyCatchy.setPosition(0.75);
+
+    }
+
+    public void latch(){
+
+        latchyCatchy.setPosition(0.15);
+
+    }
+
+
+
+
     public void setLeftWheelPwr(double a)
     {
             leftWheels.setPower(a);
@@ -106,7 +198,8 @@ public class Wheels implements SubsystemTemplate{
     {
             rightWheels.setPower(b);
     }
-
+    public void setLeftServoPwr(double c) { lservoIntkae.setPower(c); }
+    public void setRightServoPwr(double d) { rservoIntkae.setPower(d); }
 
 
     @Override

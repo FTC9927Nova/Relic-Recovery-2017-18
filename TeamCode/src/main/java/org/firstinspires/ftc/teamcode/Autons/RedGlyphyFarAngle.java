@@ -91,7 +91,7 @@ public class RedGlyphyFarAngle extends LinearOpMode
                 telemetry.addData(String.valueOf(robot.jewelArm.getColor()),"00");
                 telemetry.update();
 
-                robot.driveTrain.setMoveDist(-4);
+                robot.driveTrain.setMoveDist(-3);
                 dist+=4;
 
             }
@@ -139,7 +139,7 @@ public class RedGlyphyFarAngle extends LinearOpMode
 
                     robot.driveTrain.setMoveDist(-5);
                     robot.bar4.setMoveAngle(167);
-                    robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.RIGHT_SIDE, gyro.getYaw()+46.5, -0.2);
+                    robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.RIGHT_SIDE, gyro.getYaw()+43, -0.2);
                     robot.bar4.setMoveAngle(167);
                     correctAtLateral();
                     break;
@@ -150,19 +150,21 @@ public class RedGlyphyFarAngle extends LinearOpMode
 
                 }
             }
-            robot.driveTrain.setMoveDist(3);
-            robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.RIGHT_SIDE, gyro.getYaw()+90+44,0.8);
+            robot.driveTrain.setMoveDist(5);
+            robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.RIGHT_SIDE, gyro.getYaw()+135,0.8);
 //            robot.driveTrain.rotateDeg(-64.5);
             timer.startTime();
             while(robot.bar4.isLowerHit()){
                 robot.bar4.setPower(-1);
             }
+
             robot.bar4.setPower(0);
+
             robot.driveTrain.setMoveDist(18);
             int startLeftEnc = robot.driveTrain.getLeftCurrentPosition();
             double i = 1;
             int c = 0;
-            while(!robot.range.isGlyph() && opModeIsActive() && Math.abs(robot.driveTrain.getLeftCurrentPosition() - startLeftEnc) < (constant.getTICKS_PER_INCH() * 25) && gyro.getPitch() < 10){
+            while(!robot.range.isGlyph() && opModeIsActive() && Math.abs(robot.driveTrain.getLeftCurrentPosition() - startLeftEnc) < (constant.getTICKS_PER_INCH() * 50) && gyro.getPitch() < 10){
                 c = (int) (i);
                 if (c % 2 == 0) {
                     robot.wheels.intakeLeft();
@@ -184,15 +186,32 @@ public class RedGlyphyFarAngle extends LinearOpMode
             sleep(200);
 
             int leftTarget = (robot.driveTrain.getLeftCurrentPosition() - startLeftEnc)/constant.getTICKS_PER_INCH();
-            robot.driveTrain.setMoveDist(-leftTarget-11.5);
+            robot.driveTrain.setMoveDist(-leftTarget - 11.5);
             //TODO: CHANGE FOR REEAL AUTO
-            robot.driveTrain.rotateDeg(-gyro.getYaw()-1);
+            robot.driveTrain.rotateDeg(-gyro.getYaw() + 1.5);
 //            robot.driveTrain.setMoveDist(-1);
-            robot.bar4.setMoveAngle(167);
+
+            switch(reading){
+
+                case LEFT: {
+                    robot.bar4.setMoveAngle(167);
+                    robot.driveTrain.setMoveDist(2);
+                    break;
+                }
+                default:{
+                    robot.driveTrain.setMoveDist(4);
+                    break;
+                }
+
+
+            }
 //            robot.driveTrain.setMoveDist(1.5);
             placeBlock();
 
-            robot.driveTrain.setMoveDist(-3);
+            robot.driveTrain.setMoveDist(-5);
+
+            telemetry.addData("enc, " , startLeftEnc);
+            telemetry.update();
 
 
         }

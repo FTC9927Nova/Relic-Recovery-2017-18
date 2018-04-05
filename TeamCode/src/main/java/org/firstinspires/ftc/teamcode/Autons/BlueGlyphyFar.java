@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Autons;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -46,7 +47,7 @@ public class BlueGlyphyFar extends LinearOpMode
 
             robot.jewelArm.arm2Down();
 
-            sleep(500);
+            sleep(1000);
 
             telemetry.addData(String.valueOf(robot.jewelArm.getColor2()),"");
             telemetry.update();

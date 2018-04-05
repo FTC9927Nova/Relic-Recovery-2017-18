@@ -114,6 +114,7 @@ public class BlueGlyphyFarAngle extends LinearOpMode
                     robot.driveTrain.setMoveDist(-5);
                     robot.bar4.setMoveAngle(167);
                     turn13();
+                    sleep(500);
                     correctAtLateral();
                     break;
                 }
@@ -126,6 +127,8 @@ public class BlueGlyphyFarAngle extends LinearOpMode
                     robot.driveTrain.setMoveDist(-5);
                     robot.bar4.setMoveAngle(167);
                     turn28();
+                    sleep(500);
+
                     correctAtLateral();
                     break;
                 }
@@ -137,7 +140,9 @@ public class BlueGlyphyFarAngle extends LinearOpMode
 
                     robot.driveTrain.setMoveDist(-5);
                     robot.bar4.setMoveAngle(167);
-                    robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.RIGHT_SIDE, gyro.getYaw()+46.5, -0.2);
+                    robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.LEFT_SIDE, gyro.getYaw()+44, -0.2);
+                    sleep(500);
+
                     correctAtLateral();
                     break;
                 }
@@ -154,11 +159,13 @@ public class BlueGlyphyFarAngle extends LinearOpMode
             while(robot.bar4.isLowerHit()){
                 robot.bar4.setPower(-1);
             }
+
             robot.bar4.setPower(0);
+            robot.driveTrain.setMoveDist(18);
             int startLeftEnc = robot.driveTrain.getLeftCurrentPosition();
             double i = 1;
             int c = 0;
-            while(!robot.range.isGlyph() && opModeIsActive() && Math.abs(robot.driveTrain.getLeftCurrentPosition() - startLeftEnc) < (constant.getTICKS_PER_INCH() * 25) && gyro.getPitch() < 10){
+            while(!robot.range.isGlyph() && opModeIsActive() && Math.abs(robot.driveTrain.getLeftCurrentPosition() - startLeftEnc) < (constant.getTICKS_PER_INCH() * 50) && gyro.getPitch() < 10){
                 c = (int) (i);
                 if (c % 2 == 0) {
                     robot.wheels.intakeLeft();
@@ -180,7 +187,7 @@ public class BlueGlyphyFarAngle extends LinearOpMode
             sleep(200);
 
             int leftTarget = (robot.driveTrain.getLeftCurrentPosition() - startLeftEnc)/constant.getTICKS_PER_INCH();
-            robot.driveTrain.setMoveDist(-leftTarget);
+            robot.driveTrain.setMoveDist(-leftTarget-18);
             //TODO: CHANGE FOR REEAL AUTO
             robot.driveTrain.rotateDeg(-gyro.getYaw()-1);
 //            robot.driveTrain.setMoveDist(-1);
@@ -238,11 +245,11 @@ public class BlueGlyphyFarAngle extends LinearOpMode
     }
 
     public void turn13(){
-        if (gyro.getYaw() < 13){
-            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-13);
+        if (gyro.getYaw() < 11){
+            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-11);
 
-        } else if (gyro.getYaw() > 13){
-            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()-13);
+        } else if (gyro.getYaw() > 11){
+            robot.driveTrain.singleSideTurnFar(DriveTrain.Side.RIGHT_SIDE,gyro.getYaw()-11);
 
         }
     }

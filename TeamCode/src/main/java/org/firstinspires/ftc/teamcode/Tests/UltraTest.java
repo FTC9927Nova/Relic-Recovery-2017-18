@@ -10,7 +10,6 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
 /**
  * Created by Sumanth on 2/23/18.
  */
-@Disabled
 @TeleOp(name = "ultraTest")
 
 public class UltraTest extends LinearOpMode

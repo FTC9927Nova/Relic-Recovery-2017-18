@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -13,7 +14,7 @@ import org.firstinspires.ftc.teamcode.Util.VisionUtil;
 /**
  * Created by Sumanth on 3/10/18.
  */
-
+@Disabled
 @Autonomous(name = "tester bester lester the lark" , group = "9927")
 public class TesterBester extends LinearOpMode {
 

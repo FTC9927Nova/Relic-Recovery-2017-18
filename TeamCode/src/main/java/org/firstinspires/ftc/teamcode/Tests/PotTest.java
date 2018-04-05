@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
 
 
 @TeleOp(name = "Potentiometer Test")
+@Disabled
 public class PotTest extends LinearOpMode
 {
     Robot robot = new Robot();

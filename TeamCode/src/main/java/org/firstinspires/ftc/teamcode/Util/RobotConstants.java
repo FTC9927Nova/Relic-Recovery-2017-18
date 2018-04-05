@@ -24,7 +24,7 @@ public class RobotConstants
     private final double FOUR_BAR_TOLERANCE = 0;
 
     //TODO: WITH TESTING
-    public final int ENCODER_TICKS_PER_REVOLUTION = 1130;
+    public final int ENCODER_TICKS_PER_REVOLUTION = (int) (1130 * (5/8.0));
 
     //TODO: GET FOURBAR MEASURMENTS
     private final int FOURBAR_TICKS_PER_ONE_MOVEMENT = 0;

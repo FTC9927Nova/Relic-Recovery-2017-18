@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.Util.Potentiometer;
 /**
  * Created by Sumanth on 12/12/17.
  */
-
+@Disabled
 @TeleOp(name = "servo arm test")
 public class ServoArmTest extends OpMode
 {

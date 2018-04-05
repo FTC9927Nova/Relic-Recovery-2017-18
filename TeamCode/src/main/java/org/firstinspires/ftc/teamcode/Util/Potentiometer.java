@@ -17,11 +17,9 @@ public class Potentiometer {
     AnalogInput potentiometer;
 
     double voltage;
-    double voltageCalc;
-    int percentTurned;
-    double percentTurnedDecimal;
-    double angle;
-    double maxVoltage;
+    double maxDist = 22;
+    double maxVoltage =1.9;
+    double dist;
 
     public Potentiometer(HardwareMap hardwareMap) {
         potentiometer = hardwareMap.analogInput.get("pot");
@@ -29,32 +27,21 @@ public class Potentiometer {
 
     public void getInput()
     {
-        voltageCalc = potentiometer.getVoltage();
-        voltageCalc = (int)(voltageCalc * 10) + 0.5;
-        voltageCalc =  voltageCalc;
-
-        voltage = voltageCalc/10;
-
-        maxVoltage = potentiometer.getMaxVoltage();
-
-        percentTurned = (int) (voltage/maxVoltage) * 100;
-        percentTurnedDecimal = (voltage/maxVoltage);
-
-        angle = percentTurnedDecimal * 270;
+        voltage = potentiometer.getVoltage();
+        dist  = (voltage/maxVoltage)*maxDist;
     }
 
-    public double getAngle()
+    public double getDist()
     {
         getInput();
-        return angle;
+        return dist;
     }
 
     public String display()
     {
         return "voltage: " + voltage
                 +"\nMax Voltage: " + maxVoltage
-                +"\nPercent Turned: " + percentTurned
-                +"\nAngle: " + angle;
+                +"\nAngle: " + dist;
     }
 
 }

@@ -33,7 +33,7 @@ public class Robot
     public void init(HardwareMap hardwareMap, Gyro gyrofromOpMode)
     {
         driveTrain = new DriveTrain(hardwareMap);
-        driveTrain.setGyro(gyrofromOpMode);
+//        driveTrain.setGyro(gyrofromOpMode);
         jewelArm = new JewelArm(hardwareMap);
         bar4 = new FourBar(hardwareMap);
         wheels = new Wheels(hardwareMap);

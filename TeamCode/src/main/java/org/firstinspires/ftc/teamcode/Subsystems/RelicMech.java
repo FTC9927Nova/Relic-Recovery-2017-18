@@ -22,7 +22,7 @@ public class RelicMech implements SubsystemTemplate
 {
     private DcMotor relic;
     private Servo claw;
-    private CRServo extender;
+    private Servo extender;
     RobotConstants constant = new RobotConstants();
     private PIDLoop relicCL = new PIDLoop(0.01,0,0);
 
@@ -33,7 +33,7 @@ public class RelicMech implements SubsystemTemplate
         relic = hardwareMap.dcMotor.get("relic");
         relic.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         claw = hardwareMap.servo.get("claw");
-        extender = hardwareMap.crservo.get("extender");
+        extender = hardwareMap.servo.get("extender");
 
     }
 
@@ -44,17 +44,14 @@ public class RelicMech implements SubsystemTemplate
     }
     //TODO: FIND BETTER EXTENDER VALUES
 
-    public void setExtender(double pos)
-    {
-        extender.setPower(pos);
-    }
-
     public void putExtenderDown(){
-        extender.setPower(-0.1);
+        extender.setPosition(1);
     }
 
     public void pullExtenderUp(){
-        extender.setPower(0);
+
+        extender.setPosition(0);
+
     }
 
     //TODO: FIND BETTER CLAW VALUES

@@ -16,16 +16,15 @@ import org.firstinspires.ftc.teamcode.Util.*;
  */
 
 
+
+//TODO: FIX WITH STRING POT
 public class FourBar implements SubsystemTemplate {
 
     private DcMotor fourBar;
     private LinearOpMode linearOpMode;
-    private double targetAngle;;
     private boolean shouldStay = true;
-    private double currentAngle = 0;
+    private double heigt = 0;
     private DigitalChannel bar4limit;
-
-
     private DigitalChannel limitSwitch_Zero;
 
     private RobotConstants constants = new RobotConstants();
@@ -56,23 +55,15 @@ public class FourBar implements SubsystemTemplate {
         this.pot = pot;
     }
 
-    public double setHeight(double height)
-    {
-
-        return (Math.toDegrees(Math.acos(1 - ((Math.pow(height, 2))/(2 * Math.pow(constants.getFOURBARLENGTH(), 2))))) + 126);
-
-    }
-
     public void setTargetAngle()
     {
         if(shouldStay)
-            targetAngle = pot.getAngle();
-        shouldStay = false;
+            shouldStay = false;
     }
 
     public double getTargetAngle(){
 
-        return targetAngle;
+        return 0;
 
     }
 
@@ -86,28 +77,21 @@ public class FourBar implements SubsystemTemplate {
     public double getCurrentAngle()
     {
         pot.getInput();
-        currentAngle = pot.getAngle();
-        return currentAngle;
+        heigt = pot.getDist();
+        return heigt;
     }
 
 
 
 
-    public void setMoveAngle(double targetAngle)
+    public void setMoveAngle(double targetHeight)
     {
-        pidLoop.setTarget(targetAngle);
-        while(this.linearOpMode.opModeIsActive()&&Math.abs(pot.getAngle()-targetAngle)>2) {
-            fourBar.setPower(pidLoop.pLoop(pot.getAngle()));
+        pidLoop.setTarget(targetHeight);
+        while(this.linearOpMode.opModeIsActive()&&Math.abs(pot.getDist()-targetHeight)>2) {
+            fourBar.setPower(pidLoop.pLoop(pot.getDist()));
         }
         fourBar.setPower(0);
     }
-
-    public void setMoveAngle2(double targetAngle)
-    {
-        pidLoop.setTarget(targetAngle);
-        fourBar.setPower(pidLoop.pLoop(pot.getAngle()));
-    }
-
 
     public boolean isHit()
     {
@@ -128,10 +112,6 @@ public class FourBar implements SubsystemTemplate {
 
     @Override
     public String display() {
-        return
-                "\nTarget Angle: " + targetAngle
-                +"\nCurrent Angle: " + currentAngle
-                +"\nPower " + fourBar.getPower()
-                +"\nShould Stay? " + shouldStay;
+        return "";
     }
 }

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Autons;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -15,7 +16,7 @@ import org.firstinspires.ftc.teamcode.Util.VisionUtil;
 /**
  * Created by therat0981 on 12/14/17.
  */
-
+@Disabled
 @Autonomous(name = "RedGlyphyFar")
 public class RedGlyphyFar extends LinearOpMode
 {
@@ -56,7 +57,7 @@ public class RedGlyphyFar extends LinearOpMode
                 reading = vision.readGraph2(hardwareMap);
             }
 
-            sleep(500);
+            sleep(1000);
 
             if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
                 telemetry.addData(String.valueOf(robot.jewelArm.getColor()),"00");
