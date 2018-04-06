@@ -21,7 +21,6 @@ public class Robot
     public Wheels wheels;
     public RelicMech relic;
     public Potentiometer potentiometer;
-    public Gyro gyro = new Gyro();
     public Range range;
 
 
@@ -33,7 +32,7 @@ public class Robot
     public void init(HardwareMap hardwareMap, Gyro gyrofromOpMode)
     {
         driveTrain = new DriveTrain(hardwareMap);
-//        driveTrain.setGyro(gyrofromOpMode);
+        driveTrain.setGyro(gyrofromOpMode);
         jewelArm = new JewelArm(hardwareMap);
         bar4 = new FourBar(hardwareMap);
         wheels = new Wheels(hardwareMap);
