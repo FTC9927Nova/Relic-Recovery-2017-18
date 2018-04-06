@@ -33,7 +33,6 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.view.View;
 
-import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -102,7 +101,6 @@ public class SensorAdafruitRGB extends LinearOpMode {
 
     // get a reference to our DeviceInterfaceModule object.
     cdim = hardwareMap.deviceInterfaceModule.get("dim");
-
 
     // set the digital channel to output mode.
     // remember, the Adafruit sensor is actually two devices.
