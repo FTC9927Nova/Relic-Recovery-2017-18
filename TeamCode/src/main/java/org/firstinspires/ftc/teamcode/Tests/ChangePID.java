@@ -16,16 +16,17 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-
+import org.firstinspires.ftc.teamcode.Subsystems.Robot;
+import org.firstinspires.ftc.teamcode.Util.Gyro;
 
 
 /**
  * Created by tom on 9/26/17.
  * This assumes that you are using a REV Robotics Expansion Hub
  * as your DC motor controller. This op mode uses the extended/enhanced
- * PID-related functions of the DcMotorControllerEx class.  
+ * PID-related functions of the DcMotorControllerEx class.
  * The REV Robotics Expansion Hub supports the extended motor controller
- * functions, but other controllers (such as the Modern Robotics and 
+ * functions, but other controllers (such as the Modern Robotics and
  * Hitechnic DC Motor Controllers) do not.
  */
 
@@ -34,40 +35,44 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 public class ChangePID extends LinearOpMode {
 
     // our DC motor.
-    DcMotor motorLeft1;
-    DcMotor motorRight1;
-    DcMotor motorLeft2;
-    DcMotor motorRight2;
+    DcMotorEx motorLeft1;
+    DcMotorEx motorRight1;
+    DcMotorEx motorLeft2;
+    DcMotorEx motorRight2;
+    Gyro gyro = new Gyro();
 
-    //17.5 , 1, 1
-    public static final double L1_P = 11.375;
-    public static final double L1_I = 0.8;//0.8
-    public static final double L1_D = 1.5;//1.5
-    public static final double L2_P = 11.375;
-    public static final double L2_I = 0.8;//1;
-    public static final double L2_D = 1.5;//1;
-    public static final double R1_P = 11.375;
-    public static final double R1_I = 0.8;//1;
-    public static final double R1_D = 1.5;//1;
-    public static final double R2_P = 11.375;
-    public static final double R2_I = 0.8;//1;
-    public static final double R2_D = 1.5;
+    public static final double L1_P = 1;
+    public static final double L1_I = 1;
+    public static final double L1_D = 1;
+    public static final double L2_P = 1;
+    public static final double L2_I = 1;
+    public static final double L2_D = 1;
+    public static final double R1_P = 1;
+    public static final double R1_I = 1;
+    public static final double R1_D = 1;
+    public static final double R2_P = 1;
+    public static final double R2_I = 1;
+    public static final double R2_D = 1;
 
 
     public void runOpMode() {
         // get reference to DC motor.
-        motorLeft1 = hardwareMap.get(DcMotor.class, "l1");
-        motorRight1 = hardwareMap.get(DcMotor.class, "r1");
-        motorLeft2 = hardwareMap.get(DcMotor.class, "l2");
-        motorRight2 = hardwareMap.get(DcMotor.class, "r2");
+        motorLeft1 = (DcMotorEx) hardwareMap.get(DcMotor.class, "l1");
+        motorRight1 =(DcMotorEx) hardwareMap.get(DcMotor.class, "r1");
+        motorLeft2 = (DcMotorEx)hardwareMap.get(DcMotor.class, "l2");
+        motorRight2 = (DcMotorEx) hardwareMap.get(DcMotor.class, "r2");
+        gyro.initGyro(hardwareMap);
+
         motorLeft1.setDirection(DcMotorSimple.Direction.REVERSE);
         motorLeft2.setDirection(DcMotorSimple.Direction.REVERSE);
         motorRight1.setDirection(DcMotorSimple.Direction.FORWARD);
         motorRight2.setDirection(DcMotorSimple.Direction.FORWARD);
-        motorLeft1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        motorLeft2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        motorRight1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        motorRight2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
+        motorLeft1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorLeft2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorRight1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorRight2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
 
 
         // wait for start command.
@@ -82,9 +87,9 @@ public class ChangePID extends LinearOpMode {
         DcMotorControllerEx motorControllerEx4 = (DcMotorControllerEx) motorRight2.getController();
 
         // get the port number of our configured motor.
-        int motorIndex1 = ((DcMotorEx) motorLeft1).getPortNumber();
-        int motorIndex2 = ((DcMotorEx) motorLeft2).getPortNumber();
-        int motorIndex3 = ((DcMotorEx) motorRight1).getPortNumber();
+        int motorIndex1 = (motorLeft1).getPortNumber();
+        int motorIndex2 = (motorLeft2).getPortNumber();
+        int motorIndex3 = (motorRight1).getPortNumber();
         int motorIndex4 = ((DcMotorEx) motorRight2).getPortNumber();
 
 
@@ -103,14 +108,15 @@ public class ChangePID extends LinearOpMode {
 
         // re-read coefficients and verify change.
         PIDCoefficients pidModified1 = motorControllerEx1.getPIDCoefficients(motorIndex1, DcMotor.RunMode.RUN_USING_ENCODER);
-        PIDCoefficients pidModified2 = motorControllerEx1.getPIDCoefficients(motorIndex2, DcMotor.RunMode.RUN_USING_ENCODER);
-        PIDCoefficients pidModified3 = motorControllerEx1.getPIDCoefficients(motorIndex3, DcMotor.RunMode.RUN_USING_ENCODER);
-        PIDCoefficients pidModified4 = motorControllerEx1.getPIDCoefficients(motorIndex4, DcMotor.RunMode.RUN_USING_ENCODER);
+        PIDCoefficients pidModified2 = motorControllerEx2.getPIDCoefficients(motorIndex2, DcMotor.RunMode.RUN_USING_ENCODER);
+        PIDCoefficients pidModified3 = motorControllerEx3.getPIDCoefficients(motorIndex3, DcMotor.RunMode.RUN_USING_ENCODER);
+        PIDCoefficients pidModified4 = motorControllerEx4.getPIDCoefficients(motorIndex4, DcMotor.RunMode.RUN_USING_ENCODER);
 
 
         ElapsedTime elapsedTime = new ElapsedTime();
         elapsedTime.reset();
         elapsedTime.startTimeNanoseconds();
+
         // display info to user.
         while (opModeIsActive()) {
 
@@ -120,9 +126,58 @@ public class ChangePID extends LinearOpMode {
 
             float lpwr = (float) Math.pow(((yval - xval)), 3);
             float rpwr = (float) Math.pow((yval + xval), 3);
-//
-//        float lpwr = gamepad1.left_stick_y;
-//        float rpwr = gamepad1.right_stick_y;
+
+            motorLeft1.setPower(lpwr);
+            motorLeft2.setPower(lpwr);
+            motorRight1.setPower(rpwr);
+            motorRight2.setPower(rpwr);
+
+            int rightTarget = (motorLeft1.getCurrentPosition() + motorLeft2.getCurrentPosition())/2;
+
+
+
+            double error = (motorRight1.getCurrentPosition()+motorRight2.getCurrentPosition())/2;
+            error -= (motorRight1.getTargetPosition()+motorRight2.getTargetPosition())/2;
+
+            if (gamepad1.right_stick_x != 0 || gyro.getYaw() > 2){
+
+                if (error > 0){
+
+                    motorLeft1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    motorLeft2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    motorRight1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    motorRight2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                    motorRight1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    motorRight2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                    motorRight1.setTargetPosition(rightTarget);
+                    motorRight2.setTargetPosition(rightTarget);
+
+                } else {
+
+                    motorLeft1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    motorLeft2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    motorRight1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    motorRight2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+                    motorLeft1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                    motorLeft2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                    motorRight1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                    motorRight2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+                }
+            } else {
+                motorLeft1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                motorLeft2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                motorRight1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                motorRight2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+                motorLeft1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                motorLeft2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                motorRight1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                motorRight2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            }
 
 
 //        turtle mode
@@ -134,13 +189,12 @@ public class ChangePID extends LinearOpMode {
                 lpwr = 0;
             if (Math.abs(rpwr) < 0.1)
                 rpwr = 0;
-//            setLeftPower(lpwr,((DcMotorEx) motorLeft1).getVelocity(AngleUnit.DEGREES),((DcMotorEx) motorLeft2).getVelocity(AngleUnit.DEGREES));
-//            setLeftPower(rpwr,((DcMotorEx) motorRight1).getVelocity(AngleUnit.DEGREES),((DcMotorEx) motorRight2).getVelocity(AngleUnit.DEGREES));
 
-            String val1 = ((DcMotorEx) motorLeft1).getVelocity(AngleUnit.DEGREES) + "   Power L1: " + motorLeft1.getPower();
-            String val2 = ((DcMotorEx) motorLeft2).getVelocity(AngleUnit.DEGREES) + "    Power L2: " + motorLeft2.getPower();
-            String val3 = ((DcMotorEx) motorRight1).getVelocity(AngleUnit.DEGREES) + "   Power R1 " + motorRight1.getPower();
-            String val4 = ((DcMotorEx) motorRight2).getVelocity(AngleUnit.DEGREES) + "     Power R2 " + motorRight2.getPower();
+
+            String val1 = (motorLeft1).getVelocity(AngleUnit.DEGREES) + "   Power L1: " + motorLeft1.getPower();
+            String val2 = (motorLeft2).getVelocity(AngleUnit.DEGREES) + "    Power L2: " + motorLeft2.getPower();
+            String val3 = (motorRight1).getVelocity(AngleUnit.DEGREES) + "   Power R1 " + motorRight1.getPower();
+            String val4 = (motorRight2).getVelocity(AngleUnit.DEGREES) + "     Power R2 " + motorRight2.getPower();
 
             Log.i("drift", val1 + " \n " + val2 + " \n" + val3 + " \n" + val4);
 
