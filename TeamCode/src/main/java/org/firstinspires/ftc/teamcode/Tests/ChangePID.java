@@ -47,10 +47,10 @@ public class ChangePID extends LinearOpMode {
     public static final double L2_P = 1;
     public static final double L2_I = 1;
     public static final double L2_D = 1;
-    public static final double R1_P = 1;
+    public static final double R1_P = 0.5;
     public static final double R1_I = 1;
     public static final double R1_D = 1;
-    public static final double R2_P = 1;
+    public static final double R2_P = 0.5;
     public static final double R2_I = 1;
     public static final double R2_D = 1;
 
@@ -139,7 +139,7 @@ public class ChangePID extends LinearOpMode {
             double error = (motorRight1.getCurrentPosition()+motorRight2.getCurrentPosition())/2;
             error -= (motorRight1.getTargetPosition()+motorRight2.getTargetPosition())/2;
 
-            if (gamepad1.right_stick_x != 0 || gyro.getYaw() > 2){
+            if (gamepad1.right_stick_x != 0){
 
                 if (error > 0){
 
@@ -148,11 +148,13 @@ public class ChangePID extends LinearOpMode {
                     motorRight1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                     motorRight2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+                    motorRight1.setTargetPosition(rightTarget);
+                    motorRight2.setTargetPosition(rightTarget);
+
                     motorRight1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     motorRight2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-                    motorRight1.setTargetPosition(rightTarget);
-                    motorRight2.setTargetPosition(rightTarget);
+
 
                 } else {
 
@@ -191,10 +193,10 @@ public class ChangePID extends LinearOpMode {
                 rpwr = 0;
 
 
-            String val1 = (motorLeft1).getVelocity(AngleUnit.DEGREES) + "   Power L1: " + motorLeft1.getPower();
-            String val2 = (motorLeft2).getVelocity(AngleUnit.DEGREES) + "    Power L2: " + motorLeft2.getPower();
-            String val3 = (motorRight1).getVelocity(AngleUnit.DEGREES) + "   Power R1 " + motorRight1.getPower();
-            String val4 = (motorRight2).getVelocity(AngleUnit.DEGREES) + "     Power R2 " + motorRight2.getPower();
+            String val1 = motorLeft1.getVelocity(AngleUnit.DEGREES) + "   Power L1: " + motorLeft1.getPower();
+            String val2 = motorLeft2.getVelocity(AngleUnit.DEGREES) + "    Power L2: " + motorLeft2.getPower();
+            String val3 = motorRight1.getVelocity(AngleUnit.DEGREES) + "   Power R1 " + motorRight1.getPower();
+            String val4 = motorRight2.getVelocity(AngleUnit.DEGREES) + "     Power R2 " + motorRight2.getPower();
 
             Log.i("drift", val1 + " \n " + val2 + " \n" + val3 + " \n" + val4);
 
