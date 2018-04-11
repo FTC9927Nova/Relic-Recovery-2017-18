@@ -225,18 +225,18 @@ public class ChangePID extends LinearOpMode {
 //        motorLeft1.setPower(Range.clip(power+diff,-1,1));
 //    }
 
-    public void setRightPower(double power,double v1, double v2)
-    {
-        double diff = 0;
-        if((Math.abs(v1)-Math.abs(v2))>30)
-            diff+=0.005;
-        else if(Math.abs(v2)-Math.abs(v1)>30)
-            diff-=0.005;
-        else
-            diff = 0;
-        motorRight2.setPower(Range.clip(power+diff,-1,1));
-        motorRight1.setPower(Range.clip(power+diff,-1,1));
-    }
+//    public void setRightPower(double power,double v1, double v2)
+//    {
+//        double diff = 0;
+//        if((Math.abs(v1)-Math.abs(v2))>30)
+//            diff+=0.005;
+//        else if(Math.abs(v2)-Math.abs(v1)>30)
+//            diff-=0.005;
+//        else
+//            diff = 0;
+//        motorRight2.setPower(Range.clip(power+diff,-1,1));
+//        motorRight1.setPower(Range.clip(power+diff,-1,1));
+//    }
 
 }
 
