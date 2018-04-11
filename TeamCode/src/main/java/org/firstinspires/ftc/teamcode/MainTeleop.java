@@ -16,13 +16,14 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  * Created by therat0981 on 10/1/17.
  */
 @TeleOp(name = "MainTeleOp")
-public class    MainTeleop extends OpMode
+public class MainTeleop extends OpMode
 {
 
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
 
     boolean relic = false;
+    double lastAngle = 0;
 
 
     @Override
@@ -90,20 +91,24 @@ public class    MainTeleop extends OpMode
         else
 
         // Arm Control
-        if (Math.abs(gamepad2.left_stick_y) > 0.05 && !relic) {
+        if (Math.abs(gamepad2.left_stick_y) > 0.05) {
 
             robot.bar4.shouldStayTrue();
             robot.bar4.setPower(-gamepad2.left_stick_y);
+            lastAngle = robot.bar4.getCurrentAngle();
 
-        } else if (Math.abs(gamepad2.left_stick_y) > 0.05 && relic) {
+
+        } else if (Math.abs(gamepad2.left_stick_y) > 0.05) {
 
             robot.bar4.shouldStayTrue();
             robot.bar4.setPower((gamepad2.left_stick_y));
+            lastAngle = robot.bar4.getCurrentAngle();
+
 
         } else {
 
             robot.bar4.setTargetAngle();
-//            robot.bar4.setMoveAngle2(robot.bar4.getTargetAngle());
+            robot.bar4.setMoveAngle(lastAngle - robot.bar4.getCurrentAngle());
 
         }
 

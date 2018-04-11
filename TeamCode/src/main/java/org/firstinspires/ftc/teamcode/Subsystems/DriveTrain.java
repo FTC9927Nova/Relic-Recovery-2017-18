@@ -39,7 +39,7 @@ public class DriveTrain implements SubsystemTemplate
 
 
     //TODO: ENTER Kp, Ki, Kd
-    private PIDLoop driveCL = new PIDLoop(0.03,0,0);
+    private PIDLoop driveCL = new PIDLoop(0.0015,0,0);
     //turnCl: P:0.0075, i:0.0025
     private PIDLoop turnCL = new PIDLoop(0.005,0,0);
     int l1motorIndex;

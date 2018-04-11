@@ -67,6 +67,7 @@ public class Gyro
 
     // State used for updating telemetry
     Orientation angles;
+    Acceleration acceleration;
 
     public void initGyro(HardwareMap hardwareMap)
     {
@@ -84,7 +85,7 @@ public class Gyro
     // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
     // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
     // and named "imu".
-    imu = hardwareMap.get(BNO055IMU.class, "imu1");
+    imu = hardwareMap.get(BNO055IMU.class, "imu");
     imu.initialize(parameters);
 
     }
@@ -108,6 +109,9 @@ public class Gyro
     public double getYaw() {
         updateAngeles();
         return -++angles.firstAngle;
+    }
+    public double getAccelerationX(){
+        return acceleration.xAccel;
     }
 
 

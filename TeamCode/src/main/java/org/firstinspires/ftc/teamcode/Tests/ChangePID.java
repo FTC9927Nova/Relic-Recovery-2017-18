@@ -139,9 +139,9 @@ public class ChangePID extends LinearOpMode {
             double error = (motorRight1.getCurrentPosition()+motorRight2.getCurrentPosition())/2;
             error -= (motorRight1.getTargetPosition()+motorRight2.getTargetPosition())/2;
 
-            if (gamepad1.right_stick_x != 0){
+            if (Math.abs(gamepad1.right_stick_x) >= 0.16){
 
-                if (error > 0){
+                if (error > 5){
 
                     motorLeft1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                     motorLeft2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);

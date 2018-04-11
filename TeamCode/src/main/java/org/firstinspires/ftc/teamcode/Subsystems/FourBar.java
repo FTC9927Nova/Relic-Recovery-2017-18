@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import android.hardware.Sensor;
-import android.util.Range;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
@@ -23,7 +20,7 @@ public class FourBar implements SubsystemTemplate {
     private DcMotor fourBar;
     private LinearOpMode linearOpMode;
     private boolean shouldStay = true;
-    private double heigt = 0;
+    private double height = 0;
     private DigitalChannel bar4limit;
     private DigitalChannel limitSwitch_Zero;
 
@@ -38,6 +35,7 @@ public class FourBar implements SubsystemTemplate {
         fourBar.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         bar4limit = hardwareMap.digitalChannel.get("limitUp");
         limitSwitch_Zero = hardwareMap.digitalChannel.get("limitDown");
+        pot = new Potentiometer(hardwareMap);
     }
 
     public FourBar(HardwareMap hardwareMap, LinearOpMode linearOpMode){
@@ -77,8 +75,8 @@ public class FourBar implements SubsystemTemplate {
     public double getCurrentAngle()
     {
         pot.getInput();
-        heigt = pot.getDist();
-        return heigt;
+        height = pot.getDist();
+        return height;
     }
 
 
