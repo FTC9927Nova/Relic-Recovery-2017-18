@@ -100,6 +100,7 @@ public class ChangePID extends LinearOpMode {
         PIDCoefficients left2PID = new PIDCoefficients(L2_P, L2_I, L2_D);
         PIDCoefficients right1PID = new PIDCoefficients(R1_P, R1_I, R1_D);
         PIDCoefficients right2PID = new PIDCoefficients(R2_P, R2_I, R2_D);
+
         motorControllerEx1.setPIDCoefficients(motorIndex4, DcMotor.RunMode.RUN_USING_ENCODER, left1PID);
         motorControllerEx2.setPIDCoefficients(motorIndex3, DcMotor.RunMode.RUN_USING_ENCODER, left2PID);
         motorControllerEx3.setPIDCoefficients(motorIndex2, DcMotor.RunMode.RUN_USING_ENCODER, right1PID);
@@ -128,8 +129,8 @@ public class ChangePID extends LinearOpMode {
             float rpwr = (float) Math.pow((yval + xval), 3);
 
             motorLeft1.setPower(lpwr);
-            motorLeft2.setPower(lpwr);
             motorRight1.setPower(rpwr);
+            motorLeft2.setPower(lpwr);
             motorRight2.setPower(rpwr);
 
             int rightTarget = (motorLeft1.getCurrentPosition() + motorLeft2.getCurrentPosition())/2;
