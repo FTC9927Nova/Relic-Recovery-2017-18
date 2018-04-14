@@ -355,7 +355,6 @@ public class DriveTrain implements SubsystemTemplate
         setDrive(Drive.SPEED);
         setSpeedController(DriveSpeedController.BRAKE);
 
-
         turnCL.setTarget(turnTarget);
         double lpwr;
 
