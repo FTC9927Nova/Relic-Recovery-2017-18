@@ -287,6 +287,7 @@ public class DriveTrain implements SubsystemTemplate
             double initialAngle = gyro.getYaw();
 
             turnCL.setTarget(initialAngle);
+
             while(this.opMode.opModeIsActive() &&
                     (Math.abs((getLeftCurrentPosition()-leftTarget))>constant.getDRIVE_TOLERANCE()))
             {
