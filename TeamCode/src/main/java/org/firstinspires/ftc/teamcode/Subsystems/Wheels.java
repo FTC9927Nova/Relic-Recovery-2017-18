@@ -29,14 +29,14 @@ public class Wheels implements SubsystemTemplate{
         latchyCatchy = hardwareMap.servo.get("latch");
 
 
-        leftWheels.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightWheels.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftWheels.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightWheels.setDirection(DcMotorSimple.Direction.FORWARD);
         lservoIntkae.setDirection(DcMotorSimple.Direction.FORWARD);
         rservoIntkae.setDirection(DcMotorSimple.Direction.REVERSE);
         latchyCatchy.setDirection(Servo.Direction.FORWARD);
 
-        leftWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        rightWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        leftWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightWheels.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public enum Mode

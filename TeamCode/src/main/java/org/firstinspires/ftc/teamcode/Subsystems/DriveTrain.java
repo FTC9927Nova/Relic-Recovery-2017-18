@@ -39,7 +39,8 @@ public class DriveTrain implements SubsystemTemplate
 
 
     //TODO: ENTER Kp, Ki, Kd
-    private PIDLoop driveCL = new PIDLoop(0.00033,0,0);
+    private PIDLoop driveCL = new PIDLoop(0.0023,0,0);
+    //driveCL: P:0.00033, 0, 0
     //turnCl: P:0.0075, i:0.0025
     private PIDLoop turnCL = new PIDLoop(0.0035,0,0);
     int l1motorIndex;
@@ -290,6 +291,10 @@ public class DriveTrain implements SubsystemTemplate
                     (Math.abs((getLeftCurrentPosition()-leftTarget))>constant.getDRIVE_TOLERANCE()))
             {
                 double pwr = driveCL.pLoop(getLeftCurrentPosition());
+                if (pwr > 0.5){
+                    pwr = 0.5;
+                }
+
                 setLeftPower(pwr);
                 setRightPower(pwr);
             }
