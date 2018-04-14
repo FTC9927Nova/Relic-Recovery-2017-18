@@ -39,9 +39,9 @@ public class DriveTrain implements SubsystemTemplate
 
 
     //TODO: ENTER Kp, Ki, Kd
-    private PIDLoop driveCL = new PIDLoop(0.0015,0,0);
+    private PIDLoop driveCL = new PIDLoop(0.00033,0,0);
     //turnCl: P:0.0075, i:0.0025
-    private PIDLoop turnCL = new PIDLoop(0.005,0,0);
+    private PIDLoop turnCL = new PIDLoop(0.0035,0,0);
     int l1motorIndex;
     int l2motorIndex;
     int r1motorIndex;
@@ -252,12 +252,13 @@ public class DriveTrain implements SubsystemTemplate
     public int getLeftCurrentPosition()
     {
         return l1.getCurrentPosition();
+
     }
 
     public int getRightCurrentPosition()
     {
 
-        return (int)((r1.getCurrentPosition()+ r2.getCurrentPosition())/2.0);
+        return r1.getCurrentPosition();
     }
 
     public boolean checkEncoders()
@@ -354,13 +355,16 @@ public class DriveTrain implements SubsystemTemplate
         setDrive(Drive.SPEED);
         setSpeedController(DriveSpeedController.BRAKE);
 
+
         turnCL.setTarget(turnTarget);
         double lpwr;
 
         while(this.opMode.opModeIsActive() &&
                 (Math.abs((gyro.getYaw()-turnTarget))>constant.getTurnTolerance()))
         {
-            lpwr = turnCL.turnPloop(gyro.getYaw());
+            lpwr = turnCL.pLoop(gyro.getYaw());
+            if(Math.abs(lpwr)>0.3)
+                lpwr = 0.3 * Math.signum(target);
             this.opMode.telemetry.addData("",display());
             this.opMode.telemetry.addData("",lpwr);
             setLeftPower(lpwr);
@@ -448,17 +452,18 @@ public class DriveTrain implements SubsystemTemplate
         setSpeedController(DriveSpeedController.BRAKE);
 
         turnCL.setTarget(turnTarget);
+        double negTarget = target/(Math.abs(target));
 
         while (this.opMode.opModeIsActive() &&
                 (Math.abs((-gyro.getYaw() - turnTarget)) > constant.getTurnTolerance())) {
 
             if (side == Side.LEFT_SIDE) {
-                setLeftPower(0.4);
+                setLeftPower(0.5);
                 setRightPower(0);
             }
             if (side == Side.RIGHT_SIDE) {
                 setLeftPower(0);
-                setRightPower(0.4);
+                setRightPower(0.5);
             }
             this.opMode.telemetry.addData("Side", String.valueOf(side));
         }

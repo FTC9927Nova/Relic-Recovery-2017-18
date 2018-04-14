@@ -111,6 +111,7 @@ public class Gyro
         return -++angles.firstAngle;
     }
     public double getAccelerationX(){
+
         return acceleration.xAccel;
     }
 

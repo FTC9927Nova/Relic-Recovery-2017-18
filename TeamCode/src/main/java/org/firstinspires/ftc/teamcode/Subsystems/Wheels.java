@@ -13,6 +13,9 @@ public class Wheels implements SubsystemTemplate{
     private AnalogInput distSensor;
     private double MinGlyphDist = 1.5;
     private double MaxGlyphDist = 4;
+    private double avgEncTicks;
+    private double prevChagne;
+    private boolean checkGlyphS = false;
     public Wheels(HardwareMap hardwareMap)
     {
 
@@ -78,6 +81,28 @@ public class Wheels implements SubsystemTemplate{
         setLeftServoPwr(-1);
         setRightServoPwr(-1);
 
+    }
+
+    public void secondGlyphIntake()
+    {
+        checkGlyphS = false;
+        intakeLeft();
+        intakeRight();
+        avgEncTicks = ((leftWheels.getCurrentPosition() + rightWheels.getCurrentPosition())/2.0)/10;
+       if(avgEncTicks<prevChagne)
+       {
+           stopLeft();
+           stopRight();
+           checkGlyphS = true;
+
+       }
+       prevChagne = avgEncTicks;
+
+    }
+
+    public boolean checkSecondGlyph()
+    {
+        return checkGlyphS;
     }
 
     public void servoOuttake(){

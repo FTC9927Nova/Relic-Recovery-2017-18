@@ -26,7 +26,7 @@ public class RotateDegTest extends LinearOpMode
         waitForStart();
         if(opModeIsActive())
         {
-            robot.driveTrain.rotateDeg(90);
+            robot.driveTrain.rotateDeg(-90);
 
             telemetry.addData("heading " , gyro.getYaw());
             telemetry.update();

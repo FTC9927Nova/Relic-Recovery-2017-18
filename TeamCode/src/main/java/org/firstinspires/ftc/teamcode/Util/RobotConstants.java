@@ -15,7 +15,7 @@ public class RobotConstants
     private final double MAX_ANGLE = 0;
 //    20
     //It was 5 at first and worked really well
-    private final double TURN_TOLERANCE = 1.75;
+    private final double TURN_TOLERANCE = 1;
     private final double WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
 
     private final double ARM_LENGTH = 12.0;
@@ -24,7 +24,7 @@ public class RobotConstants
     private final double FOUR_BAR_TOLERANCE = 0;
 
     //TODO: WITH TESTING
-    public final int ENCODER_TICKS_PER_REVOLUTION = (int) (1130 * (5/8.0));
+    public final int ENCODER_TICKS_PER_REVOLUTION = 700;
 
     //TODO: GET FOURBAR MEASURMENTS
     private final int FOURBAR_TICKS_PER_ONE_MOVEMENT = 0;

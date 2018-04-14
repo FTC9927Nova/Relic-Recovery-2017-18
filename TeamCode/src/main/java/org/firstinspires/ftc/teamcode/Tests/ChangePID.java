@@ -31,7 +31,6 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  */
 
 @TeleOp(name="PID Teleop Test ", group = "Examples")
-@Disabled
 public class ChangePID extends LinearOpMode {
 
     // our DC motor.
@@ -40,6 +39,9 @@ public class ChangePID extends LinearOpMode {
     DcMotorEx motorLeft2;
     DcMotorEx motorRight2;
     Gyro gyro = new Gyro();
+
+    double error = 0;
+    int rightTarget = 0;
 
     public static final double L1_P = 1;
     public static final double L1_I = 1;
@@ -79,6 +81,7 @@ public class ChangePID extends LinearOpMode {
         waitForStart();
 
 
+
         // get a reference to the motor controller and cast it as an extended functionality controller.
         // we assume it's a REV Robotics Expansion Hub (which supports the extended controller functions).
         DcMotorControllerEx motorControllerEx1 = (DcMotorControllerEx) motorLeft1.getController();
@@ -90,7 +93,7 @@ public class ChangePID extends LinearOpMode {
         int motorIndex1 = (motorLeft1).getPortNumber();
         int motorIndex2 = (motorLeft2).getPortNumber();
         int motorIndex3 = (motorRight1).getPortNumber();
-        int motorIndex4 = ((DcMotorEx) motorRight2).getPortNumber();
+        int motorIndex4 = (motorRight2).getPortNumber();
 
 
         // get the PID coefficients for the RUN_USING_ENCODER  modes.
@@ -101,10 +104,10 @@ public class ChangePID extends LinearOpMode {
         PIDCoefficients right1PID = new PIDCoefficients(R1_P, R1_I, R1_D);
         PIDCoefficients right2PID = new PIDCoefficients(R2_P, R2_I, R2_D);
 
-        motorControllerEx1.setPIDCoefficients(motorIndex4, DcMotor.RunMode.RUN_USING_ENCODER, left1PID);
-        motorControllerEx2.setPIDCoefficients(motorIndex3, DcMotor.RunMode.RUN_USING_ENCODER, left2PID);
-        motorControllerEx3.setPIDCoefficients(motorIndex2, DcMotor.RunMode.RUN_USING_ENCODER, right1PID);
-        motorControllerEx4.setPIDCoefficients(motorIndex1, DcMotor.RunMode.RUN_USING_ENCODER, right2PID);
+        motorControllerEx1.setPIDCoefficients(motorIndex1, DcMotor.RunMode.RUN_USING_ENCODER, left1PID);
+        motorControllerEx2.setPIDCoefficients(motorIndex2, DcMotor.RunMode.RUN_USING_ENCODER, left2PID);
+        motorControllerEx3.setPIDCoefficients(motorIndex3, DcMotor.RunMode.RUN_USING_ENCODER, right1PID);
+        motorControllerEx4.setPIDCoefficients(motorIndex4, DcMotor.RunMode.RUN_USING_ENCODER, right2PID);
 
 
         // re-read coefficients and verify change.
@@ -113,14 +116,21 @@ public class ChangePID extends LinearOpMode {
         PIDCoefficients pidModified3 = motorControllerEx3.getPIDCoefficients(motorIndex3, DcMotor.RunMode.RUN_USING_ENCODER);
         PIDCoefficients pidModified4 = motorControllerEx4.getPIDCoefficients(motorIndex4, DcMotor.RunMode.RUN_USING_ENCODER);
 
+        motorLeft1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorLeft2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorRight1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorRight2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        ElapsedTime elapsedTime = new ElapsedTime();
-        elapsedTime.reset();
-        elapsedTime.startTimeNanoseconds();
 
+        motorLeft1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorLeft2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorRight1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorRight2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         // display info to user.
         while (opModeIsActive()) {
 
+            error = 0;
+            rightTarget = 0;
             float yval = gamepad1.left_stick_y;
             float xval = gamepad1.right_stick_x;
 
@@ -128,26 +138,21 @@ public class ChangePID extends LinearOpMode {
             float lpwr = (float) Math.pow(((yval - xval)), 3);
             float rpwr = (float) Math.pow((yval + xval), 3);
 
-            motorLeft1.setPower(lpwr);
-            motorRight1.setPower(rpwr);
-            motorLeft2.setPower(lpwr);
-            motorRight2.setPower(rpwr);
-
-            int rightTarget = (motorLeft1.getCurrentPosition() + motorLeft2.getCurrentPosition())/2;
+            rightTarget = (motorLeft1.getCurrentPosition() + motorLeft2.getCurrentPosition())/2;
 
 
 
-            double error = (motorRight1.getCurrentPosition()+motorRight2.getCurrentPosition())/2;
-            error -= (motorRight1.getTargetPosition()+motorRight2.getTargetPosition())/2;
 
-            if (Math.abs(gamepad1.right_stick_x) >= 0.16){
+            if (!(Math.abs(gamepad1.right_stick_x) >= 0.16)){
+                motorRight1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                motorRight2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+                error = ((motorRight1.getCurrentPosition()+motorRight2.getCurrentPosition())/2) - ((motorRight1.getTargetPosition()+motorRight2.getTargetPosition())/2);
+
+                Log.i("Error", String.valueOf(error));
+                Log.i("RightTarget", String.valueOf(rightTarget));
                 if (error > 5){
 
-                    motorLeft1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                    motorLeft2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                    motorRight1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                    motorRight2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
                     motorRight1.setTargetPosition(rightTarget);
                     motorRight2.setTargetPosition(rightTarget);
@@ -159,39 +164,17 @@ public class ChangePID extends LinearOpMode {
 
                 } else {
 
-                    motorLeft1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                    motorLeft2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                    motorRight1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                    motorRight2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-                    motorLeft1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                    motorLeft2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                     motorRight1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                     motorRight2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
                 }
-            } else {
-                motorLeft1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                motorLeft2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                motorRight1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                motorRight2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-                motorLeft1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                motorLeft2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                motorRight1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                motorRight2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             }
 
+            motorLeft1.setPower(lpwr);
+            motorRight1.setPower(rpwr);
+            motorLeft2.setPower(lpwr);
+            motorRight2.setPower(rpwr);
 
-//        turtle mode
-            if (gamepad1.right_trigger != 0 || gamepad1.left_trigger != 0) {
-                lpwr = lpwr / 3.0f;
-                rpwr = rpwr / 3.0f;
-            }
-            if (Math.abs(lpwr) < 0.1)
-                lpwr = 0;
-            if (Math.abs(rpwr) < 0.1)
-                rpwr = 0;
 
 
             String val1 = motorLeft1.getVelocity(AngleUnit.DEGREES) + "   Power L1: " + motorLeft1.getPower();
@@ -202,10 +185,13 @@ public class ChangePID extends LinearOpMode {
             Log.i("drift", val1 + " \n " + val2 + " \n" + val3 + " \n" + val4);
 
 
+
             telemetry.addData("leftWheel1Vel", val1);
             telemetry.addData("leftWheel2Vel", val2);
             telemetry.addData("rightWheel1Vel", val3);
             telemetry.addData("rightWheel2Vel", val4);
+            telemetry.addData("Error", error);
+            telemetry.addData("RightTarget", rightTarget);
             telemetry.update();
         }
 
