@@ -44,6 +44,7 @@ public class MainTeleop extends OpMode
 
         //getting Current Angle of the Four Bar
         robot.bar4.getCurrentAngle();
+        //get current height
 
         //Driver Code
 
@@ -99,7 +100,6 @@ public class MainTeleop extends OpMode
 
 
         } else if (Math.abs(gamepad2.left_stick_y) > 0.05) {
-
             robot.bar4.shouldStayTrue();
             robot.bar4.setPower((gamepad2.left_stick_y));
             lastAngle = robot.bar4.getCurrentAngle();
@@ -108,7 +108,7 @@ public class MainTeleop extends OpMode
         } else {
 
             robot.bar4.setTargetAngle();
-            robot.bar4.setMoveAngle(lastAngle - robot.bar4.getCurrentAngle());
+//            robot.bar4.setMoveAngle(lastAngle - robot.bar4.getCurrentAngle());
 
         }
 

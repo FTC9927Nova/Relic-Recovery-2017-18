@@ -27,7 +27,7 @@ public class FourBar implements SubsystemTemplate {
     private RobotConstants constants = new RobotConstants();
 
     private PIDLoop pidLoop = new PIDLoop((1.0/60), (1.0/200), 0);
-    private Potentiometer pot;
+    public Potentiometer pot;
 
     public FourBar(HardwareMap hardwareMap){
         fourBar = hardwareMap.dcMotor.get("bar4");
@@ -51,6 +51,12 @@ public class FourBar implements SubsystemTemplate {
     public void getPotentiometer(Potentiometer pot)
     {
         this.pot = pot;
+    }
+
+    public double getHeight()
+    {
+        pot.getInput();
+        return pot.getDist();
     }
 
     public void setTargetAngle()
@@ -82,10 +88,10 @@ public class FourBar implements SubsystemTemplate {
 
 
 
-    public void setMoveAngle(double targetHeight)
+    public void setMoveHeight(double targetHeight)
     {
         pidLoop.setTarget(targetHeight);
-        while(this.linearOpMode.opModeIsActive()&&Math.abs(pot.getDist()-targetHeight)>2) {
+        while(this.linearOpMode.opModeIsActive()&&Math.abs(pot.getDist()-targetHeight)>0.5) {
             fourBar.setPower(pidLoop.pLoop(pot.getDist()));
         }
         fourBar.setPower(0);

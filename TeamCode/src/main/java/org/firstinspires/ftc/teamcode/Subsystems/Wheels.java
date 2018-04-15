@@ -29,8 +29,8 @@ public class Wheels implements SubsystemTemplate{
         latchyCatchy = hardwareMap.servo.get("latch");
 
 
-        leftWheels.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightWheels.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftWheels.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightWheels.setDirection(DcMotorSimple.Direction.REVERSE);
         lservoIntkae.setDirection(DcMotorSimple.Direction.FORWARD);
         rservoIntkae.setDirection(DcMotorSimple.Direction.REVERSE);
         latchyCatchy.setDirection(Servo.Direction.FORWARD);

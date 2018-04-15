@@ -11,6 +11,8 @@ import org.firstinspires.ftc.teamcode.Subsystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 
 import org.firstinspires.ftc.teamcode.Util.Gyro;
+import org.firstinspires.ftc.teamcode.Util.PIDLoop;
+import org.firstinspires.ftc.teamcode.Util.Potentiometer;
 
 /**
  * Created by therat0981 on 10/1/17.
@@ -21,6 +23,12 @@ public class SuperBiggieTeleop extends OpMode
 
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
+
+
+
+    private double currentHeight;
+    private PIDLoop roboHeight = new PIDLoop(1.0/60,0,0);
+    private double lastheight;
 
 
     @Override
@@ -42,6 +50,7 @@ public class SuperBiggieTeleop extends OpMode
 
         //getting Current Angle of the Four Bar
 //        robot.bar4.getCurrentAngle();
+        currentHeight = robot.bar4.getHeight();
 
         //Driver Code
 
@@ -91,11 +100,14 @@ public class SuperBiggieTeleop extends OpMode
         if (Math.abs(gamepad2.left_stick_y) > 0.05) {
 
             robot.bar4.setPower(-gamepad2.left_stick_y/4.0);
+            lastheight = currentHeight;
 
         }  else {
 
+            roboHeight.setTarget(lastheight);
+            if(Math.abs(lastheight-currentHeight)>1)
+                robot.bar4.setPower(roboHeight.pLoop(currentHeight));
             robot.bar4.setPower(0);
-
         }
 
         // intake wheel
