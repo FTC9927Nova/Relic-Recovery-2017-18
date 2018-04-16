@@ -85,6 +85,11 @@ public class FourBar implements SubsystemTemplate {
         return height;
     }
 
+    public void setMoveAngle(double x)
+    {
+        return;
+    }
+
 
 
 

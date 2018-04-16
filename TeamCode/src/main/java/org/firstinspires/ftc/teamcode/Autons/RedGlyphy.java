@@ -81,6 +81,8 @@ public class RedGlyphy extends LinearOpMode {
 
 
             robot.driveTrain.setMoveDist(dist);
+
+            sleep(500);
 //            robot.bar4.setMoveAngle(265.9);
 
             robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.RIGHT_SIDE, gyro.getYaw(), Math.signum(gyro.getYaw()) * 0.2);

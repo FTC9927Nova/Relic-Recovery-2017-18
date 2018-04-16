@@ -15,7 +15,7 @@ public class RobotConstants
     private final double MAX_ANGLE = 0;
 //    20
     //It was 5 at first and worked really well
-    private final double TURN_TOLERANCE = 1;
+    private final double TURN_TOLERANCE = 2;
     private final double WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
 
     private final double ARM_LENGTH = 12.0;
