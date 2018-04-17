@@ -34,7 +34,7 @@ public class SuperBiggieTeleop extends OpMode
     @Override
     public void init()
     {
-//        gyro.initGyro(hardwareMap);
+        gyro.initGyro(hardwareMap);
         robot.init(hardwareMap, gyro);
         robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
         robot.driveTrain.setDrive(DriveTrain.Drive.SPEED);
@@ -159,6 +159,8 @@ public class SuperBiggieTeleop extends OpMode
         }
 
         telemetry.addData("dist",robot.wheels.glyphDist());
+        telemetry.addData("angle",robot.driveTrain.getAngle());
+        telemetry.addData("bar4", -gamepad2.left_stick_y/4.0);
         telemetry.update();
     }
 

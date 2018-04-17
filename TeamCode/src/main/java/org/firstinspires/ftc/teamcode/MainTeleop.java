@@ -165,6 +165,7 @@ public class MainTeleop extends OpMode
             telemetry.addData("ultra",robot.range.isGlyph());
             telemetry.addData("dist",robot.range.getDist());
             telemetry.addData("servo", robot.jewelArm.getPos2());
+            telemetry.addData("bar4", gamepad2.left_stick_y);
 
             telemetry.update();
         }

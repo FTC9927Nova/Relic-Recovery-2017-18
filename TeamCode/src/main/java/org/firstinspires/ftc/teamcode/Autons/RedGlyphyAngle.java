@@ -16,8 +16,8 @@ import org.firstinspires.ftc.teamcode.Util.*;
 /**
  * Created by Sumanth Kondapalli on 11/16/2017.
  */
-@Autonomous(name = "RedGlyphy")
-public class RedGlyphy extends LinearOpMode {
+@Autonomous(name = "RedGlyphyAngle")
+public class RedGlyphyAngle extends LinearOpMode {
 
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
@@ -79,53 +79,34 @@ public class RedGlyphy extends LinearOpMode {
 
             sleep(200);
 //            robot.bar4.setMoveAngle(265.9);
-
-//            robot.driveTrain.singleSideRotateDegCorrect(DriveTrain.Side.RIGHT_SIDE, gyro.getYaw(), Math.signum(gyro.getYaw()) * 0.2);
-
+            robot.driveTrain.setMoveDist(dist+3.8);
 
 
+            robot.driveTrain.singleSideRotateDeg(DriveTrain.Side.RIGHT_SIDE, gyro.getYaw());
+            robot.wheels.unLatch();
+
+
+//
             switch (reading){
                 case RIGHT:{
-                    robot.driveTrain.setMoveDist(3.8+dist);
-
-                    if(gyro.getYaw() < 0)
-                    robot.driveTrain.singleSideRotateDeg(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-360);
-
                     robot.driveTrain.rotateDeg(90);
-                    robot.driveTrain.setMoveDist(-4.5);
-                    robot.wheels.unLatch();
-                    robot.bar4.setMoveHeight(4);
-                    correctAt90();
-
-
+                    robot.bar4.setMoveHeight(2);
                     placeBlock();
                     break;
                 }
                 case CENTER:{
 
-                    robot.driveTrain.setMoveDist(14+dist);
-                    robot.driveTrain.singleSideRotateDeg(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-360);
-
-                    robot.driveTrain.rotateDeg(90);
-                    robot.driveTrain.setMoveDist(-7.5);
-                    robot.wheels.unLatch();
-                    robot.bar4.setMoveHeight(4);
-                    correctAt90();
+                    robot.driveTrain.rotateDeg(65);
+                    robot.bar4.setMoveHeight(2);
                     placeBlock();
 
                     break;
                 }
                 case LEFT:{
 
-
-                    robot.driveTrain.setMoveDist(20+dist);
-                    robot.driveTrain.singleSideRotateDeg(DriveTrain.Side.LEFT_SIDE,gyro.getYaw()-360);
-
-                    robot.driveTrain.rotateDeg(90);
-                    robot.driveTrain.setMoveDist(-7.5);
-                    robot.wheels.unLatch();
-                    robot.bar4.setMoveHeight(4);
-                    correctAt90();
+                    robot.driveTrain.rotateDeg(51);
+                    robot.driveTrain.setMoveDist(2);
+                    robot.bar4.setMoveHeight(2);
                     placeBlock();
 
                     break;
@@ -140,64 +121,64 @@ public class RedGlyphy extends LinearOpMode {
                 }
             }
             robot.driveTrain.setMoveDist(-3);
-
-            heading = gyro.getYaw();
-            telemetry.addData("heading",heading);
-            Log.i("heading1",String.valueOf(heading));
-            telemetry.update();
-
-            robot.bar4.setPower(0);
-
-            robot.driveTrain.rotateDeg(180);
-
-            timer.startTime();
-            int startLeftEnc = robot.driveTrain.getLeftCurrentPosition();
-            double i = 1;
-            int c = 0;
-            while(!robot.range.isGlyph() && opModeIsActive() && Math.abs(robot.driveTrain.getLeftCurrentPosition() - startLeftEnc) < (constant.getTICKS_PER_INCH() * 40) && gyro.getPitch() < 10){
-                c = (int) (i);
-                if (c % 2 == 0) {
-                    robot.wheels.intakeLeft();
-                    robot.wheels.setRightWheels(0);
-                } else {
-                    robot.wheels.intakeRight();
-                    robot.wheels.setLeftWheelPwr(0);
-                }
-                i += 0.7;
-                Log.i("dist", robot.range.getDist() + "");
-                robot.driveTrain.setLeftPower(0.5);
-                robot.driveTrain.setRightPower(0.5);
-            }
-
-            robot.driveTrain.setLeftPower(0);
-            robot.driveTrain.setRightPower(0);
-            robot.wheels.setLeftWheelPwr(0);
-            robot.wheels.setRightWheels(0);
-
-
-            int leftTarget = robot.driveTrain.getLeftCurrentPosition() - startLeftEnc;
-
-            robot.driveTrain.rotateDeg(180);
-
-            correctAt90();
-
-            robot.driveTrain.setMoveDistEnc((leftTarget + (0 * constant.getTICKS_PER_INCH())));
-
-            correctAt90();
-            robot.driveTrain.setLeftPower(0);
-            robot.driveTrain.setRightPower(0);
-            robot.wheels.setLeftWheelPwr(0);
-            robot.wheels.setRightWheels(0);
-
-
-            robot.bar4.setMoveAngle(167);
-            robot.driveTrain.setMoveDist(3);
-            correctAt90();
-
-            placeBlock();
-            robot.driveTrain.setMoveDist(-5.5);
-            robot.bar4.setMoveAngle(110.4);
-
+//
+//            heading = gyro.getYaw();
+//            telemetry.addData("heading",heading);
+//            Log.i("heading1",String.valueOf(heading));
+//            telemetry.update();
+//
+//            robot.bar4.setPower(0);
+//
+//            robot.driveTrain.rotateDeg(180);
+//
+//            timer.startTime();
+//            int startLeftEnc = robot.driveTrain.getLeftCurrentPosition();
+//            double i = 1;
+//            int c = 0;
+//            while(!robot.range.isGlyph() && opModeIsActive() && Math.abs(robot.driveTrain.getLeftCurrentPosition() - startLeftEnc) < (constant.getTICKS_PER_INCH() * 40) && gyro.getPitch() < 10){
+//                c = (int) (i);
+//                if (c % 2 == 0) {
+//                    robot.wheels.intakeLeft();
+//                    robot.wheels.setRightWheels(0);
+//                } else {
+//                    robot.wheels.intakeRight();
+//                    robot.wheels.setLeftWheelPwr(0);
+//                }
+//                i += 0.7;
+//                Log.i("dist", robot.range.getDist() + "");
+//                robot.driveTrain.setLeftPower(0.5);
+//                robot.driveTrain.setRightPower(0.5);
+//            }
+//
+//            robot.driveTrain.setLeftPower(0);
+//            robot.driveTrain.setRightPower(0);
+//            robot.wheels.setLeftWheelPwr(0);
+//            robot.wheels.setRightWheels(0);
+//
+//
+//            int leftTarget = robot.driveTrain.getLeftCurrentPosition() - startLeftEnc;
+//
+//            robot.driveTrain.rotateDeg(180);
+//
+//            correctAt90();
+//
+//            robot.driveTrain.setMoveDistEnc((leftTarget + (0 * constant.getTICKS_PER_INCH())));
+//
+//            correctAt90();
+//            robot.driveTrain.setLeftPower(0);
+//            robot.driveTrain.setRightPower(0);
+//            robot.wheels.setLeftWheelPwr(0);
+//            robot.wheels.setRightWheels(0);
+//
+//
+//            robot.bar4.setMoveAngle(167);
+//            robot.driveTrain.setMoveDist(3);
+//            correctAt90();
+//
+//            placeBlock();
+//            robot.driveTrain.setMoveDist(-5.5);
+//            robot.bar4.setMoveAngle(110.4);
+//
         }
 
     }

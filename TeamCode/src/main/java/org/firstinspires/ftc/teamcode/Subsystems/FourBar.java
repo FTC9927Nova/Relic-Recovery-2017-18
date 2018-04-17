@@ -26,7 +26,7 @@ public class FourBar implements SubsystemTemplate {
 
     private RobotConstants constants = new RobotConstants();
 
-    private PIDLoop pidLoop = new PIDLoop((1.0/60), (1.0/200), 0);
+    private PIDLoop pidLoop = new PIDLoop((1.0/10), (1.0/200), 0);
     public Potentiometer pot;
 
     public FourBar(HardwareMap hardwareMap){
@@ -96,10 +96,13 @@ public class FourBar implements SubsystemTemplate {
     public void setMoveHeight(double targetHeight)
     {
         pidLoop.setTarget(targetHeight);
-        while(this.linearOpMode.opModeIsActive()&&Math.abs(pot.getDist()-targetHeight)>0.5) {
-            fourBar.setPower(pidLoop.pLoop(pot.getDist()));
+        while(this.linearOpMode.opModeIsActive()&&Math.abs((pot.getDist()-targetHeight) + 1.5)>0.5) {
+            double power = pidLoop.pLoop(pot.getDist());
+            if(power<0.01)
+                power = 0.005;
+            fourBar.setPower(power);
         }
-        fourBar.setPower(0);
+        fourBar.setPower(0.005);
     }
 
     public boolean isHit()

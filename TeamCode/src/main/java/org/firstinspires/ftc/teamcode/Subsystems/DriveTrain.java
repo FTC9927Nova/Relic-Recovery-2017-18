@@ -366,6 +366,9 @@ public class DriveTrain implements SubsystemTemplate
             lpwr = turnCL.pLoop(gyro.getYaw());
             if(Math.abs(lpwr)>0.3)
                 lpwr = 0.3 * Math.signum(target);
+            if(Math.abs(lpwr)<0.07)
+                lpwr = 0.07 * Math.signum(target);
+
             this.opMode.telemetry.addData("",display());
             this.opMode.telemetry.addData("",lpwr);
             setLeftPower(lpwr);
@@ -376,6 +379,11 @@ public class DriveTrain implements SubsystemTemplate
         setLeftPower(0);
         setRightPower(0);
 
+    }
+
+    public double getAngle()
+    {
+        return gyro.getYaw();
     }
 
     public void singleSideRotateDeg(Side side, double target) {
@@ -393,20 +401,26 @@ public class DriveTrain implements SubsystemTemplate
         turnCL.setTarget(turnTarget);
 
         while (this.opMode.opModeIsActive() &&
-                (Math.abs((-gyro.getYaw() - turnTarget)) > constant.getTurnTolerance())) {
+                (Math.abs((-gyro.getYaw() - turnTarget)) > (constant.getTurnTolerance()))) {
 
             if (side == Side.LEFT_SIDE) {
-                setLeftPower(turnCL.pLoop(gyro.getYaw()));
+                double pwr = turnCL.pLoop(gyro.getYaw());
+                if(Math.abs(pwr)<0.05)
+                    pwr = 0.05 * Math.signum(target);
+                setLeftPower(pwr);
                 setRightPower(0);
             }
             if (side == Side.RIGHT_SIDE) {
+                double pwr = turnCL.pLoop(gyro.getYaw());
+                if(Math.abs(pwr)<0.05)
+                    pwr = 0.05 * Math.signum(target);
                 setLeftPower(0);
-                setRightPower(turnCL.pLoop(gyro.getYaw()));
+                setRightPower(pwr);
             }
             this.opMode.telemetry.addData("Side", String.valueOf(side));
         }
-        setLeftPower(0);
         setRightPower(0);
+        setLeftPower(0);
     }
 
     public void singleSideRotateDegCorrect(Side side, double target, double power) {

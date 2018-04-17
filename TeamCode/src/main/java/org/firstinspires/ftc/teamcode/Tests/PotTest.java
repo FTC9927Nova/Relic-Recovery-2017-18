@@ -12,8 +12,7 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  */
 
 
-@TeleOp(name = "Potentiometer Test")
-@Disabled
+@TeleOp(name = "bar4 Test")
 public class PotTest extends LinearOpMode
 {
     Robot robot = new Robot();
@@ -28,9 +27,7 @@ public class PotTest extends LinearOpMode
         waitForStart();
         while (opModeIsActive())
         {
-          telemetry.addData(" angle: ", robot.bar4.getCurrentAngle());
-          telemetry.update();
-
+            robot.bar4.setMoveHeight(10);
         }
     }
 }
