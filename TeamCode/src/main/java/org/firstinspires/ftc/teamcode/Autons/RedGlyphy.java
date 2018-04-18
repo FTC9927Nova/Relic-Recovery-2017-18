@@ -94,7 +94,7 @@ public class RedGlyphy extends LinearOpMode {
                     robot.driveTrain.rotateDeg(90);
                     robot.driveTrain.setMoveDist(-4.5);
                     robot.wheels.unLatch();
-                    robot.bar4.setMoveHeight(4);
+//                    robot.bar4.setMoveHeight(4);
                     correctAt90();
 
 

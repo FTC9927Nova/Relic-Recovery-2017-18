@@ -23,7 +23,6 @@ public class StringPotTest extends OpMode
 
     @Override
     public void loop()
-
     {
         double dist  = (stringPot.getVoltage()/MaxVoltage)*MaxDist;
         telemetry.addData("voltage", stringPot.getVoltage());

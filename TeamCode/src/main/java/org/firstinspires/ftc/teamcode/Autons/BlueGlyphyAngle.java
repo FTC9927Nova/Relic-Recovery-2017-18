@@ -16,8 +16,8 @@ import org.firstinspires.ftc.teamcode.Util.*;
 /**
  * Created by Sumanth Kondapalli on 11/16/2017.
  */
-@Autonomous(name = "RedGlyphyAngle")
-public class RedGlyphyAngle extends LinearOpMode {
+@Autonomous(name = "BlueGlyphyAngle")
+public class BlueGlyphyAngle extends LinearOpMode {
 
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
@@ -45,7 +45,7 @@ public class RedGlyphyAngle extends LinearOpMode {
         waitForStart();
         if (opModeIsActive()){
             firstAnlge = gyro.getYaw();
-            robot.jewelArm.armDown();
+            robot.jewelArm.arm2Down();
 
             if (!visionUtil.isDetected()){
                 reading = vision.readGraph2(hardwareMap);
@@ -54,7 +54,7 @@ public class RedGlyphyAngle extends LinearOpMode {
             sleep(1000);
 
             if(String.valueOf(robot.jewelArm.getColor2()) == "RED"){
-                telemetry.addData(String.valueOf(robot.jewelArm.getColor()),"00");
+                telemetry.addData(String.valueOf(robot.jewelArm.getColor2()),"00");
                 telemetry.update();
 
                 robot.driveTrain.setMoveDist(4 + dist+3.8);
@@ -63,9 +63,9 @@ public class RedGlyphyAngle extends LinearOpMode {
             }
 
 
-            else if(String.valueOf(robot.jewelArm.getColor()) == "BLUE"){
+            else if(String.valueOf(robot.jewelArm.getColor2()) == "BLUE"){
 
-                telemetry.addData(String.valueOf(robot.jewelArm.getColor()),"00");
+                telemetry.addData(String.valueOf(robot.jewelArm.getColor2()),"00");
                 telemetry.update();
 
                 robot.driveTrain.setMoveDist(-4);
@@ -90,15 +90,11 @@ public class RedGlyphyAngle extends LinearOpMode {
 //
             switch (reading){
                 case RIGHT:{
-
-                    robot.driveTrain.rotateDeg(96);
+                    robot.driveTrain.rotateDeg(-60);
                     robot.wheels.unLatch();
                     robot.bar4.setPower(0.2);
                     sleep(1000);
-                    robot.driveTrain.setMoveDist(-5);
-                    robot.bar4.setPower(0);
-
-//                    robot.bar4.setMoveHeight(2);
+                    robot.bar4.setPower(0);//                    robot.bar4.setMoveHeight(2);
                     placeBlock();
 
                     break;
@@ -106,7 +102,7 @@ public class RedGlyphyAngle extends LinearOpMode {
                 }
                 case CENTER:{
 
-                    robot.driveTrain.rotateDeg(77);
+                    robot.driveTrain.rotateDeg(-77);
                     robot.wheels.unLatch();
                     robot.bar4.setPower(0.2);
                     sleep(1000);
@@ -120,13 +116,15 @@ public class RedGlyphyAngle extends LinearOpMode {
                 }
                 case LEFT:{
 
-                    robot.driveTrain.rotateDeg(60);
+                    robot.driveTrain.rotateDeg(-96);
                     robot.wheels.unLatch();
                     robot.bar4.setPower(0.2);
                     sleep(1000);
-                    robot.bar4.setPower(0);//                    robot.bar4.setMoveHeight(2);
-                    placeBlock();
+                    robot.driveTrain.setMoveDist(-5);
+                    robot.bar4.setPower(0);
 
+//                    robot.bar4.setMoveHeight(2);
+                    placeBlock();
                     break;
                 }
                 default:{

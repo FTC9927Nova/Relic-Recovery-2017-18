@@ -6,10 +6,8 @@ package org.firstinspires.ftc.teamcode.Util;
 
 public class RobotConstants
 {
-    private final double ROBOT_WIDTH = 17;
-    private final double ROBOT_LENGTH = 17;
     private final double WHEEL_DIAMETER = 4;
-    private final int DRIVE_TOLERANCE = 10;
+    private final int DRIVE_TOLERANCE = 50;
 
     //TODO: GET FASTERERERER
     private final double MAX_ANGLE = 0;

@@ -295,7 +295,6 @@ public class DriveTrain implements SubsystemTemplate
                 setLeftPower(pwr);
                 setRightPower(pwr);
             }
-//            singleSideRotateDeg(Side.RIGHT_SIDE,(gyro.getYaw()-initialAngle),Math.signum(dist));
 
 
             setLeftPower(0);
@@ -359,16 +358,17 @@ public class DriveTrain implements SubsystemTemplate
 
         turnCL.setTarget(turnTarget);
         double lpwr;
+        boolean isPowerTooLow = false;
 
         while(this.opMode.opModeIsActive() &&
-                (Math.abs((gyro.getYaw()-turnTarget))>constant.getTurnTolerance()))
+                (Math.abs((gyro.getYaw()-turnTarget))>constant.getTurnTolerance())
+                && !isPowerTooLow)
         {
             lpwr = turnCL.pLoop(gyro.getYaw());
-            if(Math.abs(lpwr)>0.3)
-                lpwr = 0.3 * Math.signum(target);
+            if(Math.abs(lpwr)>0.2)
+                lpwr = 0.2 * Math.signum(target);
             if(Math.abs(lpwr)<0.07)
-                lpwr = 0.07 * Math.signum(target);
-
+                isPowerTooLow = true;
             this.opMode.telemetry.addData("",display());
             this.opMode.telemetry.addData("",lpwr);
             setLeftPower(lpwr);
