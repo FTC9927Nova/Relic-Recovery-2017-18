@@ -13,12 +13,11 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
 
 
 @TeleOp(name = "bar4 Test")
+@Disabled
 public class PotTest extends LinearOpMode
 {
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
-
-
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -27,7 +26,7 @@ public class PotTest extends LinearOpMode
         waitForStart();
         while (opModeIsActive())
         {
-            robot.bar4.setMoveHeight(10,this);
+            robot.bar4.setMoveHeight(10);
         }
     }
 }

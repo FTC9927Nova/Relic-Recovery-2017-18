@@ -17,9 +17,9 @@ public class Wheels implements SubsystemTemplate{
     private double MinGlyphDist = 1.5;
     private double MaxGlyphDist = 3;
     private double avgEncTicks;
-    private double prevChagne;
+    private double prevChagne = 0;
     private boolean checkGlyphS = false;
-
+    boolean hasReached = false;
     public Wheels(HardwareMap hardwareMap)
     {
 
@@ -92,13 +92,16 @@ public class Wheels implements SubsystemTemplate{
         DcMotorEx lw = (DcMotorEx)leftWheels;
         DcMotorEx rw = (DcMotorEx)rightWheels;
 
-        prevChagne = avgEncTicks;
+        if(avgEncTicks>8)
+            hasReached = true;
+
         avgEncTicks = ((lw.getVelocity(AngleUnit.RADIANS) + rw.getVelocity(AngleUnit.RADIANS))/2.0);
-       if(prevChagne-avgEncTicks>2)
-       {
-           return true;
-       }
-       return false;
+        if(avgEncTicks<8 &&hasReached)
+        {
+            return true;
+        }
+
+        return false;
 
 
     }

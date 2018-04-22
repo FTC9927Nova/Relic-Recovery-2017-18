@@ -14,71 +14,50 @@ import org.firstinspires.ftc.teamcode.Util.RobotConstants;
 /**
  * Created by Ethan Pereira on 2/24/2018.
  */
-@Disabled
 @Autonomous(name = "2ndGlyphyTest")
 public class SecondGlyphy extends LinearOpMode
 {
     Robot robot = new Robot();
     ElapsedTime timer = new ElapsedTime();
     RobotConstants constant = new RobotConstants();
+    double startTime = 0;
     Gyro gyro = new Gyro();
     @Override
     public void runOpMode() throws InterruptedException {
         gyro.initGyro(hardwareMap);
         robot.init(hardwareMap,this,gyro);
         waitForStart();
-        if(opModeIsActive())
+        timer.startTime();
+        while(opModeIsActive())
         {
-            double heading = gyro.getYaw();
-
-            robot.driveTrain.rotateDeg(180);
-
-            int startLeftEnc = robot.driveTrain.getLeftCurrentPosition();
-            timer.reset();
-            timer.startTime();
-            while(!robot.range.isGlyph() && opModeIsActive() && Math.abs(robot.driveTrain.getLeftCurrentPosition() - startLeftEnc) < (constant.getTICKS_PER_INCH() * 62.5)){
-
-                if (timer.milliseconds() <= 1000) {
-
-                    robot.wheels.setLeftWheelPwr(0);
-                    robot.wheels.intakeRight();
-
+            if(robot.wheels.secondGlyphIntake()) {
+                if(startTime==0)
+                    startTime = timer.milliseconds();
+                else {
+                    if (((timer.milliseconds() - startTime) > 500)) {
+                        if((timer.milliseconds()-startTime)<1500)
+                        {
+                            robot.wheels.intakeRight();
+                            robot.wheels.intakeLeft();
+                        }
+                        else
+                        {
+                            robot.wheels.stop();
+                        }
+                    } else {
+                        robot.wheels.setLeftWheelPwr(-1);
+                        robot.wheels.setRightWheels(0.2);
+                    }
                 }
-                else{
-
-                    robot.wheels.intakeRight();
-                    robot.wheels.setLeftWheelPwr(-0.4);
-                }
-                robot.driveTrain.setLeftPower(0.2);
-                robot.driveTrain.setRightPower(0.2);
-
-                Log.i("dist",robot.range.getDist()+"");
+             //   robot.wheels.stop();
             }
-
-            robot.driveTrain.setLeftPower(0);
-            robot.driveTrain.setRightPower(0);
-            robot.wheels.setLeftWheelPwr(0);
-            robot.wheels.setRightWheels(0);
-
-
-            int leftTarget = robot.driveTrain.getLeftCurrentPosition() - startLeftEnc;
-
-            robot.driveTrain.setMoveDist(-10.5);
-            robot.bar4.setMoveAngle(167);
-            robot.driveTrain.setMoveDistEnc((leftTarget- (10 * constant.getTICKS_PER_INCH())));
-
-            robot.driveTrain.rotateDeg(180);
-
-
-
-
-            robot.driveTrain.setLeftPower(0);
-            robot.driveTrain.setRightPower(0);
-            robot.wheels.setLeftWheelPwr(0);
-            robot.wheels.setRightWheels(0);
-
-
-
+            else
+            {
+                robot.wheels.intakeLeft();
+                robot.wheels.intakeRight();
+            }
+            telemetry.addData("",robot.wheels.getWheelVelocity());
+            telemetry.update();
         }
     }
 }

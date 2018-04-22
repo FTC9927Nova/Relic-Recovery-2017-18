@@ -97,6 +97,10 @@ public class DoubleIntakeTest extends OpMode
         r1.setPower(rpwr);
         r2.setPower(rpwr);
 
+        telemetry.addData("leftEnc", leftIntake.getCurrentPosition());
+        telemetry.addData("rightEnc", rightIntake.getCurrentPosition());
+        telemetry.update();
+
     }
 
     @Override

@@ -25,6 +25,8 @@ public class BlueCloseMGAuton extends LinearOpMode {
     RobotConstants constant = new RobotConstants();
     VisionUtil vision = new VisionUtil(this);
     RelicRecoveryVuMark reading;
+    double startTime = 0;
+    String tester = "";
     VisionUtil visionUtil = new VisionUtil(this);
 
     double firstAnlge;
@@ -102,7 +104,7 @@ public class BlueCloseMGAuton extends LinearOpMode {
                 {
                     robot.driveTrain.setDrive(DriveTrain.Drive.NOTHING);
                     robot.driveTrain.driveStraight();
-                    if(robot.wheels.secondGlyphIntake() && wheelState.equals(WheelState.FULL_INTAKE_DOSGLYPHY))
+                    if(wheelState.equals(WheelState.STOP))
                     {
                         robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
                         robot.driveTrain.stop();
@@ -148,12 +150,30 @@ public class BlueCloseMGAuton extends LinearOpMode {
                 }
                 case FULL_INTAKE_DOSGLYPHY:
                 {
-                    robot.wheels.intakeLeft();
-                    robot.wheels.intakeRight();
-                    if(robot.wheels.secondGlyphIntake())
+                    if(robot.wheels.secondGlyphIntake()) {
+                        if(startTime==0)
+                            startTime = timer.milliseconds();
+                        else {
+                            if (((timer.milliseconds() - startTime) > 500)) {
+                                if((timer.milliseconds()-startTime)<1500)
+                                {
+                                    robot.wheels.intakeRight();
+                                    robot.wheels.intakeLeft();
+                                }
+                                else
+                                {
+                                    wheelState = WheelState.STOP;
+                                }
+                            } else {
+                                robot.wheels.setLeftWheelPwr(-1);
+                                robot.wheels.setRightWheels(0.2);
+                            }
+                        }
+                    }
+                    else
                     {
-                        robot.wheels.stop();
-                        wheelState = WheelState.STOP;
+                        robot.wheels.intakeLeft();
+                        robot.wheels.intakeRight();
                     }
                     break;
                 }
@@ -168,8 +188,6 @@ public class BlueCloseMGAuton extends LinearOpMode {
             robot.driveTrain.getLogs();
             telemetry.addData("Drive Action", driveState.toString());
             telemetry.addData("Wheel Action", wheelState.toString());
-            telemetry.addData("velocities", robot.wheels.getWheelVelocity());
-
             telemetry.update();
 
         }

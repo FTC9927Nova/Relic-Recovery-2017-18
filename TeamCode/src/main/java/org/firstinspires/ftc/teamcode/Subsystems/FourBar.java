@@ -93,28 +93,30 @@ public class FourBar implements SubsystemTemplate {
 
 
 
-    public void setMoveHeight(double targetHeight)
-    {
-        pidLoop.setTarget(targetHeight);
-        while(Math.abs((pot.getDist()-targetHeight) + 1.5)>0.5) {
-            double power = pidLoop.pLoop(pot.getDist());
-            if(power<0.01)
-                power = 0.005;
-            fourBar.setPower(power);
-        }
-        fourBar.setPower(0.005);
-    }
+//    public void setMoveHeight(double targetHeight)
+//    {
+//        pidLoop.setTarget(targetHeight);
+//        while(Math.abs((pot.getDist()-targetHeight) + 1.5)>0.5) {
+//            double power = pidLoop.pLoop(pot.getDist());
+//            if(power<0.01)
+//                power = 0.005;
+//            fourBar.setPower(power);
+//        }
+//        fourBar.setPower(0.005);
+//    }
 
-    public void setMoveHeight(double targetHeight,LinearOpMode linearOpMode)
+    public boolean setMoveHeight(double targetHeight)
     {
         pidLoop.setTarget(targetHeight);
-        while(linearOpMode.opModeIsActive()&&Math.abs((pot.getDist()-targetHeight) + 1.5)>0.5) {
-            double power = pidLoop.pLoop(pot.getDist());
-            if(power<0.01)
-                power = 0.005;
-            fourBar.setPower(power);
+        double power = pidLoop.pLoop(pot.getDist());
+        if(power<0.01)
+            power = 0.005;
+        fourBar.setPower(power);
+        if(Math.abs((pot.getDist()-targetHeight) + 1.5)<0.5) {
+            return true;
         }
-        fourBar.setPower(0.005);
+        fourBar.setPower(0.002);
+        return false;
     }
 
     public boolean isHit()
