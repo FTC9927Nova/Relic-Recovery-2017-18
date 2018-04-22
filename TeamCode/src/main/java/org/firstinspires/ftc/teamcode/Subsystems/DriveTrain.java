@@ -470,7 +470,7 @@ public class DriveTrain implements SubsystemTemplate
         while (this.opMode.opModeIsActive() &&
                 (Math.abs((-gyro.getYaw() - turnTarget)) > constant.getTurnTolerance())) {
 
-            if (side == Side.LEFT_SIDE) {
+            if (side == Side.LEFT_SIDE)  {
                 setLeftPower(0.5);
                 setRightPower(0);
             }
