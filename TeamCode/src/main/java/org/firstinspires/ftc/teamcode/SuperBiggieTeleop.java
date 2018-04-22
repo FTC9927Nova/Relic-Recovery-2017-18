@@ -27,7 +27,6 @@ public class SuperBiggieTeleop extends OpMode
 
 
     private double currentHeight;
-    private PIDLoop roboHeight = new PIDLoop(1.0/60,0,0);
     private double lastheight;
 
 
@@ -99,14 +98,10 @@ public class SuperBiggieTeleop extends OpMode
         // Arm Control
         if (Math.abs(gamepad2.left_stick_y) > 0.05) {
 
-            robot.bar4.setPower(-gamepad2.left_stick_y/4.0);
-            lastheight = currentHeight;
+            robot.bar4.setPower(-gamepad2.left_stick_y/2.0);
 
         }  else {
 
-            roboHeight.setTarget(lastheight);
-            if(Math.abs(lastheight-currentHeight)>1)
-                robot.bar4.setPower(roboHeight.pLoop(currentHeight));
             robot.bar4.setPower(0);
         }
 
@@ -121,32 +116,34 @@ public class SuperBiggieTeleop extends OpMode
         }
         else
         {
-            if (gamepad2.right_bumper) {
-                //left claw intake
-                robot.wheels.leftClawIntake();
-            } else {
-                robot.wheels.setLeftServoPwr(0);
-                robot.wheels.setLeftWheelPwr(0);
+            if(gamepad2.dpad_left || gamepad2.dpad_right)
+            {
+                if(gamepad2.dpad_left)
+                    robot.wheels.leftSideOuttake();
+                if(gamepad2.dpad_right)
+                    robot.wheels.rightSideOuttake();
             }
-            if (gamepad2.left_bumper) {
-                //right claw intake
-                robot.wheels.rightClawIntake();
-            } else {
-                robot.wheels.setRightServoPwr(0);
-                robot.wheels.setRightWheels(0);
+            else {
+
+                if (gamepad2.right_bumper) {
+                    //left claw intake
+                    robot.wheels.leftClawIntake();
+                } else {
+                    robot.wheels.setLeftServoPwr(0);
+                    robot.wheels.setLeftWheelPwr(0);
+                }
+                if (gamepad2.left_bumper) {
+                    //right claw intake
+                    robot.wheels.rightClawIntake();
+                } else {
+                    robot.wheels.setRightServoPwr(0);
+                    robot.wheels.setRightWheels(0);
+                }
             }
         }
 
-        if(gamepad1.dpad_up){
-
-            robot.wheels.latch();
-
-        }
-
-        else if(gamepad1.dpad_down){
-
+        if(gamepad2.right_stick_y!=0){
             robot.wheels.unLatch();
-
         }
 
         //Zlides
@@ -158,10 +155,6 @@ public class SuperBiggieTeleop extends OpMode
             robot.relic.setPower(0);
         }
 
-        telemetry.addData("dist",robot.wheels.glyphDist());
-        telemetry.addData("angle",robot.driveTrain.getAngle());
-        telemetry.addData("bar4", -gamepad2.left_stick_y/4.0);
-        telemetry.update();
     }
 
 

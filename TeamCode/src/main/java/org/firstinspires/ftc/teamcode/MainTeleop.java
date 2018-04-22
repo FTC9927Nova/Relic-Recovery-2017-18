@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  * Created by therat0981 on 10/1/17.
  */
 @TeleOp(name = "MainTeleOp")
+@Disabled
 public class MainTeleop extends OpMode
 {
 
@@ -159,13 +160,7 @@ public class MainTeleop extends OpMode
                 robot.relic.setPower(0);
             }
 
-            telemetry.addData("anlge",robot.bar4.getCurrentAngle());
-            telemetry.addData("upper limit",robot.bar4.isHit());
-            telemetry.addData("lowerLimit",robot.bar4.isLowerHit());
-            telemetry.addData("ultra",robot.range.isGlyph());
-            telemetry.addData("dist",robot.range.getDist());
-            telemetry.addData("servo", robot.jewelArm.getPos2());
-            telemetry.addData("bar4", gamepad2.left_stick_y);
+
 
             telemetry.update();
         }

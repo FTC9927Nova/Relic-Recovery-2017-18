@@ -27,7 +27,7 @@ public class PotTest extends LinearOpMode
         waitForStart();
         while (opModeIsActive())
         {
-            robot.bar4.setMoveHeight(10);
+            robot.bar4.setMoveHeight(10,this);
         }
     }
 }

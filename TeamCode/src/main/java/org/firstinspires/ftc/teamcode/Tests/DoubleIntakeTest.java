@@ -13,21 +13,34 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @TeleOp(name = "doubley intake")
 public class DoubleIntakeTest extends OpMode
 {
-    DcMotor lmotorIntake;
-    DcMotor rmotorIntake;
+    DcMotor leftIntake;
+    DcMotor rightIntake;
+    DcMotor fourBar;
 
     CRServo lservoIntkae;
     CRServo rservoIntkae;
+
+    DcMotor l1, l2, r1, r2;
 
 
     @Override
     public void init()
     {
-//        lmotorIntake = hardwareMap.dcMotor.get("lmintake");
-//        rmotorIntake = hardwareMap.dcMotor.get("rmintake");
+        leftIntake = hardwareMap.dcMotor.get("leftIntake");
+        rightIntake = hardwareMap.dcMotor.get("rightIntake");
 
         lservoIntkae = hardwareMap.crservo.get("lsintake");
         rservoIntkae = hardwareMap.crservo.get("rsintake");
+
+        fourBar = hardwareMap.dcMotor.get("bar4");
+
+
+        l1 = hardwareMap.dcMotor.get("l1");
+        l2 = hardwareMap.dcMotor.get("l2");
+        r1 = hardwareMap.dcMotor.get("r1");
+        r2 = hardwareMap.dcMotor.get("r2");
+
+
 
     }
 
@@ -35,18 +48,55 @@ public class DoubleIntakeTest extends OpMode
     public void loop()
     {
 
+        if(gamepad2.right_bumper||gamepad2.left_bumper)
+        {
+            lservoIntkae.setPower(gamepad2.left_trigger / 2.0);
+            rservoIntkae.setPower(gamepad2.right_trigger / 2.0);
+            leftIntake.setPower(gamepad2.left_trigger);
+            rightIntake.setPower(gamepad2.right_trigger);
+        }
+        else {
+            lservoIntkae.setPower(-gamepad2.left_trigger / 2.0);
+            rservoIntkae.setPower(-gamepad2.right_trigger / 2.0);
+            leftIntake.setPower(-gamepad2.left_trigger);
+            rightIntake.setPower(-gamepad2.right_trigger);
+        }
 
-//        if(gamepad1.left_bumper||gamepad1.right_bumper)
-//        {
-//            lmotorIntake.setPower(gamepad1.left_trigger);
-//            rmotorIntake.setPower(-gamepad1.right_trigger);
-//        }
-//        else {
-//            lmotorIntake.setPower(-gamepad1.left_trigger);
-//            rmotorIntake.setPower(gamepad1.right_trigger);
-//        }
-        lservoIntkae.setPower(gamepad1.left_stick_y/2);
-        rservoIntkae.setPower(-gamepad1.right_stick_y/2);
+        fourBar.setPower(-gamepad2.left_stick_y/2.0);
+
+        float yval = gamepad1.left_stick_y;
+        float xval = gamepad1.right_stick_x;
+
+        float lpwr = (float) Math.pow(((yval - xval)), 3);
+        float rpwr = (float) Math.pow((yval + xval), 3);
+//
+//        float lpwr = gamepad1.left_stick_y;
+//        float rpwr = gamepad1.right_stick_y;
+
+
+//        turtle mode
+        if (gamepad1.right_trigger != 0) {
+            lpwr /= 3.0f;
+            rpwr /= 3.0f;
+        }
+
+        else if(gamepad1.left_trigger != 0){
+            lpwr /= 9.0f;
+            rpwr /= 9.0f;
+        }
+
+        if(Math.abs(lpwr)<0.1)
+            lpwr = 0;
+
+        if(Math.abs(rpwr)<0.1)
+            rpwr = 0;
+
+//      Setting the power for dt
+        l1.setPower(lpwr);
+        l2.setPower(lpwr);
+        r1.setPower(rpwr);
+        r2.setPower(rpwr);
+
     }
 
     @Override
@@ -54,5 +104,7 @@ public class DoubleIntakeTest extends OpMode
     {
         lservoIntkae.setPower(0);
         rservoIntkae.setPower(0);
+        leftIntake.setPower(0);
+        rightIntake.setPower(0);
     }
 }

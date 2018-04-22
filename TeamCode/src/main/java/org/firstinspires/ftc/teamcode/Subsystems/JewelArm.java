@@ -48,6 +48,31 @@ public class JewelArm implements SubsystemTemplate
 
         jewlCheck.enableLed(false);
         check2.enableLed(false);
+    }
+
+
+    public JewelArm(HardwareMap hardwareMap, boolean isTeleop)
+    {
+        jewlArm = hardwareMap.servo.get("jewl");
+        arm2 = hardwareMap.servo.get("jewl2");
+
+        if(!isTeleop)
+        {
+
+            check2 = hardwareMap.colorSensor.get("color2");
+            jewlCheck = hardwareMap.colorSensor.get("color");
+
+            jewlCheck.enableLed(false);
+            check2.enableLed(false);
+
+        }
+
+
+        jewlArm.setDirection(Servo.Direction.FORWARD);
+        jewlArm.scaleRange(0,1);
+        arm2.setDirection(Servo.Direction.REVERSE);
+        arm2.scaleRange(0,1);
+
 
     }
 

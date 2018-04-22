@@ -107,8 +107,6 @@ public class DriveTrain implements SubsystemTemplate
 
     }
 
-
-
     public DriveTrain(HardwareMap hardwareMap, LinearOpMode opMode)
     {
         l1 = hardwareMap.dcMotor.get("l1");
@@ -485,6 +483,14 @@ public class DriveTrain implements SubsystemTemplate
         setLeftPower(0);
         setRightPower(0);
     }
+
+
+
+
+
+
+
+
     public void getLogs(){
         Log.i("L1", String.valueOf(l1.getPower()));
         Log.i("L2", String.valueOf(l2.getCurrentPosition()));

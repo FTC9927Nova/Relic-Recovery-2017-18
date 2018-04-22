@@ -96,7 +96,19 @@ public class FourBar implements SubsystemTemplate {
     public void setMoveHeight(double targetHeight)
     {
         pidLoop.setTarget(targetHeight);
-        while(this.linearOpMode.opModeIsActive()&&Math.abs((pot.getDist()-targetHeight) + 1.5)>0.5) {
+        while(Math.abs((pot.getDist()-targetHeight) + 1.5)>0.5) {
+            double power = pidLoop.pLoop(pot.getDist());
+            if(power<0.01)
+                power = 0.005;
+            fourBar.setPower(power);
+        }
+        fourBar.setPower(0.005);
+    }
+
+    public void setMoveHeight(double targetHeight,LinearOpMode linearOpMode)
+    {
+        pidLoop.setTarget(targetHeight);
+        while(linearOpMode.opModeIsActive()&&Math.abs((pot.getDist()-targetHeight) + 1.5)>0.5) {
             double power = pidLoop.pLoop(pot.getDist());
             if(power<0.01)
                 power = 0.005;
@@ -107,18 +119,23 @@ public class FourBar implements SubsystemTemplate {
 
     public boolean isHit()
     {
-        return bar4limit.getState();
+        return !bar4limit.getState();
     }
 
     public boolean isLowerHit()
     {
-        return  limitSwitch_Zero.getState();
+        return  !limitSwitch_Zero.getState();
     }
 
 
 
     public void setPower(double power){
-        fourBar.setPower(power);
+//        if(isLowerHit())
+//            setMoveHeight(20);
+//        else if(isHit())
+//            setMoveHeight(1);
+//        else
+            fourBar.setPower(power);
     }
 
 

@@ -23,7 +23,7 @@ public class ColorTest extends OpMode
     public void init()
     {
 
-        j = new JewelArm(hardwareMap);
+        j = new JewelArm(hardwareMap,true);
 
     }
 

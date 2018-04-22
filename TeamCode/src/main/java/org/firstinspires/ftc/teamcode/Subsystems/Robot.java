@@ -37,7 +37,6 @@ public class Robot
         bar4 = new FourBar(hardwareMap);
         wheels = new Wheels(hardwareMap);
         relic = new RelicMech(hardwareMap);
-        range = new Range(hardwareMap);
         potentiometer = new Potentiometer(hardwareMap);
         bar4.getPotentiometer(potentiometer);
     }
@@ -46,10 +45,9 @@ public class Robot
     {
         driveTrain = new DriveTrain(hardwareMap,linearOpMode);
         driveTrain.setGyro(gyrofromOpMode);
-        jewelArm = new JewelArm(hardwareMap);
+        jewelArm = new JewelArm(hardwareMap,true);
         bar4 = new FourBar(hardwareMap,linearOpMode);
         wheels = new Wheels(hardwareMap);
-        range = new Range(hardwareMap);
         potentiometer = new Potentiometer(hardwareMap);
         bar4.getPotentiometer(potentiometer);
     }

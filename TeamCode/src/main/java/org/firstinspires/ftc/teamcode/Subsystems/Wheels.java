@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 import com.qualcomm.robotcore.hardware.*;
+import com.qualcomm.robotcore.util.Range;
 
 /**
  * Created by Sumanth on 11/2/17.
@@ -12,7 +13,7 @@ public class Wheels implements SubsystemTemplate{
     private Servo latchyCatchy;
     private AnalogInput distSensor;
     private double MinGlyphDist = 1.5;
-    private double MaxGlyphDist = 4;
+    private double MaxGlyphDist = 3;
     private double avgEncTicks;
     private double prevChagne;
     private boolean checkGlyphS = false;
@@ -88,8 +89,8 @@ public class Wheels implements SubsystemTemplate{
         checkGlyphS = false;
         intakeLeft();
         intakeRight();
-        avgEncTicks = ((leftWheels.getCurrentPosition() + rightWheels.getCurrentPosition())/2.0)/10;
-       if(avgEncTicks<prevChagne)
+        avgEncTicks = ((leftWheels.getCurrentPosition() + rightWheels.getCurrentPosition())/2.0);
+       if(Math.abs(avgEncTicks - prevChagne) > 100)
        {
            stopLeft();
            stopRight();
@@ -149,6 +150,18 @@ public class Wheels implements SubsystemTemplate{
         return 1.8694*(Math.pow(distSensor.getVoltage(),-1.086));
     }
 
+    public void leftSideOuttake()
+    {
+        outtakeLeft();
+        lservoIntkae.setPower(0.5);
+    }
+    public void rightSideOuttake()
+    {
+        outtakeRight();
+        rservoIntkae.setPower(0.5);
+    }
+
+
     public void leftClawIntake()
     {
         intakeLeft();
@@ -177,8 +190,8 @@ public class Wheels implements SubsystemTemplate{
 
     public void fullOuttake()
     {
-        rservoIntkae.setPower(1);
-        lservoIntkae.setPower(1);
+        rservoIntkae.setPower(Range.clip(0.35-(glyphDist()/18),0.1,0.35));
+        lservoIntkae.setPower(Range.clip(0.35-(glyphDist()/18),0.1,0.35));
         outtakeLeft();
         outtakeRight();
     }
@@ -195,8 +208,8 @@ public class Wheels implements SubsystemTemplate{
         {
             lservoIntkae.setPower(0.5);
             rservoIntkae.setPower(0.5);
-            intakeLeft();
-            intakeRight();
+            leftWheels.setPower(0.7);
+            rightWheels.setPower(0.7);
         }
     }
 
