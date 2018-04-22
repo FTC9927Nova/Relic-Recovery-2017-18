@@ -155,6 +155,9 @@ public class SuperBiggieTeleop extends OpMode
             robot.relic.setPower(0);
         }
 
+        telemetry.addData("get velocities", robot.wheels.getWheelVelocity());
+        telemetry.update();
+
     }
 
 

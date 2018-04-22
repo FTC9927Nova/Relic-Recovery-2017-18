@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
 /**
  * Created by Sumanth on 11/2/17.
  */
@@ -17,6 +19,7 @@ public class Wheels implements SubsystemTemplate{
     private double avgEncTicks;
     private double prevChagne;
     private boolean checkGlyphS = false;
+
     public Wheels(HardwareMap hardwareMap)
     {
 
@@ -84,27 +87,22 @@ public class Wheels implements SubsystemTemplate{
 
     }
 
-    public void secondGlyphIntake()
+    public boolean secondGlyphIntake()
     {
-        checkGlyphS = false;
-        intakeLeft();
-        intakeRight();
-        avgEncTicks = ((leftWheels.getCurrentPosition() + rightWheels.getCurrentPosition())/2.0);
-       if(Math.abs(avgEncTicks - prevChagne) > 100)
+        DcMotorEx lw = (DcMotorEx)leftWheels;
+        DcMotorEx rw = (DcMotorEx)rightWheels;
+
+        prevChagne = avgEncTicks;
+        avgEncTicks = ((lw.getVelocity(AngleUnit.RADIANS) + rw.getVelocity(AngleUnit.RADIANS))/2.0);
+       if(prevChagne-avgEncTicks>2)
        {
-           stopLeft();
-           stopRight();
-           checkGlyphS = true;
-
+           return true;
        }
-       prevChagne = avgEncTicks;
+       return false;
+
 
     }
 
-    public boolean checkSecondGlyph()
-    {
-        return checkGlyphS;
-    }
 
     public void servoOuttake(){
 
@@ -140,9 +138,13 @@ public class Wheels implements SubsystemTemplate{
     }
 
     public void stopRight(){
-
         rightWheels.setPower(0);
 
+    }
+
+    public boolean hasFirstGlyph()
+    {
+        return (glyphDist()<MinGlyphDist);
     }
 
     public double glyphDist()
@@ -225,6 +227,15 @@ public class Wheels implements SubsystemTemplate{
 
     }
 
+    public void stop()
+    {
+        setRightWheels(0);
+        setLeftWheelPwr(0);
+        setLeftServoPwr(0);
+        setRightServoPwr(0);
+    }
+
+
 
 
 
@@ -239,6 +250,14 @@ public class Wheels implements SubsystemTemplate{
     }
     public void setLeftServoPwr(double c) { lservoIntkae.setPower(c); }
     public void setRightServoPwr(double d) { rservoIntkae.setPower(d); }
+
+
+    public String getWheelVelocity()
+    {
+        DcMotorEx lw = (DcMotorEx)leftWheels;
+        DcMotorEx rw = (DcMotorEx)rightWheels;
+        return lw.getVelocity(AngleUnit.RADIANS) + "    "  +rw.getVelocity(AngleUnit.RADIANS);
+    }
 
 
     @Override

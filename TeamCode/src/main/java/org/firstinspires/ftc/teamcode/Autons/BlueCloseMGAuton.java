@@ -3,6 +3,7 @@ import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
@@ -28,6 +29,28 @@ public class BlueCloseMGAuton extends LinearOpMode {
 
     double firstAnlge;
 
+    enum DriveState
+    {
+        DRIVE_TO_POS,
+        ROTATE_TO_GLYPH_PIT,
+        GET_FIRST_GLYPH,
+        GET_SECOND_GLYPH,
+        STOP
+    }
+
+
+    int intkaeCounter = 0;
+    boolean swap = true;
+    enum WheelState
+    {
+        SPAZ_INTAKE,
+        FULL_INTAKE_DOSGLYPHY,
+        STOP
+    }
+
+    WheelState wheelState = WheelState.STOP;
+    DriveState driveState = DriveState.DRIVE_TO_POS;
+
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -35,18 +58,119 @@ public class BlueCloseMGAuton extends LinearOpMode {
         robot.init(hardwareMap, this, gyro);
         reading = vision.readGraph(hardwareMap);
 
-        double heading;
+        double prevAngle = 0;
 
         int dist = 24;
         reading = vision.readGraph2(hardwareMap);
         telemetry.addData("vision", reading);
         telemetry.update();
         waitForStart();
-        if (opModeIsActive()){
-            //jewel code crap
+        while(opModeIsActive()){
+            switch (driveState)
+            {
+                case DRIVE_TO_POS:
+                {
+                    if(robot.driveTrain.setMoveDist(36)) {
+                        robot.wheels.unLatch();
+                        driveState = DriveState.ROTATE_TO_GLYPH_PIT;
+                    }
+                    break;
+                }
+                case ROTATE_TO_GLYPH_PIT: {
+                    if (robot.driveTrain.rotateDeg(90))
+                    {
+                        driveState = DriveState.GET_SECOND_GLYPH;
+                        wheelState = WheelState.SPAZ_INTAKE;
+                    }
 
-            robot.driveTrain.setMoveDist(35);
-            robot.driveTrain.rotateDeg(90);
+                    break;
+                }
+                case GET_FIRST_GLYPH:
+                {
+                    robot.driveTrain.setDrive(DriveTrain.Drive.NOTHING);
+                    robot.driveTrain.driveStraight();
+                    if(wheelState.equals(WheelState.STOP))
+                    {
+                        robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
+                        robot.driveTrain.stop();
+                        driveState = DriveState.STOP;
+                    }
+                    break;
+
+                }
+                case GET_SECOND_GLYPH:
+                {
+                    robot.driveTrain.setDrive(DriveTrain.Drive.NOTHING);
+                    robot.driveTrain.driveStraight();
+                    if(robot.wheels.secondGlyphIntake() && wheelState.equals(WheelState.FULL_INTAKE_DOSGLYPHY))
+                    {
+                        robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
+                        robot.driveTrain.stop();
+                        driveState = DriveState.STOP;
+                    }
+                    break;
+                }
+                case STOP:
+                {
+                    robot.driveTrain.stop();
+                    robot.wheels.stop();
+                    break;
+                }
+            }
+
+
+            switch (wheelState)
+            {
+                case SPAZ_INTAKE:
+                {
+                    robot.wheels.setLeftServoPwr(-0.5);
+                    robot.wheels.setRightWheels(-0.5);
+                    intkaeCounter++;
+                    if((intkaeCounter%3)==0)
+                        swap = !swap;
+
+                    if(swap) {
+                        robot.wheels.setLeftWheelPwr(-1);
+                        robot.wheels.stopRight();
+                    }
+                    else
+                    {
+                        robot.wheels.setRightWheels(-1);
+                        robot.wheels.stopLeft();
+                    }
+
+                    if(robot.wheels.glyphDist()<3) {
+                        robot.wheels.intakeRight();
+                        robot.wheels.intakeLeft();
+                        wheelState = WheelState.FULL_INTAKE_DOSGLYPHY;
+                    }
+                    break;
+                }
+                case FULL_INTAKE_DOSGLYPHY:
+                {
+                    robot.wheels.intakeLeft();
+                    robot.wheels.intakeRight();
+                    if(robot.wheels.secondGlyphIntake())
+                    {
+                        robot.wheels.stop();
+                        wheelState = WheelState.STOP;
+                    }
+                    break;
+                }
+                case STOP:
+                {
+                    robot.wheels.stop();
+                    break;
+                }
+            }
+
+            Log.i("DriveAction",driveState.toString());
+            robot.driveTrain.getLogs();
+            telemetry.addData("Drive Action", driveState.toString());
+            telemetry.addData("Wheel Action", wheelState.toString());
+            telemetry.addData("velocities", robot.wheels.getWheelVelocity());
+
+            telemetry.update();
 
         }
 

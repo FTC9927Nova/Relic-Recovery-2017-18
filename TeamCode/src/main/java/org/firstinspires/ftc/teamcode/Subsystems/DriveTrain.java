@@ -37,6 +37,11 @@ public class DriveTrain implements SubsystemTemplate
 
     private double turnTarget;
 
+    private double heading;
+
+    private double pastAngle;
+    private double currentAngle;
+
 
     //TODO: ENTER Kp, Ki, Kd
     private PIDLoop driveCL = new PIDLoop(0.01,0,0);
@@ -128,18 +133,15 @@ public class DriveTrain implements SubsystemTemplate
         r1motorControllerEx = (DcMotorControllerEx)r1.getController();
         r2motorControllerEx = (DcMotorControllerEx)r2.getController();
 
+        setDrive(Drive.STOP_RESET);
         this.opMode = opMode;
-
-        l1motorIndex = ((DcMotorEx)l1).getPortNumber();
-        l2motorIndex = ((DcMotorEx)l2).getPortNumber();
-        r1motorIndex = ((DcMotorEx)r1).getPortNumber();
-        r2motorIndex = ((DcMotorEx)r2).getPortNumber();
 
     }
 
     public void setGyro(Gyro gyro)
     {
         this.gyro = gyro;
+        heading = getAngle();
     }
 
     public void setDrive(Drive d)
@@ -193,23 +195,7 @@ public class DriveTrain implements SubsystemTemplate
     }
 
 
-    public void setLeftPowerNew(){
-        PIDCoefficients l1PIDOrig = l1motorControllerEx.getPIDCoefficients(l1motorIndex, DcMotor.RunMode.RUN_USING_ENCODER);
-        PIDCoefficients l2pidOrig = l2motorControllerEx.getPIDCoefficients(l2motorIndex, DcMotor.RunMode.RUN_USING_ENCODER);
 
-        PIDCoefficients l1PIDNew = new PIDCoefficients(constant.getLP(), constant.getLI(), constant.getLD());
-        PIDCoefficients l2PIDNew = new PIDCoefficients(constant.getLP(), constant.getLI(), constant.getLD());
-
-    }
-    public void setRightPowerNew(){
-
-        PIDCoefficients r1PIDOrig = r1motorControllerEx.getPIDCoefficients(r1motorIndex, DcMotor.RunMode.RUN_USING_ENCODER);
-        PIDCoefficients r2pidOrig = r2motorControllerEx.getPIDCoefficients(r2motorIndex, DcMotor.RunMode.RUN_USING_ENCODER);
-
-        PIDCoefficients r1PIDNew = new PIDCoefficients(constant.getR1P(), constant.getR1P(), constant.getR1D());
-        PIDCoefficients r2PIDNew = new PIDCoefficients(constant.getR2P(), constant.getR2P(), constant.getR2D());
-
-    }
     public void setLeftPower(double power)
     {
         power = Range.clip(power, -1,1);
@@ -265,74 +251,62 @@ public class DriveTrain implements SubsystemTemplate
         return true;
     }
 
-    public void setMoveDist(double dist)
+    public boolean setMoveDist(double dist)
     {
 
         setSpeedController(DriveSpeedController.BRAKE);
-        if (this.opMode.opModeIsActive()) {
 
-            setDrive(Drive.STOP_RESET);
-
-            leftTarget = (int) (dist * constant.getTICKS_PER_INCH());
-            rightTarget = (int) (dist * constant.getTICKS_PER_INCH());
-
-            setDrive(Drive.ENCODERS);
-
-            setLeftTarget(leftTarget);
-            setRightTarget(rightTarget);
-
-            driveCL.setTarget(leftTarget);
-            double initialAngle = gyro.getYaw();
-
-            turnCL.setTarget(initialAngle);
-
-            while(this.opMode.opModeIsActive() &&
-                    (Math.abs((getLeftCurrentPosition()-leftTarget))>constant.getDRIVE_TOLERANCE()))
-            {
-                double pwr = driveCL.pLoop(getLeftCurrentPosition());
-                setLeftPower(pwr);
-                setRightPower(pwr);
-            }
-
-
-            setLeftPower(0);
-            setRightPower(0);
-            setDrive(Drive.SPEED);
-
-        }
-    }
-
-    public void setMoveDistEnc(int target){
-
-
-        setDrive(Drive.STOP_RESET);
-
-        leftTarget = target;
-
+        leftTarget = (int) (dist * constant.getTICKS_PER_INCH());
+        rightTarget = (int) (dist * constant.getTICKS_PER_INCH());
 
         setDrive(Drive.ENCODERS);
+
+        setLeftTarget(leftTarget);
+        setRightTarget(rightTarget);
+
+        driveCL.setTarget(leftTarget);
+
+        double pwr = driveCL.pLoop(getLeftCurrentPosition());
+        setLeftPower(pwr);
+        setRightPower(pwr);
+
+        if((Math.abs((getLeftCurrentPosition()-leftTarget))<constant.getDRIVE_TOLERANCE()))
+        {
+            setLeftPower(0);
+            setRightPower(0);
+            setDrive(Drive.STOP_RESET);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean setMoveDistEnc(int target){
+
+        setSpeedController(DriveSpeedController.BRAKE);
+        setDrive(Drive.ENCODERS);
+
+        leftTarget = target;
 
         setLeftTarget(leftTarget);
         setRightTarget(leftTarget);
 
         driveCL.setTarget(leftTarget);
 
-        while(this.opMode.opModeIsActive() &&
-                (Math.abs((getLeftCurrentPosition()-target))>constant.getDRIVE_TOLERANCE() && Math.abs((getRightCurrentPosition()-rightTarget))>constant.getDRIVE_TOLERANCE()))
+        setLeftPower(driveCL.pLoop(getLeftCurrentPosition()));
+        setRightPower(driveCL.pLoop(getLeftCurrentPosition()));
+
+        if(Math.abs((getLeftCurrentPosition()-target))>constant.getDRIVE_TOLERANCE())
         {
-
-            setLeftPower(driveCL.pLoop(getLeftCurrentPosition()));
-            setRightPower(driveCL.pLoop(getLeftCurrentPosition()));
-
+            setLeftPower(0);
+            setRightPower(0);
+            setDrive(Drive.STOP_RESET);
+            return true;
         }
 
-        setLeftPower(0);
-        setRightPower(0);
-        setDrive(Drive.SPEED);
+        return false;
+
 
     }
-
-
     public double getRightPwr(){
         return (r1.getPower() + r2.getPower())/2;
 }
@@ -341,13 +315,12 @@ public class DriveTrain implements SubsystemTemplate
     }
 
 
-    public void rotateDeg(double target)
+    public boolean rotateDeg(double target)
     {
-        turnTarget = gyro.getYaw() + target;
+        turnTarget = heading + target;
 
         if(turnTarget > 180)
             turnTarget -= 360;
-
         else if (turnTarget < -180)
             turnTarget += 360;
 
@@ -358,24 +331,38 @@ public class DriveTrain implements SubsystemTemplate
         double lpwr;
         boolean isPowerTooLow = false;
 
-        while(this.opMode.opModeIsActive() &&
-                (Math.abs((gyro.getYaw()-turnTarget))>constant.getTurnTolerance())
-                && !isPowerTooLow)
-        {
-            lpwr = turnCL.pLoop(gyro.getYaw());
-            if(Math.abs(lpwr)>0.2)
-                lpwr = 0.2 * Math.signum(target);
-            if(Math.abs(lpwr)<0.07)
-                isPowerTooLow = true;
-            this.opMode.telemetry.addData("",display());
-            this.opMode.telemetry.addData("",lpwr);
-            setLeftPower(lpwr);
-            setRightPower(-lpwr);
-            this.opMode.telemetry.update();
+        lpwr = turnCL.pLoop(gyro.getYaw());
+        if(Math.abs(lpwr)>0.25)
+            lpwr = 0.25 * Math.signum(target);
+        if(Math.abs(lpwr)<0.07)
+            isPowerTooLow = true;
+        setLeftPower(lpwr);
+        setRightPower(-lpwr);
 
+        if((Math.abs((gyro.getYaw()-turnTarget))<constant.getTurnTolerance())
+                && isPowerTooLow)
+        {
+            setLeftPower(0);
+            setRightPower(0);
+            setDrive(Drive.ENCODERS);
+            return true;
         }
-        setLeftPower(0);
-        setRightPower(0);
+
+        this.opMode.telemetry.addData("",display());
+        this.opMode.telemetry.addData("",lpwr);
+        this.opMode.telemetry.update();
+
+        return false;
+    }
+
+    public void driveStraight()
+    {
+        pastAngle = currentAngle;
+        currentAngle = Math.atan(Math.tan(Math.toRadians(getAngle())));
+        double diff = currentAngle-pastAngle;
+        double correction = diff/17.0;
+        setLeftPower(0.3+correction);
+        setRightPower(0.3-correction);
 
     }
 
@@ -384,8 +371,8 @@ public class DriveTrain implements SubsystemTemplate
         return gyro.getYaw();
     }
 
-    public void singleSideRotateDeg(Side side, double target) {
-        turnTarget = -gyro.getYaw() + target;
+    public boolean singleSideRotateDeg(Side side, double target) {
+        turnTarget = gyro.getYaw() + target;
 
         if (turnTarget > 180)
             turnTarget -= 360;
@@ -398,104 +385,48 @@ public class DriveTrain implements SubsystemTemplate
 
         turnCL.setTarget(turnTarget);
 
-        while (this.opMode.opModeIsActive() &&
-                (Math.abs((-gyro.getYaw() - turnTarget)) > (constant.getTurnTolerance()))) {
 
-            if (side == Side.LEFT_SIDE) {
-                double pwr = turnCL.pLoop(gyro.getYaw());
-                if(Math.abs(pwr)<0.05)
-                    pwr = 0.05 * Math.signum(target);
-                setLeftPower(pwr);
-                setRightPower(0);
-            }
-            if (side == Side.RIGHT_SIDE) {
-                double pwr = turnCL.pLoop(gyro.getYaw());
-                if(Math.abs(pwr)<0.05)
-                    pwr = 0.05 * Math.signum(target);
-                setLeftPower(0);
-                setRightPower(pwr);
-            }
-            this.opMode.telemetry.addData("Side", String.valueOf(side));
+        if (side == Side.LEFT_SIDE) {
+            double pwr = turnCL.pLoop(gyro.getYaw());
+            if(Math.abs(pwr)<0.05)
+                pwr = 0.05 * Math.signum(target);
+            setLeftPower(pwr);
+            setRightPower(0);
         }
-        setRightPower(0);
-        setLeftPower(0);
+        if (side == Side.RIGHT_SIDE) {
+            double pwr = turnCL.pLoop(gyro.getYaw());
+            if(Math.abs(pwr)<0.05)
+                pwr = 0.05 * Math.signum(target);
+            setLeftPower(0);
+            setRightPower(pwr);
+        }
+
+
+        if ((Math.abs((-gyro.getYaw() - turnTarget)) < (constant.getTurnTolerance()))) {
+            setRightPower(0);
+            setLeftPower(0);
+            return true;
+        }
+
+
+        this.opMode.telemetry.addData("Side", String.valueOf(side));
+        this.opMode.telemetry.update();
+
+        return false;
+
     }
 
-    public void singleSideRotateDegCorrect(Side side, double target, double power) {
-        turnTarget = -gyro.getYaw() + target;
-
-        if (turnTarget > 180)
-            turnTarget -= 360;
-
-        else if (turnTarget < -180)
-            turnTarget += 360;
-
-        setDrive(Drive.SPEED);
-        setSpeedController(DriveSpeedController.BRAKE);
-
-        turnCL.setTarget(turnTarget);
-
-        while (this.opMode.opModeIsActive() &&
-                (Math.abs((-gyro.getYaw() - turnTarget)) > constant.getTurnTolerance())) {
-
-            if (side == Side.LEFT_SIDE) {
-                setLeftPower(power);
-                setRightPower(0);
-            }
-            if (side == Side.RIGHT_SIDE) {
-                setLeftPower(0);
-                setRightPower(power);
-            }
-            this.opMode.telemetry.addData("Side", String.valueOf(side));
-        }
+    public void stop()
+    {
         setLeftPower(0);
         setRightPower(0);
     }
-
-    public void singleSideTurnFar(Side side, double target) {
-        turnTarget = -gyro.getYaw() + target;
-
-        if (turnTarget > 180)
-            turnTarget -= 360;
-
-        else if (turnTarget < -180)
-            turnTarget += 360;
-
-        setDrive(Drive.SPEED);
-        setSpeedController(DriveSpeedController.BRAKE);
-
-        turnCL.setTarget(turnTarget);
-        double negTarget = target/(Math.abs(target));
-
-        while (this.opMode.opModeIsActive() &&
-                (Math.abs((-gyro.getYaw() - turnTarget)) > constant.getTurnTolerance())) {
-
-            if (side == Side.LEFT_SIDE)  {
-                setLeftPower(0.5);
-                setRightPower(0);
-            }
-            if (side == Side.RIGHT_SIDE) {
-                setLeftPower(0);
-                setRightPower(0.5);
-            }
-            this.opMode.telemetry.addData("Side", String.valueOf(side));
-        }
-        setLeftPower(0);
-        setRightPower(0);
-    }
-
-
-
-
-
-
 
 
     public void getLogs(){
-        Log.i("L1", String.valueOf(l1.getPower()));
+        Log.i("L1", String.valueOf(l1.getCurrentPosition()));
         Log.i("L2", String.valueOf(l2.getCurrentPosition()));
-        Log.i("R1", String.valueOf(r1.getPower()));
-        Log.i("Error", String.valueOf(driveCL.getError()));
+        Log.i("R1", String.valueOf(r1.getCurrentPosition()));
         Log.i("R2", String.valueOf(r2.getCurrentPosition()));
 
 
