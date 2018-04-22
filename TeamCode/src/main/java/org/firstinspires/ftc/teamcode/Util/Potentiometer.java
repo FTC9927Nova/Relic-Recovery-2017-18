@@ -17,32 +17,24 @@ public class Potentiometer {
     AnalogInput potentiometer;
 
     double voltage;
-    double maxDist = 23;
-    double minVoltage =1.75;
-    double maxVoltage = 2.5;
-    double dist;
+    double MaxDist = 20.5;
+    double minVoltge = 0.273;
+    double MaxVoltage = 0;
 
     public Potentiometer(HardwareMap hardwareMap) {
         potentiometer = hardwareMap.analogInput.get("pot");
     }
 
-    public void getInput()
-    {
-        voltage = potentiometer.getVoltage();
-        dist = (voltage-minVoltage)*(maxDist/(maxVoltage-minVoltage));
-    }
 
     public double getDist()
     {
-        getInput();
+        double dist  = ((potentiometer.getVoltage()-minVoltge)/MaxVoltage)*MaxDist;
         return dist;
     }
 
     public String display()
     {
-        return "voltage: " + voltage
-                +"\nMax Voltage: " + maxVoltage
-                +"\nAngle: " + dist;
+        return ""; 
     }
 
 }
