@@ -21,8 +21,6 @@ public class FourBar implements SubsystemTemplate {
     private LinearOpMode linearOpMode;
     private boolean shouldStay = true;
     private double height = 0;
-    private DigitalChannel bar4limit;
-    private DigitalChannel limitSwitch_Zero;
 
     private RobotConstants constants = new RobotConstants();
 
@@ -33,8 +31,7 @@ public class FourBar implements SubsystemTemplate {
         fourBar = hardwareMap.dcMotor.get("bar4");
         fourBar.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         fourBar.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        bar4limit = hardwareMap.digitalChannel.get("limitUp");
-        limitSwitch_Zero = hardwareMap.digitalChannel.get("limitDown");
+
         pot = new Potentiometer(hardwareMap);
     }
 
@@ -42,8 +39,7 @@ public class FourBar implements SubsystemTemplate {
         fourBar = hardwareMap.dcMotor.get("bar4");
         fourBar.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         fourBar.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        bar4limit = hardwareMap.digitalChannel.get("limitUp");
-        limitSwitch_Zero = hardwareMap.digitalChannel.get("limitDown");
+
         this.linearOpMode = linearOpMode;
 
     }
@@ -55,7 +51,7 @@ public class FourBar implements SubsystemTemplate {
 
     public double getHeight()
     {
-        pot.getInput();
+//        pot.getInput();
         return pot.getDist();
     }
 
@@ -80,8 +76,8 @@ public class FourBar implements SubsystemTemplate {
 
     public double getCurrentAngle()
     {
-        pot.getInput();
-        height = pot.getDist();
+//        pot.getInput();
+//        height = pot.getDist();
         return height;
     }
 
@@ -90,43 +86,24 @@ public class FourBar implements SubsystemTemplate {
         return;
     }
 
-
-
-
-//    public void setMoveHeight(double targetHeight)
-//    {
-//        pidLoop.setTarget(targetHeight);
-//        while(Math.abs((pot.getDist()-targetHeight) + 1.5)>0.5) {
-//            double power = pidLoop.pLoop(pot.getDist());
-//            if(power<0.01)
-//                power = 0.005;
-//            fourBar.setPower(power);
-//        }
-//        fourBar.setPower(0.005);
-//    }
+    public void stop()
+    {
+        fourBar.setPower(0);
+    }
 
     public boolean setMoveHeight(double targetHeight)
     {
         pidLoop.setTarget(targetHeight);
         double power = pidLoop.pLoop(pot.getDist());
-        if(power<0.01)
-            power = 0.005;
+        if(power<0)
+            power = 0;
         fourBar.setPower(power);
-        if(Math.abs((pot.getDist()-targetHeight) + 1.5)<0.5) {
+        if(Math.abs((pot.getDist()-targetHeight))<0.5) {
+            fourBar.setPower(0);
             return true;
         }
-        fourBar.setPower(0.002);
+
         return false;
-    }
-
-    public boolean isHit()
-    {
-        return !bar4limit.getState();
-    }
-
-    public boolean isLowerHit()
-    {
-        return  !limitSwitch_Zero.getState();
     }
 
 

@@ -30,7 +30,7 @@ public class ArmUpTest extends LinearOpMode
         timer.startTime();
         while(opModeIsActive())
         {
-           if(robot.bar4.setMoveHeight(10))
+           if(robot.bar4.setMoveHeight(3))
                telemetry.addData("yay","neing");
            else
                telemetry.addData("asf","fasdfa");

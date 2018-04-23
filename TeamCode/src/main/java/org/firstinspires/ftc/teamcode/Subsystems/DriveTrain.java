@@ -295,7 +295,7 @@ public class DriveTrain implements SubsystemTemplate
         setLeftPower(driveCL.pLoop(getLeftCurrentPosition()));
         setRightPower(driveCL.pLoop(getLeftCurrentPosition()));
 
-        if(Math.abs((getLeftCurrentPosition()-target))>constant.getDRIVE_TOLERANCE())
+        if(Math.abs((getLeftCurrentPosition()-target))<constant.getDRIVE_TOLERANCE())
         {
             setLeftPower(0);
             setRightPower(0);
@@ -345,12 +345,9 @@ public class DriveTrain implements SubsystemTemplate
             setLeftPower(0);
             setRightPower(0);
             setDrive(Drive.ENCODERS);
+            heading = gyro.getYaw();
             return true;
         }
-
-        this.opMode.telemetry.addData("",display());
-        this.opMode.telemetry.addData("",lpwr);
-        this.opMode.telemetry.update();
 
         return false;
     }

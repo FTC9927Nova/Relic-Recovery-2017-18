@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 
+import org.firstinspires.ftc.teamcode.Util.Potentiometer;
+
 /**
  * Created by Sumanth on 4/3/18.
  */
@@ -11,27 +13,18 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
 @TeleOp(name = "StringPOt Test")
 public class StringPotTest extends OpMode
 {
-    AnalogInput stringPot;
-    double MaxDist = 20.5;
-    double minVoltge = 0.273;
-    double MaxVoltage = 0;
-
-
+   Potentiometer pot;
 
     @Override
     public void init() {
-        stringPot = hardwareMap.analogInput.get("pot");
-        minVoltge = stringPot.getVoltage();
-        MaxVoltage =1.793-minVoltge;
+       pot = new Potentiometer(hardwareMap);
     }
 
 
     @Override
     public void loop()
     {
-        double dist  = ((stringPot.getVoltage()-minVoltge)/MaxVoltage)*MaxDist;
-        telemetry.addData("voltage", stringPot.getVoltage());
-        telemetry.addData("dist", dist);
+        telemetry.addData("",pot.display());
         telemetry.update();
     }
 }
