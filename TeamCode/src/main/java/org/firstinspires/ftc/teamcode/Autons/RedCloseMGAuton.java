@@ -374,25 +374,20 @@ public class RedCloseMGAuton extends LinearOpMode {
                 }
                 case SPIT_GLYPHS:
                 {
-                    robot.wheels.halfOuttake();
-                    if(robot.wheels.glyphDist()>6)
+                    if(robot.wheels.halfOuttake()&&robot.wheels.glyphDist()>3)
                     {
-                        if(startTime == 0)
-                            startTime = timer.milliseconds();
-                        if(timer.milliseconds()-startTime<1000)
-                        {
-                            robot.wheels.intakeLeft();
-                            robot.wheels.intakeRight();
-                        }
-                        else if(robot.wheels.glyphDist()<9){
+                        if(robot.wheels.glyphDist()<9){
 
                             robot.wheels.fullOuttake();
 
                         }
                         else
                         {
+                            if(startTime==0)
+                                startTime = timer.milliseconds();
+                            if(timer.milliseconds()-startTime>1000)
+                                driveState = DriveState.ROTATE_DEG_2;
                             wheelState = WheelState.STOP;
-                            driveState = DriveState.ROTATE_DEG_2;
                         }
                     }
                     break;

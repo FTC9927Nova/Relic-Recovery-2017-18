@@ -201,13 +201,14 @@ public class Wheels implements SubsystemTemplate{
         outtakeRight();
     }
 
-    public void halfOuttake()
+    public boolean halfOuttake()
     {
         if(glyphDist()>MaxGlyphDist) {
             lservoIntkae.setPower(0);
             rservoIntkae.setPower(0);
             setLeftWheelPwr(0);
             setRightWheels(0);
+            return true;
         }
         else
         {
@@ -215,6 +216,7 @@ public class Wheels implements SubsystemTemplate{
             rservoIntkae.setPower(0.5);
             leftWheels.setPower(0.7);
             rightWheels.setPower(0.7);
+            return false;
         }
     }
 
