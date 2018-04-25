@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Tests;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.AnalogInput;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.Util.Potentiometer;
  */
 
 @TeleOp(name = "StringPOt Test")
+@Disabled
 public class StringPotTest extends OpMode
 {
    Potentiometer pot;

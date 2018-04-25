@@ -357,7 +357,7 @@ public class DriveTrain implements SubsystemTemplate
         pastAngle = currentAngle;
         currentAngle = Math.atan(Math.tan(Math.toRadians(getAngle())));
         double diff = currentAngle-pastAngle;
-        double correction = diff/17.0;
+        double correction = diff/15.0;
         setLeftPower(0.3+correction);
         setRightPower(0.3-correction);
 

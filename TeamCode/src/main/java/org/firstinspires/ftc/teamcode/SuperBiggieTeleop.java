@@ -156,6 +156,7 @@ public class SuperBiggieTeleop extends OpMode
         }
 
         telemetry.addData("get disty", robot.wheels.glyphDist());
+        telemetry.addData("get wheel velocitires", robot.wheels.getWheelVelocity());
         telemetry.update();
 
     }

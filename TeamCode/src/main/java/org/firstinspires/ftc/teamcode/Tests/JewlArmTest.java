@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  * Created by Sumanth on 3/7/18.
  */
 @Autonomous(name = "Jewlee")
+@Disabled
 public class JewlArmTest extends LinearOpMode{
 
     Robot robot = new Robot();

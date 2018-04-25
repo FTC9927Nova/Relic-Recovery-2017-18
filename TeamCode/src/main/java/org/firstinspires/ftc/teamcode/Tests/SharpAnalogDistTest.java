@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Tests;
 
 import android.util.Log;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -22,17 +23,19 @@ public class SharpAnalogDistTest extends OpMode
 
     @Override
     public void init() {
-        analogSensor = hardwareMap.analogInput.get("as");
+        analogSensor = hardwareMap.analogInput.get("distyListy");
     }
 
 
     @Override
     public void loop()
     {
+        double input = analogSensor.getVoltage();
+
 //        toggle = false;
         telemetry.addData("voltage",analogSensor.getVoltage());
         telemetry.addData("max voltage", analogSensor.getMaxVoltage());
-        double input = analogSensor.getVoltage();
+        telemetry.addData("RealInput", input);
         double dist = 1.8694*(Math.pow(input,-1.086));
         telemetry.addData("dist: ", dist);
         telemetry.update();

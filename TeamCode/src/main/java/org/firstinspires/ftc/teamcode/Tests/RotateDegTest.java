@@ -12,7 +12,8 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  */
 
 
-@TeleOp(name = "HESGr")
+@TeleOp(name = "Rotate Deg Test")
+@Disabled
 public class RotateDegTest extends LinearOpMode
 {
     Robot robot = new Robot();

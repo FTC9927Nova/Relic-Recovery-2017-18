@@ -31,6 +31,7 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
  */
 
 @TeleOp(name="PID Teleop Test ", group = "Examples")
+@Disabled
 public class ChangePID extends LinearOpMode {
 
     // our DC motor.

@@ -11,29 +11,33 @@ import org.firstinspires.ftc.teamcode.Subsystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 
 import org.firstinspires.ftc.teamcode.Util.Gyro;
+import org.firstinspires.ftc.teamcode.Util.PIDLoop;
+import org.firstinspires.ftc.teamcode.Util.Potentiometer;
 
 /**
  * Created by therat0981 on 10/1/17.
  */
-@TeleOp(name = "MainTeleOp")
-@Disabled
+@TeleOp(name = "Main Teleop")
 public class MainTeleop extends OpMode
 {
 
     Robot robot = new Robot();
     Gyro gyro = new Gyro();
 
-    boolean relic = false;
-    double lastAngle = 0;
+
+
+    private double currentHeight;
+    private double lastheight;
 
 
     @Override
     public void init()
     {
-       // gyro.initGyro(hardwareMap);
+        gyro.initGyro(hardwareMap);
         robot.init(hardwareMap, gyro);
         robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
         robot.driveTrain.setDrive(DriveTrain.Drive.SPEED);
+
     }
 
 
@@ -42,10 +46,7 @@ public class MainTeleop extends OpMode
         robot.jewelArm.armUp();
         robot.jewelArm.arm2Up();
 
-
-        //getting Current Angle of the Four Bar
-        robot.bar4.getCurrentAngle();
-        //get current height
+        currentHeight = robot.bar4.getHeight();
 
         //Driver Code
 
@@ -55,9 +56,6 @@ public class MainTeleop extends OpMode
 
         float lpwr = (float) Math.pow(((yval - xval)), 3);
         float rpwr = (float) Math.pow((yval + xval), 3);
-//
-//        float lpwr = gamepad1.left_stick_y;
-//        float rpwr = gamepad1.right_stick_y;
 
 
 //        turtle mode
@@ -67,8 +65,8 @@ public class MainTeleop extends OpMode
         }
 
         else if(gamepad1.left_trigger != 0){
-            lpwr /= 9.0f;
-            rpwr /= 9.0f;
+            lpwr /= 7.0f;
+            rpwr /= 7.0f;
         }
 
         if(Math.abs(lpwr)<0.1)
@@ -82,88 +80,73 @@ public class MainTeleop extends OpMode
         robot.driveTrain.setRightPower(rpwr);
 
 //      Claw and Extender for Relic
-//        if (gamepad2.x)
-//            robot.relic.clawOpen();
-//        else if (gamepad2.y)
-//            robot.relic.clawClose();
+        if (gamepad2.x)
+            robot.relic.clawOpen();
+        else if (gamepad2.y)
+            robot.relic.clawClose();
         if (gamepad2.a)
             robot.relic.pullExtenderUp();
         else if (gamepad2.b)
             robot.relic.putExtenderDown();
-        else
 
         // Arm Control
         if (Math.abs(gamepad2.left_stick_y) > 0.05) {
 
-            robot.bar4.shouldStayTrue();
-            robot.bar4.setPower(-gamepad2.left_stick_y);
-            lastAngle = robot.bar4.getCurrentAngle();
+            robot.bar4.setPower(-gamepad2.left_stick_y/2.0);
+            lastheight = robot.bar4.getHeight();
 
-
-        } else if (Math.abs(gamepad2.left_stick_y) > 0.05) {
-            robot.bar4.shouldStayTrue();
-            robot.bar4.setPower((gamepad2.left_stick_y));
-            lastAngle = robot.bar4.getCurrentAngle();
-
-
-        } else {
-
-            robot.bar4.setTargetAngle();
-//            robot.bar4.setMoveAngle(lastAngle - robot.bar4.getCurrentAngle());
-
-        }
-
-        if (Math.abs(gamepad2.right_stick_y) > 0.75 && gamepad2.right_bumper) {
-
-            relic = !relic;
-
-        }
-
-        // intake wheel
-
-        if (gamepad2.right_bumper || gamepad2.left_bumper) {
-            robot.wheels.setRightWheels(1);
-            robot.wheels.setLeftWheelPwr(1);
-        } else if(gamepad2.left_trigger!=0 || gamepad2.right_trigger!= 0)
+        }  else if(Math.abs(currentHeight-lastheight)>1)
         {
-            robot.wheels.setLeftWheelPwr(-gamepad2.left_trigger);
-            robot.wheels.setRightWheels(-gamepad2.right_trigger);
+            robot.bar4.setMoveHeight(lastheight);
         }
         else
         {
-            robot.wheels.setLeftWheelPwr(0);
-            robot.wheels.setRightWheels(0);
-        }
-        if(gamepad2.right_stick_y > 10){
-
-            robot.wheels.servoIntake();
-
-        }
-        else if(gamepad2.right_stick_y < 10){
-
-            robot.wheels.servoOuttake();
-
-        }
-        else{
-
-            robot.wheels.setRightServoPwr(0);
-            robot.wheels.setLeftServoPwr(0);
-
+            robot.bar4.setPower(0);
         }
 
-            //Zlides
-            if (gamepad2.dpad_up) {
-                robot.relic.setPower(1);
-            } else if (gamepad2.dpad_down) {
-                robot.relic.setPower(-1);
+        // intake wheel
+        if(gamepad2.left_trigger!=0) {
+            //both glyphs outtake
+            robot.wheels.fullOuttake();
+        }
+        else if(gamepad2.right_trigger!=0) {
+            //last glyph outtake
+            robot.wheels.halfOuttake();
+        }
+        else
+        {
+
+            if (gamepad2.right_bumper) {
+                //left claw intake
+                robot.wheels.leftClawIntake();
             } else {
-                robot.relic.setPower(0);
+                robot.wheels.setLeftServoPwr(0);
+                robot.wheels.setLeftWheelPwr(0);
             }
-
-
-
-            telemetry.update();
+            if (gamepad2.left_bumper) {
+                //right claw intake
+                robot.wheels.rightClawIntake();
+            } else {
+                robot.wheels.setRightServoPwr(0);
+                robot.wheels.setRightWheels(0);
+            }
         }
+
+
+        if(gamepad2.right_stick_y!=0){
+            robot.wheels.unLatch();
+        }
+
+        //Zlides
+        if (gamepad2.dpad_up) {
+            robot.relic.setPower(1);
+        } else if (gamepad2.dpad_down) {
+            robot.relic.setPower(-1);
+        } else {
+            robot.relic.setPower(0);
+        }
+
+    }
 
 
 

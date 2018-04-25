@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Tests;
 
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Subsystems.DriveTrain;
@@ -10,7 +11,7 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
 /**
  * Created by therat0981 on 11/25/17.
  */
-
+@Disabled
 public class SingleSideTurnTest extends LinearOpMode
 {
     Robot robot = new Robot();

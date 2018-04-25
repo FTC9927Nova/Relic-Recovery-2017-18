@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.Util.RobotConstants;
  * Created by Ethan Pereira on 2/24/2018.
  */
 @Autonomous(name = "Arm Up Test ")
+@Disabled
 public class ArmUpTest extends LinearOpMode
 {
     Robot robot = new Robot();
@@ -30,7 +31,7 @@ public class ArmUpTest extends LinearOpMode
         timer.startTime();
         while(opModeIsActive())
         {
-           if(robot.bar4.setMoveHeight(3))
+           if(robot.bar4.setMoveHeight(10))
                telemetry.addData("yay","neing");
            else
                telemetry.addData("asf","fasdfa");

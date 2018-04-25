@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.Util.RobotConstants;
  * Created by Ethan Pereira on 2/24/2018.
  */
 @Autonomous(name = "2ndGlyphyTest")
+@Disabled
 public class SecondGlyphy extends LinearOpMode
 {
     Robot robot = new Robot();

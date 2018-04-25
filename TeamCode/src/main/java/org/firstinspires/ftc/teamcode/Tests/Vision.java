@@ -6,15 +6,15 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.teamcode.Util.AutoTransitioner;
 import org.firstinspires.ftc.teamcode.Util.VisionUtil;
 
 /**
  * Created by Sumanth on 12/13/17.
  */
 
+@TeleOp(name = "vision")
 @Disabled
-
-@TeleOp(name = "vision", group = "")
 public class Vision extends LinearOpMode {
 
     VisionUtil vision = new VisionUtil(this);
@@ -24,7 +24,10 @@ public class Vision extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
+        AutoTransitioner.transitionOnStop(this, "teleop" +
+                "");
         reading = vision.readGraph(hardwareMap);
+
         waitForStart();
         while(opModeIsActive()) {
 
