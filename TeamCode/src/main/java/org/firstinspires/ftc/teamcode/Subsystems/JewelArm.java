@@ -83,7 +83,7 @@ public class JewelArm implements SubsystemTemplate
     }
     public void arm2Down(){
 
-        arm2.setPosition(0.18);
+        arm2.setPosition(0.1);
 
 
     }

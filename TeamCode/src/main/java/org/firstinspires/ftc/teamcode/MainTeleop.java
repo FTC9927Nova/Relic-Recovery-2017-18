@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Subsystems.DriveTrain;
+import org.firstinspires.ftc.teamcode.Subsystems.DriveTrainDos;
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
 
 import org.firstinspires.ftc.teamcode.Util.Gyro;

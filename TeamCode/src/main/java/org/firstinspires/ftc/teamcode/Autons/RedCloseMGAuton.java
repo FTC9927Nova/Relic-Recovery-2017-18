@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Autons;
 import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -15,9 +16,7 @@ import org.firstinspires.ftc.teamcode.Util.Gyro;
 import org.firstinspires.ftc.teamcode.Util.VisionUtil;
 import org.firstinspires.ftc.teamcode.Util.*;
 
-/**
- * Created by Sumanth Kondapalli on 11/16/2017.
- */
+
 @Autonomous(name = "RedCloseMGY")
 public class RedCloseMGAuton extends LinearOpMode {
 
@@ -42,18 +41,13 @@ public class RedCloseMGAuton extends LinearOpMode {
         GET_FIRST_GLYPH,
         GET_SECOND_GLYPH,
         DRIVE_BACK_TO_CRYPTO,
+        JIGGL1,
+        JIGGLE2,
         LEFT,
         RIGHT,
         CENTER,
         ROTATE_DEG_2,
         STOP
-    }
-
-    enum JewelState
-    {
-        RED,
-        BLUE,
-        NONE,
     }
 
 
@@ -64,6 +58,7 @@ public class RedCloseMGAuton extends LinearOpMode {
         SPAZ_INTAKE,
         FULL_INTAKE_DOSGLYPHY,
         SPIT_GLYPHS,
+        SPIT_2,
         STOP
     }
 
@@ -88,13 +83,10 @@ public class RedCloseMGAuton extends LinearOpMode {
     DriveState driveState = DriveState.DRIVE_TO_POS;
     DriveState firstDState = DriveState.CENTER;
     FourBarState fourBarState = FourBarState.STOP;
-    JewelState jewelState = JewelState.NONE;
     ArmState armState = ArmState.ARM_DOWN;
 
     @Override
     public void runOpMode() throws InterruptedException {
-
-        AutoTransitioner.transitionOnStop(this,"MainTeleNoPID");
 
         gyro.initGyro(hardwareMap);
         robot.init(hardwareMap, this, gyro);
@@ -136,30 +128,27 @@ public class RedCloseMGAuton extends LinearOpMode {
 
         if (opModeIsActive()) {
             robot.jewelArm.armDown();
-            //robot.wheels.latch();
             sleep(1200);
             if (String.valueOf(robot.jewelArm.getColor()) == "RED")
             {
                 telemetry.addData(String.valueOf(robot.jewelArm.getColor()), "00");
                 telemetry.update();
-                robot.driveTrain.setMoveDist(-3);
-                dist = 3;
+                robot.driveTrain.setMoveDist(-4);
+                dist = 4;
 
             } else if (String.valueOf(robot.jewelArm.getColor()) == "BLUE") {
 
                 telemetry.addData(String.valueOf(robot.jewelArm.getColor()), "00");
                 telemetry.update();
 
-                robot.driveTrain.setMoveDist(3);
-                dist = -3;
+                robot.driveTrain.setMoveDist(4);
+                dist = -4;
 
             }
 //
             sleep(1000);
             robot.jewelArm.armMid();
             robot.jewelArm.arm2Mid();
-
-
         }
 
 
@@ -172,20 +161,17 @@ public class RedCloseMGAuton extends LinearOpMode {
 
 
 
-            switch (driveState)
-            {
-                case DRIVE_TO_POS:
-                {
-                    if(robot.driveTrain.setMoveDist(36 + dist)) {
+            switch (driveState) {
+                case DRIVE_TO_POS: {
+                    if (robot.driveTrain.setMoveDist(36 + dist)) {
                         robot.wheels.unLatch();
                         driveState = DriveState.ROTATE_TO_GLYPH_PIT;
                     }
                     break;
                 }
                 case ROTATE_TO_GLYPH_PIT: {
-                    if (robot.driveTrain.rotateDeg(-90))
-                    {
-                        startEnc = (robot.driveTrain.getLeftCurrentPosition()+robot.driveTrain.getRightCurrentPosition())/2.0;
+                    if (robot.driveTrain.rotateDeg(-90)) {
+                        startEnc = (robot.driveTrain.getLeftCurrentPosition() + robot.driveTrain.getRightCurrentPosition()) / 2.0;
                         driveState = DriveState.GET_SECOND_GLYPH;
                         wheelState = WheelState.SPAZ_INTAKE;
                         fourBarState = FourBarState.INTAKE;
@@ -193,13 +179,11 @@ public class RedCloseMGAuton extends LinearOpMode {
 
                     break;
                 }
-                case GET_FIRST_GLYPH:
-                {
+                case GET_FIRST_GLYPH: {
                     robot.driveTrain.setDrive(DriveTrain.Drive.NOTHING);
                     robot.driveTrain.driveStraight();
 
-                    if(wheelState.equals(WheelState.STOP))
-                    {
+                    if (wheelState.equals(WheelState.STOP)) {
                         robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
                         robot.driveTrain.stop();
 
@@ -210,14 +194,12 @@ public class RedCloseMGAuton extends LinearOpMode {
                     break;
 
                 }
-                case GET_SECOND_GLYPH:
-                {
+                case GET_SECOND_GLYPH: {
                     robot.driveTrain.setDrive(DriveTrain.Drive.NOTHING);
                     robot.driveTrain.driveStraight();
-                    if(wheelState.equals(WheelState.STOP))
-                    {
-                        targetEnc = ((robot.driveTrain.getLeftCurrentPosition()+robot.driveTrain.getRightCurrentPosition())/2.0)
-                                -startEnc;
+                    if (wheelState.equals(WheelState.STOP)) {
+                        targetEnc = ((robot.driveTrain.getLeftCurrentPosition() + robot.driveTrain.getRightCurrentPosition()) / 2.0)
+                                - startEnc;
                         robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
                         robot.driveTrain.stop();
                         driveState = DriveState.DRIVE_BACK_TO_CRYPTO;
@@ -225,16 +207,13 @@ public class RedCloseMGAuton extends LinearOpMode {
                     }
                     break;
                 }
-                case DRIVE_BACK_TO_CRYPTO:
-                {
-                    if(robot.driveTrain.setMoveDistEnc(250-(int)targetEnc))
-                    {
+                case DRIVE_BACK_TO_CRYPTO: {
+                    if (robot.driveTrain.setMoveDistEnc(360 - (int) targetEnc)) {
                         driveState = firstDState;
                     }
                     break;
                 }
-                case ROTATE_DEG_2:
-                {
+                case ROTATE_DEG_2: {
 
 //                    if(robot.driveTrain.rotateDeg(angle))
 //                    {
@@ -244,17 +223,15 @@ public class RedCloseMGAuton extends LinearOpMode {
 //
 //                    }
 //                    break;
-                    if(robot.driveTrain.setMoveDist(-10))
-                    {
+                    if (robot.driveTrain.setMoveDist(-10)) {
                         driveState = DriveState.STOP;
                     }
                     break;
 
                 }
-                case LEFT:
-                {
-                    if(robot.driveTrain.rotateDeg(angle))
-                    {
+                case LEFT: {
+                    if (robot.driveTrain.rotateDeg(angle)) {
+                        driveState = DriveState.STOP;
                         wheelState = WheelState.SPIT_GLYPHS;
 //                        driveState = DriveState.STOP;
 //                        firstDState = DriveState.RIGHT;
@@ -263,14 +240,13 @@ public class RedCloseMGAuton extends LinearOpMode {
 //                            angle = -165;
 //                        }
 //                        else if(driveState.equals(DriveState.RIGHT))
-                            driveState = DriveState.STOP;
+
                     }
                     break;
                 }
-                case RIGHT:
-                {
-                    if(robot.driveTrain.rotateDeg(angle))
-                    {
+                case RIGHT: {
+                    if (robot.driveTrain.rotateDeg(angle)) {
+                        driveState = DriveState.STOP;
                         wheelState = WheelState.SPIT_GLYPHS;
 //                        driveState = DriveState.STOP;
 //                        firstDState = DriveState.LEFT;
@@ -280,25 +256,35 @@ public class RedCloseMGAuton extends LinearOpMode {
 //                            angle = 165;
 //                        }
 //                        else if(driveState.equals(DriveState.LEFT))
-                            driveState = DriveState.STOP;
 
                     }
                     break;
 
                 }
-                case CENTER:
-                {
-                    if(robot.driveTrain.rotateDeg(angle))
-                    {
-                        wheelState = WheelState.SPIT_GLYPHS;
+                case CENTER: {
+                    if (robot.driveTrain.rotateDeg(angle)) {
                         driveState = DriveState.STOP;
+                        wheelState = WheelState.SPIT_GLYPHS;
 //                        if(!driveState.equals(DriveState.RIGHT))
 //                        {
 //                            driveState = DriveState.RIGHT;
 //                            angle = -165;
 //                        }
 //                        else if(driveState.equals(DriveState.RIGHT))
-                            driveState = DriveState.STOP;
+                    }
+                    break;
+                }
+                case JIGGL1: {
+                    if (robot.driveTrain.setMoveDist(-3))
+                        driveState = DriveState.JIGGLE2;
+                    break;
+                }
+                case JIGGLE2:
+                {
+                    if(robot.driveTrain.setMoveDist(3))
+                    {
+                        wheelState = WheelState.SPIT_2;
+                        driveState = DriveState.STOP;
                     }
                     break;
                 }
@@ -371,13 +357,19 @@ public class RedCloseMGAuton extends LinearOpMode {
                 case SPIT_GLYPHS:
                 {
 
-                    if(robot.wheels.halfOuttake()&&robot.wheels.glyphDist()>3)
+                    if(robot.wheels.halfOuttake())
                     {
-                        if(robot.wheels.fullOuttake2()){
-                            wheelState = WheelState.STOP;
-                            driveState = DriveState.ROTATE_DEG_2;
-                        }
-
+                        wheelState = WheelState.STOP;
+                        driveState = DriveState.JIGGL1;
+                    }
+                    break;
+                }
+                case SPIT_2:
+                {
+                    if(robot.wheels.fullOuttake2())
+                    {
+                        wheelState = WheelState.STOP;
+                        driveState = DriveState.ROTATE_DEG_2;
                     }
                     break;
                 }

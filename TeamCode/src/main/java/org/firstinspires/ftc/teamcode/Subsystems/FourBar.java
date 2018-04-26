@@ -66,8 +66,8 @@ public class FourBar implements SubsystemTemplate {
     {
         pidLoop.setTarget(targetHeight);
         double power = pidLoop.pLoop(pot.getDist());
-        if(Math.abs(power)>0.3)
-            power = 0.3 * Math.signum(power);
+        if(Math.abs(power)>0.2)
+            power = 0.2 * Math.signum(power);
 
         fourBar.setPower(power);
 
