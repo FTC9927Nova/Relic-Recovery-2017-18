@@ -103,7 +103,7 @@ public class SuperBiggieTeleop extends OpMode
 
         }  else {
 
-            robot.bar4.setPower(0);
+            robot.bar4.setPower(0.002);
         }
 
         // intake wheel

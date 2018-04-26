@@ -38,7 +38,7 @@ public class BlueCloseMGAuton extends LinearOpMode {
     double targetEnc;
     enum DriveState
     {
-        HIT_JEWEL,
+        SKRT,
         DRIVE_TO_POS,
         ROTATE_TO_GLYPH_PIT,
         GET_FIRST_GLYPH,
@@ -51,6 +51,7 @@ public class BlueCloseMGAuton extends LinearOpMode {
         JIGGLE_2,
         ROTATE_DEG_2,
         FINAL_MOVE,
+        BACK_UP,
         STOP
     }
 
@@ -150,18 +151,19 @@ public class BlueCloseMGAuton extends LinearOpMode {
                 telemetry.addData(String.valueOf(robot.jewelArm.getColor2()), "00");
                 telemetry.update();
 
-                robot.driveTrain.setMoveDist(4);
-                dist -= 4;
+                robot.driveTrain.setMoveDist(6);
+                dist -= 6;
 
             } else if (String.valueOf(robot.jewelArm.getColor2()) == "BLUE") {
 
                 telemetry.addData(String.valueOf(robot.jewelArm.getColor2()), "00");
                 telemetry.update();
-
+                robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
                 robot.driveTrain.setMoveDist(-4);
-                dist += 4;
+                dist += 8;
 
             }
+            sleep(500);
 //
             robot.jewelArm.armMid();
             robot.jewelArm.arm2Mid();
@@ -213,6 +215,14 @@ public class BlueCloseMGAuton extends LinearOpMode {
                     }
                     break;
                 }
+                case SKRT:
+                {
+                    if(robot.driveTrain.setMoveDist(10))
+                    {
+                        driveState = DriveState.GET_FIRST_GLYPH;
+                    }
+                    break;
+                }
                 case GET_FIRST_GLYPH:
                 {
                     robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
@@ -222,11 +232,7 @@ public class BlueCloseMGAuton extends LinearOpMode {
 
                     if(wheelState.equals(WheelState.FULL_INTAKE_DOSGLYPHY))
                     {
-                        robot.driveTrain.stop();
                         driveState = DriveState.GET_SECOND_GLYPH;
-                        fourBarState = FourBarState.INTAKE;
-
-
                     }
                     break;
 
@@ -261,7 +267,7 @@ public class BlueCloseMGAuton extends LinearOpMode {
                     if(robot.driveTrain.rotateDeg(-angle))
                     {
 
-                        driveState = DriveState.GET_FIRST_GLYPH;
+                        driveState = DriveState.SKRT;
                         wheelState = WheelState.SPAZ_INTAKE;
                     }
                     break;
@@ -324,6 +330,18 @@ public class BlueCloseMGAuton extends LinearOpMode {
                     }
                     break;
                 }
+                case BACK_UP:
+                {
+
+                    if(robot.driveTrain.setMoveDist(-8)){
+
+                        stop();
+                        driveState = DriveState.ROTATE_DEG_2;
+                        fourBarState = FourBarState.INTAKE;
+                    }
+                    break;
+
+                }
                 case CENTER:
                 {
                     if(c == 0){
@@ -359,24 +377,28 @@ public class BlueCloseMGAuton extends LinearOpMode {
             switch (wheelState)
             {
                 case SPAZ_INTAKE:
-                {
-                    robot.wheels.setLeftServoPwr(-0.5);
+                { robot.wheels.setLeftServoPwr(-0.5);
                     robot.wheels.setRightWheels(-0.5);
                     intkaeCounter++;
-                    if((intkaeCounter%3)==0)
-                        swap = !swap;
+                    if(robot.wheels.glyphDist()>6.5) {
+                        if ((intkaeCounter % 3) == 0)
+                            swap = !swap;
 
-                    if(swap) {
-                        robot.wheels.setLeftWheelPwr(-1);
-                        robot.wheels.stopRight();
+                        if (swap) {
+                            robot.wheels.setLeftWheelPwr(-1);
+                            robot.wheels.stopRight();
+                        } else {
+                            robot.wheels.setRightWheels(-1);
+                            robot.wheels.stopLeft();
+                        }
+                    }
+                    else if(robot.wheels.glyphDist()<6.5 && robot.wheels.glyphDist()>3)
+                    {
+                        robot.wheels.intakeRight();
+                        robot.wheels.intakeLeft();
                     }
                     else
                     {
-                        robot.wheels.setRightWheels(-1);
-                        robot.wheels.stopLeft();
-                    }
-
-                    if(robot.wheels.glyphDist()<3) {
                         robot.wheels.intakeRight();
                         robot.wheels.intakeLeft();
                         wheelState = WheelState.FULL_INTAKE_DOSGLYPHY;
@@ -434,10 +456,12 @@ public class BlueCloseMGAuton extends LinearOpMode {
                         }
                         if(c == 0){
 
-                            wheelState = WheelState.STOP;
-                            driveState = DriveState.ROTATE_DEG_2;
-                            fourBarState = FourBarState.INTAKE;
                             c++;
+                            wheelState = WheelState.STOP;
+                            robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
+                            driveState = DriveState.BACK_UP;
+
+
                         }
 
                     }
@@ -475,7 +499,10 @@ public class BlueCloseMGAuton extends LinearOpMode {
             telemetry.addData("start time", startTime);
             telemetry.addData("diff", (timer.milliseconds()-startTime));
             telemetry.addData("wheel state: ",wheelState.toString());
-            Log.i("what happened: ", driveState.toString()  + "      " + wheelState.toString() + "      " + robot.driveTrain.getLeftPwr() + "        " + robot.driveTrain.getRightPwr() + "         " + robot.driveTrain.getLeftCurrentPosition() + "       " + robot.driveTrain.getRightCurrentPosition());
+            telemetry.addData("Encdoers", startEnc);
+            telemetry.addData("avergae",(robot.driveTrain.getRightCurrentPosition()+robot.driveTrain.getLeftCurrentPosition())/2.0);
+            Log.i("what happened: ", driveState.toString()  + "      " + wheelState.toString() + "      " + robot.driveTrain.getLeftPwr() + "        " + robot.driveTrain.getRightPwr() + "         " + robot.driveTrain.getLeftCurrentPosition() + "       " + robot.driveTrain.getRightCurrentPosition() + " " +
+            startEnc);
             telemetry.addData("drive state", driveState.toString());
             telemetry.update();
 
