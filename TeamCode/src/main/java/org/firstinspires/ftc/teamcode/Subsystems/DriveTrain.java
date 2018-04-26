@@ -344,6 +344,7 @@ public class DriveTrain implements SubsystemTemplate
         {
             setLeftPower(0);
             setRightPower(0);
+            setDrive(Drive.STOP_RESET);
             setDrive(Drive.ENCODERS);
             heading = gyro.getYaw();
             return true;

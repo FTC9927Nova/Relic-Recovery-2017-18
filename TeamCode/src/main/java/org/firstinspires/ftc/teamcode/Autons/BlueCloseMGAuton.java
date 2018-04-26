@@ -32,6 +32,7 @@ public class BlueCloseMGAuton extends LinearOpMode {
     String tester = "";
     VisionUtil visionUtil = new VisionUtil(this);
     double angle;
+    int c = 0;
 
     double startEnc;
     double targetEnc;
@@ -49,6 +50,7 @@ public class BlueCloseMGAuton extends LinearOpMode {
         JIGGLE_1,
         JIGGLE_2,
         ROTATE_DEG_2,
+        FINAL_MOVE,
         STOP
     }
 
@@ -97,7 +99,7 @@ public class BlueCloseMGAuton extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        AutoTransitioner.transitionOnStop(this,"MainTeleNoPID");
+//        AutoTransitioner.transitionOnStop(this,"MainTeleNoPID");
 
         gyro.initGyro(hardwareMap);
         robot.init(hardwareMap, this, gyro);
@@ -213,15 +215,16 @@ public class BlueCloseMGAuton extends LinearOpMode {
                 }
                 case GET_FIRST_GLYPH:
                 {
+                    robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
                     robot.driveTrain.setDrive(DriveTrain.Drive.NOTHING);
+                    startEnc = (robot.driveTrain.getLeftCurrentPosition()+robot.driveTrain.getRightCurrentPosition())/2.0;
                     robot.driveTrain.driveStraight();
 
-                    if(wheelState.equals(WheelState.STOP))
+                    if(wheelState.equals(WheelState.FULL_INTAKE_DOSGLYPHY))
                     {
-                        robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
                         robot.driveTrain.stop();
-
                         driveState = DriveState.GET_SECOND_GLYPH;
+                        fourBarState = FourBarState.INTAKE;
 
 
                     }
@@ -235,7 +238,7 @@ public class BlueCloseMGAuton extends LinearOpMode {
                     if(wheelState.equals(WheelState.STOP))
                     {
                         targetEnc = ((robot.driveTrain.getLeftCurrentPosition()+robot.driveTrain.getRightCurrentPosition())/2.0)
-                                -startEnc;
+                                - startEnc;
                         robot.driveTrain.setDrive(DriveTrain.Drive.STOP_RESET);
                        robot.driveTrain.stop();
                         driveState = DriveState.DRIVE_BACK_TO_CRYPTO;
@@ -253,68 +256,94 @@ public class BlueCloseMGAuton extends LinearOpMode {
                 }
                 case ROTATE_DEG_2:
                 {
-
-//                    if(robot.driveTrain.rotateDeg(angle))
-//                    {
-//                        driveState = DriveState.GET_FIRST_GLYPH;
-//                        fourBarState = FourBarState.INTAKE;
 //
-//                    }
-                    if(robot.driveTrain.setMoveDist(-12))
+
+                    if(robot.driveTrain.rotateDeg(-angle))
                     {
-                        driveState = DriveState.STOP;
+
+                        driveState = DriveState.GET_FIRST_GLYPH;
+                        wheelState = WheelState.SPAZ_INTAKE;
                     }
                     break;
 
                 }
                 case LEFT:
                 {
-                    if(robot.driveTrain.rotateDeg(angle))
-                    {
-                        driveState = DriveState.STOP;
-                        wheelState = WheelState.SPIT_GLYPHS;
-//                        driveState = DriveState.STOP;
-//                        firstDState = DriveState.RIGHT;
-//                        if(!driveState.equals(DriveState.RIGHT)) {
-//                            driveState = DriveState.RIGHT;
-//                            angle = -165;
-//                        }
-//                        else if(driveState.equals(DriveState.RIGHT))
+                    if(c == 0){
+
+                        if(robot.driveTrain.rotateDeg(angle) )
+                        {
+                            driveState = DriveState.STOP;
+                            wheelState = WheelState.SPIT_GLYPHS;
+                        }
+
+                    }
+                    if(c == 1){
+
+                        if(robot.driveTrain.rotateDeg(-angle)){
+
+                            driveState = DriveState.STOP;
+                            wheelState = WheelState.SPIT_GLYPHS;
+
+                        }
+
                     }
                     break;
                 }
                 case RIGHT:
                 {
-                    if(robot.driveTrain.rotateDeg(angle))
-                    {
-                        driveState = DriveState.STOP;
-                        wheelState = WheelState.SPIT_GLYPHS;
-//                        firstDState = DriveState.LEFT;
-//                        if(!driveState.equals(DriveState.LEFT))
-//                        {
-//                            driveState = DriveState.LEFT;
-//                            angle = 165;
-//                        }
-//                        else if(driveState.equals(DriveState.LEFT))
-//                            driveState = DriveState.STOP;
+                    if(c == 0){
+
+                        if(robot.driveTrain.rotateDeg(angle) )
+                        {
+                            driveState = DriveState.STOP;
+                            wheelState = WheelState.SPIT_GLYPHS;
+                        }
 
                     }
+                    if(c == 1){
+
+                        if(robot.driveTrain.rotateDeg(-angle)){
+
+                            driveState = DriveState.STOP;
+                            wheelState = WheelState.SPIT_GLYPHS;
+
+                        }
+
+                    }
+
+
                     break;
 
                 }
-                case CENTER:
+                case FINAL_MOVE:
                 {
-                    if(robot.driveTrain.rotateDeg(angle))
+                    if(robot.driveTrain.setMoveDist(-4))
                     {
                         driveState = DriveState.STOP;
-                        wheelState = WheelState.SPIT_GLYPHS;
-//                        driveState = DriveState.STOP;
-//                        if(!driveState.equals(DriveState.RIGHT))
-//                        {
-//                            driveState = DriveState.RIGHT;
-//                            angle = -165;
-//                        }
-//                        else if(driveState.equals(DriveState.RIGHT))
+                    }
+                    break;
+                }
+                case CENTER:
+                {
+                    if(c == 0){
+
+                        if(robot.driveTrain.rotateDeg(angle) )
+                        {
+                            driveState = DriveState.STOP;
+                            wheelState = WheelState.SPIT_GLYPHS;
+                        }
+
+                    }
+                    if(c == 1){
+
+                        if(robot.driveTrain.rotateDeg(angle - 15)){
+
+                            driveState = DriveState.STOP;
+                            wheelState = WheelState.SPIT_GLYPHS;
+
+                        }
+
                     }
                     break;
                 }
@@ -387,7 +416,7 @@ public class BlueCloseMGAuton extends LinearOpMode {
                 case SPIT_GLYPHS:
                 {
 
-                    if(robot.wheels.halfOuttake()&&robot.wheels.glyphDist()>3)
+                    if(robot.wheels.halfOuttake())
                     {
                         driveState = DriveState.JIGGLE_1;
                         wheelState = WheelState.STOP;
@@ -398,8 +427,19 @@ public class BlueCloseMGAuton extends LinearOpMode {
                 {
                     if(robot.wheels.fullOuttake2())
                     {
-                        wheelState = WheelState.STOP;
-                        driveState = DriveState.ROTATE_DEG_2;
+                        if(c == 1){
+
+                            stop();
+
+                        }
+                        if(c == 0){
+
+                            wheelState = WheelState.STOP;
+                            driveState = DriveState.ROTATE_DEG_2;
+                            fourBarState = FourBarState.INTAKE;
+                            c++;
+                        }
+
                     }
                     break;
                 }
@@ -420,7 +460,7 @@ public class BlueCloseMGAuton extends LinearOpMode {
 
                 case OUTTAKE:
                 {
-                    robot.bar4.setMoveHeight(7);
+                    robot.bar4.setMoveHeight(8);
                     break;
                 }
                 case STOP:
