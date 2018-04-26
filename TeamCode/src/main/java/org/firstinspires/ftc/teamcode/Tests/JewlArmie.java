@@ -134,20 +134,18 @@ public class JewlArmie extends LinearOpMode {
 
 
         if (opModeIsActive()) {
-            robot.jewelArm.arm2Down();
-            robot.wheels.latch();
-
-
+            robot.jewelArm.armDown();
+            //robot.wheels.latch();
             sleep(1000);
-            if (String.valueOf(robot.jewelArm.getColor2()).equals("RED")) {
-                telemetry.addData(String.valueOf(robot.jewelArm.getColor2()), "00");
+            if (String.valueOf(robot.jewelArm.getColor()) == "RED")
+            {
+                telemetry.addData(String.valueOf(robot.jewelArm.getColor()), "00");
                 telemetry.update();
-
                 robot.driveTrain.setMoveDist(4);
 
-            } else if (String.valueOf(robot.jewelArm.getColor2()).equals("BLUE")) {
+            } else if (String.valueOf(robot.jewelArm.getColor()) == "BLUE") {
 
-                telemetry.addData(String.valueOf(robot.jewelArm.getColor2()), "00");
+                telemetry.addData(String.valueOf(robot.jewelArm.getColor()), "00");
                 telemetry.update();
 
                 robot.driveTrain.setMoveDist(-4);

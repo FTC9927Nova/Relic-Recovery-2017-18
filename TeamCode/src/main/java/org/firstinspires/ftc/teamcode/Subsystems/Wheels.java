@@ -201,6 +201,26 @@ public class Wheels implements SubsystemTemplate{
         outtakeRight();
     }
 
+    public boolean fullOuttake2()
+    {
+        if(glyphDist()<9) {
+            rservoIntkae.setPower(Range.clip(0.35 - (glyphDist() / 18), 0.1, 0.35));
+            lservoIntkae.setPower(Range.clip(0.35 - (glyphDist() / 18), 0.1, 0.35));
+            outtakeLeft();
+            outtakeRight();
+            return false;
+        }
+        else
+        {
+            lservoIntkae.setPower(0);
+            rservoIntkae.setPower(0);
+            setLeftWheelPwr(0);
+            setRightWheels(0);
+            return true;
+
+        }
+    }
+
     public boolean halfOuttake()
     {
         if(glyphDist()>MaxGlyphDist) {

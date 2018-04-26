@@ -72,6 +72,7 @@ public class RedCloseMGAuton extends LinearOpMode {
     {
         INTAKE,
         OUTTAKE,
+        OUTTAKE2,
         STOP
     }
 
@@ -98,6 +99,7 @@ public class RedCloseMGAuton extends LinearOpMode {
         gyro.initGyro(hardwareMap);
         robot.init(hardwareMap, this, gyro);
         reading = vision.readGraph(hardwareMap);
+        double dist = 0;
 
         reading = vision.readGraph2(hardwareMap);
         telemetry.addData("vision", reading);
@@ -130,55 +132,43 @@ public class RedCloseMGAuton extends LinearOpMode {
         }
 
         waitForStart();
+
+
+        if (opModeIsActive()) {
+            robot.jewelArm.armDown();
+            //robot.wheels.latch();
+            sleep(1200);
+            if (String.valueOf(robot.jewelArm.getColor()) == "RED")
+            {
+                telemetry.addData(String.valueOf(robot.jewelArm.getColor()), "00");
+                telemetry.update();
+                robot.driveTrain.setMoveDist(-3);
+                dist = 3;
+
+            } else if (String.valueOf(robot.jewelArm.getColor()) == "BLUE") {
+
+                telemetry.addData(String.valueOf(robot.jewelArm.getColor()), "00");
+                telemetry.update();
+
+                robot.driveTrain.setMoveDist(3);
+                dist = -3;
+
+            }
+//
+            sleep(1000);
+            robot.jewelArm.armMid();
+            robot.jewelArm.arm2Mid();
+
+
+        }
+
+
+
         while(opModeIsActive())
         {
-            if(gyro.getPitch()>7)
+            if(gyro.getPitch()>11)
                 stop();
 
-//            switch (armState)
-//            {
-//                case ARM_DOWN:
-//                {
-//                    robot.jewelArm.arm2Down();
-//                    break;
-//                }
-//                case ARM_UP:
-//                {
-//                    robot.jewelArm.arm2Up();
-//                    break;
-//                }
-//            }
-////
-//            switch (jewelState)
-//            {
-//                case RED:
-//                {
-//                   driveState = DriveState.DRIVE_TO_POS;
-//                   break;
-//                }
-//                case BLUE:
-//                {
-//                    if(robot.driveTrain.setMoveDist(-4))
-//                    {
-//                        driveState = DriveState.DRIVE_TO_POS;
-//                    }
-//                    break;
-//                }
-//                case NONE:
-//                {
-//                    if(robot.jewelArm.getColor2().equals(JewelArm.ColorDetected.RED))
-//                    {
-//                        jewelState = JewelState.RED;
-//                    }
-//                    else if(robot.jewelArm.getColor2().equals(JewelArm.ColorDetected.BLUE))
-//                    {
-//                        jewelState = JewelState.BLUE;
-//                    }
-//                    break;
-//                }
-//            }
-//
-//            armState = ArmState.ARM_DOWN;
 
 
 
@@ -186,7 +176,7 @@ public class RedCloseMGAuton extends LinearOpMode {
             {
                 case DRIVE_TO_POS:
                 {
-                    if(robot.driveTrain.setMoveDist(36)) {
+                    if(robot.driveTrain.setMoveDist(36 + dist)) {
                         robot.wheels.unLatch();
                         driveState = DriveState.ROTATE_TO_GLYPH_PIT;
                     }
@@ -237,7 +227,7 @@ public class RedCloseMGAuton extends LinearOpMode {
                 }
                 case DRIVE_BACK_TO_CRYPTO:
                 {
-                    if(robot.driveTrain.setMoveDistEnc(360-(int)targetEnc))
+                    if(robot.driveTrain.setMoveDistEnc(250-(int)targetEnc))
                     {
                         driveState = firstDState;
                     }
@@ -246,11 +236,17 @@ public class RedCloseMGAuton extends LinearOpMode {
                 case ROTATE_DEG_2:
                 {
 
-                    if(robot.driveTrain.rotateDeg(angle))
+//                    if(robot.driveTrain.rotateDeg(angle))
+//                    {
+//                        driveState = DriveState.GET_FIRST_GLYPH;
+//                        fourBarState = FourBarState.INTAKE;
+//                        wheelState = WheelState.STOP;
+//
+//                    }
+//                    break;
+                    if(robot.driveTrain.setMoveDist(-10))
                     {
-                        driveState = DriveState.GET_FIRST_GLYPH;
-                        fourBarState = FourBarState.INTAKE;
-
+                        driveState = DriveState.STOP;
                     }
                     break;
 
@@ -260,13 +256,13 @@ public class RedCloseMGAuton extends LinearOpMode {
                     if(robot.driveTrain.rotateDeg(angle))
                     {
                         wheelState = WheelState.SPIT_GLYPHS;
-                        driveState = DriveState.STOP;
-                        firstDState = DriveState.RIGHT;
-                        if(!driveState.equals(DriveState.RIGHT)) {
-                            driveState = DriveState.RIGHT;
-                            angle = -165;
-                        }
-                        else if(driveState.equals(DriveState.RIGHT))
+//                        driveState = DriveState.STOP;
+//                        firstDState = DriveState.RIGHT;
+//                        if(!driveState.equals(DriveState.RIGHT)) {
+//                            driveState = DriveState.RIGHT;
+//                            angle = -165;
+//                        }
+//                        else if(driveState.equals(DriveState.RIGHT))
                             driveState = DriveState.STOP;
                     }
                     break;
@@ -276,14 +272,14 @@ public class RedCloseMGAuton extends LinearOpMode {
                     if(robot.driveTrain.rotateDeg(angle))
                     {
                         wheelState = WheelState.SPIT_GLYPHS;
-                        driveState = DriveState.STOP;
-                        firstDState = DriveState.LEFT;
-                        if(!driveState.equals(DriveState.LEFT))
-                        {
-                            driveState = DriveState.LEFT;
-                            angle = 165;
-                        }
-                        else if(driveState.equals(DriveState.LEFT))
+//                        driveState = DriveState.STOP;
+//                        firstDState = DriveState.LEFT;
+//                        if(!driveState.equals(DriveState.LEFT))
+//                        {
+//                            driveState = DriveState.LEFT;
+//                            angle = 165;
+//                        }
+//                        else if(driveState.equals(DriveState.LEFT))
                             driveState = DriveState.STOP;
 
                     }
@@ -296,12 +292,12 @@ public class RedCloseMGAuton extends LinearOpMode {
                     {
                         wheelState = WheelState.SPIT_GLYPHS;
                         driveState = DriveState.STOP;
-                        if(!driveState.equals(DriveState.RIGHT))
-                        {
-                            driveState = DriveState.RIGHT;
-                            angle = -165;
-                        }
-                        else if(driveState.equals(DriveState.RIGHT))
+//                        if(!driveState.equals(DriveState.RIGHT))
+//                        {
+//                            driveState = DriveState.RIGHT;
+//                            angle = -165;
+//                        }
+//                        else if(driveState.equals(DriveState.RIGHT))
                             driveState = DriveState.STOP;
                     }
                     break;
@@ -374,21 +370,14 @@ public class RedCloseMGAuton extends LinearOpMode {
                 }
                 case SPIT_GLYPHS:
                 {
+
                     if(robot.wheels.halfOuttake()&&robot.wheels.glyphDist()>3)
                     {
-                        if(robot.wheels.glyphDist()<9){
-
-                            robot.wheels.fullOuttake();
-
-                        }
-                        else
-                        {
-                            if(startTime==0)
-                                startTime = timer.milliseconds();
-                            if(timer.milliseconds()-startTime>1000)
-                                driveState = DriveState.ROTATE_DEG_2;
+                        if(robot.wheels.fullOuttake2()){
                             wheelState = WheelState.STOP;
+                            driveState = DriveState.ROTATE_DEG_2;
                         }
+
                     }
                     break;
                 }
@@ -412,6 +401,11 @@ public class RedCloseMGAuton extends LinearOpMode {
                     robot.bar4.setMoveHeight(8);
                     break;
                 }
+                case OUTTAKE2:
+                {
+                    robot.bar4.setMoveHeight(13);
+                    break;
+                }
                 case STOP:
                 {
                     robot.bar4.stop();
@@ -423,6 +417,7 @@ public class RedCloseMGAuton extends LinearOpMode {
             telemetry.addData("time", timer.milliseconds());
             telemetry.addData("start time", startTime);
             telemetry.addData("diff", (timer.milliseconds()-startTime));
+            telemetry.addData("drive state",driveState.toString());
             telemetry.addData("wheel state: ",wheelState.toString());
             telemetry.addData("wheel dist", robot.wheels.glyphDist());
             telemetry.update();

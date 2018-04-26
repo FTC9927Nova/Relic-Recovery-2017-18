@@ -62,8 +62,8 @@ public class JewelArm implements SubsystemTemplate
             check2 = hardwareMap.colorSensor.get("color2");
             jewlCheck = hardwareMap.colorSensor.get("color");
 
-            jewlCheck.enableLed(true);
-            check2.enableLed(true);
+            jewlCheck.enableLed(false );
+            check2.enableLed(false);
 
         }
 
@@ -79,7 +79,7 @@ public class JewelArm implements SubsystemTemplate
     public void armDown()
     {
 //        isArmDown = true;
-        jewlArm.setPosition(0.18);
+        jewlArm.setPosition(0);
     }
     public void arm2Down(){
 
